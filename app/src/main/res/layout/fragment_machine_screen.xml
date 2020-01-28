@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="@string/button_hold"
             android:textAlignment="center"
             tools:text="HOLD" />
 
@@ -40,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="@string/button_hold"
             android:textAlignment="center"
             tools:text="HOLD" />
 
@@ -48,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="@string/button_hold"
             android:textAlignment="center"
             tools:text="HOLD" />
 
@@ -56,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="@string/button_hold"
             android:textAlignment="center"
             tools:text="HOLD" />
 
@@ -64,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="@string/button_hold"
             android:textAlignment="center"
             tools:text="HOLD" />
     </LinearLayout>
@@ -140,6 +145,7 @@
         android:id="@+id/textViewBet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/bet"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
@@ -159,6 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="@string/button_game_menu"
             tools:text="Game Menu" />
 
         <Button
@@ -166,6 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="@string/button_sound"
             tools:text="Sound (2)" />
 
         <Button
@@ -173,6 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="@string/button_speed"
             tools:text="Speed (1)" />
 
         <ImageView
@@ -187,6 +196,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="@string/button_double_up"
             tools:text="Double Up" />
 
         <Button
@@ -200,6 +210,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text="@string/button_deal"
             tools:text="Deal" />
     </LinearLayout>
 
@@ -207,6 +218,7 @@
         android:id="@+id/textViewGameType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/result_jacks_or_better"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
@@ -216,6 +228,7 @@
         android:id="@+id/textViewGameOver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/game_over"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"

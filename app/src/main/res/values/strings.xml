@@ -30,4 +30,13 @@
     <string name="result_two_pair">TWO PAIR</string>
     <string name="result_jacks_or_better">JACKS OR BETTER</string>
     <string name="result_nothing">NOTHING</string>
+
+    <string name="button_deal">DEAL</string>
+    <string name="button_double_up">DOUBLE UP</string>
+    <string name="button_speed">SPEED</string>
+    <string name="button_sound">SOUND</string>
+    <string name="button_game_menu">GAME MENU</string>
+    <string name="button_hold">HOLD</string>
+    <string name="bet">BET</string>
+    <string name="game_over">GAME OVER</string>
 </resources>
