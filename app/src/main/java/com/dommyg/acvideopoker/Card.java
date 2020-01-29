@@ -59,16 +59,24 @@ class Card {
     private Suit suit;
     private Value value;
 
-    public Card(Suit suit, Value value) {
+    Card(Suit suit, Value value) {
         this.suit = suit;
         this.value = value;
     }
 
-    public Suit getSuit() {
+    /**
+     * Returns a duplicate card. Used in the Deck's checkPair() function.
+     */
+    Card(Card card) {
+        this.suit = card.suit;
+        this.value = card.value;
+    }
+
+    Suit getSuit() {
         return suit;
     }
 
-    public Value getValue() {
+    Value getValue() {
         return value;
     }
 }
