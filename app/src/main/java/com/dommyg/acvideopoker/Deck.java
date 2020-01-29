@@ -116,6 +116,10 @@ class Deck {
         this.handStatus = Result.NOTHING;
     }
 
+    Result getHandStatus() {
+        return handStatus;
+    }
+
     /**
      * Resets the currentDeck by clearing all cards in it and copying over the masterDeck. Used when
      * the game is over and a fresh deck must be prepared for the next game.
@@ -172,20 +176,20 @@ class Deck {
      * Processes holds in the handDisplay. If a card is not selected to be held by the player, it
      * will be discarded.
      */
-    void hold(boolean card1, boolean card2, boolean card3, boolean card4, boolean card5) {
-        if (!card1) {
+    void hold(boolean[] holds) {
+        if (!holds[0]) {
             discard(1);
         }
-        if (!card2) {
+        if (!holds[1]) {
             discard(2);
         }
-        if (!card3) {
+        if (!holds[2]) {
             discard(3);
         }
-        if (!card4) {
+        if (!holds[3]) {
             discard(4);
         }
-        if (!card5) {
+        if (!holds[4]) {
             discard(5);
         }
     }
@@ -225,7 +229,7 @@ class Deck {
      * Sets the hand status by using various checking functions: checkStraight(), checkFlush(),
      * checkRoyalFlush(), and checkPair().
      */
-    private void determineHandStatus() {
+    void determineHandStatus() {
         sortHandCalculationByValue();
         boolean straight = checkStraight();
 
@@ -280,8 +284,8 @@ class Deck {
                     || firstCard == Card.Value.TEN.getNumValue()) {
                 // First card is either a two or a ten; a straight is possible.
                 for (int i = 0; i < HAND_SIZE - 2; i++) {
-                    if (handCalculation.get(i).getValue().getNumValue()
-                            != handCalculation.get(i + 1).getValue().getNumValue() + 1) {
+                    if (handCalculation.get(i).getValue().getNumValue() !=
+                            handCalculation.get(i + 1).getValue().getNumValue() + 1) {
                         return false;
                     }
                 }
@@ -291,8 +295,8 @@ class Deck {
         } else {
             // Last card is not an ace. Checking all cards for a straight.
             for (int i = 0; i < HAND_SIZE - 1; i++) {
-                if (handCalculation.get(i).getValue().getNumValue()
-                        != handCalculation.get(i + 1).getValue().getNumValue() + 1) {
+                if (handCalculation.get(i).getValue().getNumValue() !=
+                        handCalculation.get(i + 1).getValue().getNumValue() + 1) {
                     return false;
                 }
             }

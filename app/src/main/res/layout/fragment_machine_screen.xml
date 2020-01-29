@@ -200,10 +200,11 @@
             tools:text="Double Up" />
 
         <Button
-            android:id="@+id/buttonEmpty"
+            android:id="@+id/buttonBet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:text="@string/bet" />
 
         <Button
             android:id="@+id/buttonDeal"
