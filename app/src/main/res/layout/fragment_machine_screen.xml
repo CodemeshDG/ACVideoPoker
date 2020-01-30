@@ -90,35 +90,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars[0]" />
+            tools:srcCompat="@drawable/back" />
 
         <ImageView
             android:id="@+id/imageViewCard2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars[11]" />
+            tools:srcCompat="@drawable/back" />
 
         <ImageView
             android:id="@+id/imageViewCard3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars[12]" />
+            tools:srcCompat="@drawable/back" />
 
         <ImageView
             android:id="@+id/imageViewCard4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars[10]" />
+            tools:srcCompat="@drawable/back" />
 
         <ImageView
             android:id="@+id/imageViewCard5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:srcCompat="@tools:sample/avatars[3]" />
+            tools:srcCompat="@drawable/back" />
     </LinearLayout>
 
     <TextView

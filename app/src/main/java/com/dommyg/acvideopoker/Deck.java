@@ -104,9 +104,9 @@ class Deck {
      */
     private Result handStatus;
 
-    private static int HAND_SIZE = 5;
-    private static int FIRST_CARD = 0;
-    private static int HAND_LAST_CARD = 4;
+    final int HAND_SIZE = 5;
+    private final int FIRST_CARD = 0;
+    private final int HAND_LAST_CARD = 4;
 
     Deck() {
         this.currentDeck = new ArrayList<>();
@@ -120,11 +120,15 @@ class Deck {
         return handStatus;
     }
 
+    Card[] getHandDisplay() {
+        return handDisplay;
+    }
+
     /**
      * Resets the currentDeck by clearing all cards in it and copying over the masterDeck. Used when
      * the game is over and a fresh deck must be prepared for the next game.
      */
-    private void resetDeck() {
+    void resetDeck() {
         currentDeck.subList(FIRST_CARD, currentDeck.size()).clear();
         currentDeck.addAll(masterDeck);
     }
@@ -133,7 +137,7 @@ class Deck {
      * Resets the handDisplay by setting all indexes to null. Used when the game is over and the
      * player's hand must be discarded.
      */
-    private void resetHandDisplay() {
+    void resetHandDisplay() {
         for (int i = 0; i < HAND_SIZE; i++) {
             handDisplay[i] = null;
         }
