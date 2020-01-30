@@ -16,6 +16,10 @@ import java.math.RoundingMode;
 
 class GameLogic {
 
+    private final int DENOM_25 = 1;
+    private final int DENOM_50 = 2;
+    private final int DENOM_100 = 3;
+
     private boolean[] holds;
 
     private boolean isNewHand;
@@ -34,14 +38,13 @@ class GameLogic {
         this.deck = jacksOrBetter.getDeck();
         this.gameScreenFragment = gameScreenFragment;
         this.resources = resources;
-        resetCardImages();
     }
 
     /**
      * Runs all the methods involved with gameplay based upon if the player pressed the buttonDeal
      * at the start of the game or mid game.
      */
-    private void run() {
+    void run() {
         if (isNewHand) {
             resetWinText();
             jacksOrBetter.processWager();
@@ -50,6 +53,7 @@ class GameLogic {
             setCreditText();
             setResultText();
             isNewHand = false;
+            handleToggles();
         } else {
             deck.hold(holds);
             deck.deal();
@@ -61,13 +65,19 @@ class GameLogic {
             setWinText();
             setCreditText();
             removeHolds();
+            handleToggles();
         }
+    }
+
+    void initializeGameElements() {
+        resetCardImages();
+        setDenominationImage(DENOM_25);
     }
 
     /**
      * Sets a hold for an index and updates the visibility of the appropriate hold textView.
      */
-    private void setHolds(int index) {
+    void setHolds(int index) {
         if (holds[index] = false) {
             holds[index] = true;
             gameScreenFragment.getTextViewHolds()[index].setVisibility(View.VISIBLE);
@@ -93,7 +103,7 @@ class GameLogic {
      * Enables or disables all indexes in gameScreenFragment's cards ImageView array based upon the
      * isNewHand value so that the player may or may not interact with the cards to hold them.
      */
-    private void toggleHolds() {
+    private void toggleHoldButtons() {
         if (isNewHand) {
             for (ImageView card : gameScreenFragment.getCards()) {
                 card.setEnabled(true);
@@ -148,13 +158,44 @@ class GameLogic {
      * Updates the machine's betDenomination value to the next increment depending on its current
      * value.
      */
-    private void setDenominationText() {
-        if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.25))) {
-            processChangeDenomination(.50);
-        } else if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.50))) {
-            processChangeDenomination(1.00);
-        } else {
-            processChangeDenomination(.25);
+    void setDenominationText() {
+            if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.25))) {
+                processChangeDenomination(.50);
+                setDenominationImage(DENOM_50);
+            } else if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.50))) {
+                processChangeDenomination(1.00);
+                setDenominationImage(DENOM_100);
+            } else {
+                processChangeDenomination(.25);
+                setDenominationImage(DENOM_25);
+            }
+    }
+
+    private void setDenominationImage(int value) {
+        ImageView denomButton = gameScreenFragment.getImageViewDenomination();
+        AssetManager assetManager = gameScreenFragment.getContext().getAssets();
+        InputStream inputStream;
+        Bitmap bitmap;
+        String path = "denom/";
+        try {
+            switch (value) {
+                case DENOM_25:
+                    inputStream = assetManager.open(path + "denom_25.png");
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    denomButton.setImageBitmap(bitmap);
+                    break;
+                case DENOM_50:
+                    inputStream = assetManager.open(path + "denom_50.png");
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    denomButton.setImageBitmap(bitmap);
+                    break;
+                case DENOM_100:
+                    inputStream = assetManager.open(path + "denom_100.png");
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    denomButton.setImageBitmap(bitmap);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -162,9 +203,22 @@ class GameLogic {
      * Updates the machine's betDenomination value.
      */
     private void processChangeDenomination(double amount) {
+
         jacksOrBetter.setBetDenomination(BigDecimal.valueOf(amount));
     }
-    // TODO: Add setDenominationText() and processChangeDenomination()
+
+    /**
+     * Enables or disables the gameScreenFragment's imageViewDenomination based upon the isNewHand
+     * variable so the player may or may not interact with the denomination button to change the bet
+     * denomination.
+     */
+    private void toggleDenominationButton() {
+        if (isNewHand) {
+            gameScreenFragment.getImageViewDenomination().setEnabled(false);
+        } else {
+            gameScreenFragment.getImageViewDenomination().setEnabled(true);
+        }
+    }
 
     /**
      * Sets the gameScreenFragment's textViewCredit based upon the bank's bankroll value.
@@ -188,7 +242,7 @@ class GameLogic {
      * Sets the gameScreenFragment's textViewBet and updates the machine's bet value to the next
      * increment depending on its current value.
      */
-    private void setBetText() {
+    void setBetText() {
         TextView betTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_BET];
         switch (jacksOrBetter.getBet()) {
@@ -223,7 +277,8 @@ class GameLogic {
     }
 
     /**
-     * Enables or disables the gameScreenFragment's buttonBet based upon the isNewHand variable.
+     * Enables or disables the gameScreenFragment's buttonBet based upon the isNewHand variable so
+     * the player may or may not interact with the bet button to change the bet amount.
      */
     private void toggleBetButton() {
         Button betButton = gameScreenFragment.getButtons()[gameScreenFragment.ARRAY_BUTTON_BET];
@@ -261,6 +316,12 @@ class GameLogic {
         setWinText();
     }
 
-    // TODO: Finish this toggle method.
-    private void handleToggles()
+    /**
+     * Enables or disables important gameplay buttons depending upon isNewHand value.
+     */
+    private void handleToggles() {
+        toggleDenominationButton();
+        toggleBetButton();
+        toggleHoldButtons();
+    }
 }

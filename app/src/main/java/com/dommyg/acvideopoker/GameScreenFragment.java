@@ -1,5 +1,6 @@
 package com.dommyg.acvideopoker;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-class GameScreenFragment extends Fragment {
+public class GameScreenFragment extends Fragment {
 
     private Button buttonMenu;
     private Button buttonSound;
@@ -21,8 +22,7 @@ class GameScreenFragment extends Fragment {
     private Button buttonBet;
     private Button buttonDeal;
 
-    private Button[] buttons = {buttonMenu, buttonSound, buttonSpeed, buttonDoubleUp, buttonBet,
-            buttonDeal};
+    private Button[] buttons;
 
     final int ARRAY_BUTTON_MENU = 0;
     final int ARRAY_BUTTON_SOUND = 1;
@@ -31,14 +31,15 @@ class GameScreenFragment extends Fragment {
     final int ARRAY_BUTTON_BET = 4;
     final int ARRAY_BUTTON_DEAL = 5;
 
+    private ImageView imageViewDenomination;
+
     private ImageView imageViewCard1;
     private ImageView imageViewCard2;
     private ImageView imageViewCard3;
     private ImageView imageViewCard4;
     private ImageView imageViewCard5;
 
-    private ImageView[] cards = {imageViewCard1, imageViewCard2, imageViewCard3, imageViewCard4,
-            imageViewCard5};
+    private ImageView[] cards;
 
     private TextView textViewResult;
     private TextView textViewHold1;
@@ -51,8 +52,7 @@ class GameScreenFragment extends Fragment {
     private TextView textViewBet;
     private TextView textViewGameOver;
 
-    private TextView[] textViewHolds = {textViewHold1, textViewHold2, textViewHold3, textViewHold4,
-            textViewHold5};
+    private TextView[] textViewHolds;
 
     final int ARRAY_CARD_1 = 0;
     final int ARRAY_CARD_2 = 1;
@@ -60,8 +60,7 @@ class GameScreenFragment extends Fragment {
     final int ARRAY_CARD_4 = 3;
     final int ARRAY_CARD_5 = 4;
 
-    private TextView[] textViewOperations = {textViewResult, textViewWin, textViewCredit,
-            textViewBet, textViewGameOver};
+    private TextView[] textViewOperations;
 
     final int ARRAY_OPERATIONS_RESULT = 0;
     final int ARRAY_OPERATIONS_WIN = 1;
@@ -71,12 +70,12 @@ class GameScreenFragment extends Fragment {
 
     private GameLogic gameLogic;
 
-    static GameScreenFragment newInstance() {
-        return new GameScreenFragment();
+    static GameScreenFragment newInstance(Resources resources) {
+        return new GameScreenFragment(resources);
     }
 
-    private GameScreenFragment() {
-        this.gameLogic = new GameLogic(this, getResources());
+    private GameScreenFragment(Resources resources) {
+        this.gameLogic = new GameLogic(this, resources);
     }
 
     Button[] getButtons() {
@@ -95,6 +94,10 @@ class GameScreenFragment extends Fragment {
         return textViewOperations;
     }
 
+    ImageView getImageViewDenomination() {
+        return imageViewDenomination;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -102,6 +105,8 @@ class GameScreenFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_machine_screen, container, false);
 
         setViews(v);
+        setArrays();
+        gameLogic.initializeGameElements();
 
         return v;
     }
@@ -116,8 +121,43 @@ class GameScreenFragment extends Fragment {
         buttonDoubleUp = v.findViewById(R.id.buttonDoubleUp);
 
         buttonBet = v.findViewById(R.id.buttonBet);
+        buttonBet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameLogic.setBetText();
+            }
+        });
 
         buttonDeal = v.findViewById(R.id.buttonDeal);
+        buttonDeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameLogic.run();
+            }
+        });
+
+        imageViewDenomination = v.findViewById(R.id.imageViewDenom);
+        imageViewDenomination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameLogic.setDenominationText();
+            }
+        });
+
+        imageViewCard1 = v.findViewById(R.id.imageViewCard1);
+        imageViewCard1.setOnClickListener(new cardClickListener(ARRAY_CARD_1));
+
+        imageViewCard2 = v.findViewById(R.id.imageViewCard2);
+        imageViewCard2.setOnClickListener(new cardClickListener(ARRAY_CARD_2));
+
+        imageViewCard3 = v.findViewById(R.id.imageViewCard3);
+        imageViewCard3.setOnClickListener(new cardClickListener(ARRAY_CARD_3));
+
+        imageViewCard4 = v.findViewById(R.id.imageViewCard4);
+        imageViewCard4.setOnClickListener(new cardClickListener(ARRAY_CARD_4));
+
+        imageViewCard5 = v.findViewById(R.id.imageViewCard5);
+        imageViewCard5.setOnClickListener(new cardClickListener(ARRAY_CARD_5));
 
         textViewResult = v.findViewById(R.id.textViewResult);
 
@@ -138,5 +178,29 @@ class GameScreenFragment extends Fragment {
         textViewBet = v.findViewById(R.id.textViewBet);
 
         textViewGameOver = v.findViewById(R.id.textViewGameOver);
+    }
+
+    private void setArrays() {
+        buttons = new Button[] {buttonMenu, buttonSound, buttonSpeed, buttonDoubleUp, buttonBet,
+                buttonDeal};
+        cards = new ImageView[] {imageViewCard1, imageViewCard2, imageViewCard3, imageViewCard4,
+                imageViewCard5};
+        textViewHolds = new TextView[] {textViewHold1, textViewHold2, textViewHold3, textViewHold4,
+                textViewHold5};
+        textViewOperations = new TextView[] {textViewResult, textViewWin, textViewCredit,
+                textViewBet, textViewGameOver};
+    }
+
+    private class cardClickListener implements View.OnClickListener {
+        private int index;
+
+        private cardClickListener(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public void onClick(View view) {
+            gameLogic.setHolds(index);
+        }
     }
 }

@@ -6,6 +6,6 @@ public class GameScreenActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return GameScreenFragment.newInstance();
+        return GameScreenFragment.newInstance(getResources());
     }
 }
