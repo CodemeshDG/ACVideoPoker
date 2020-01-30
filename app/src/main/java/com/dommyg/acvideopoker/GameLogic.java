@@ -46,25 +46,34 @@ class GameLogic {
      */
     void run() {
         if (isNewHand) {
+            removeHolds();
             resetWinText();
+
             jacksOrBetter.processWager();
             deck.deal();
             deck.determineHandStatus();
+
+            setCardImages();
             setCreditText();
             setResultText();
+
             isNewHand = false;
             handleToggles();
         } else {
             deck.hold(holds);
             deck.deal();
             deck.determineHandStatus();
+
             setCardImages();
+            setCreditText();
+            setResultText();
+
+            jacksOrBetter.determinePayout();
+
             deck.resetDeck();
             deck.resetHandDisplay();
-            jacksOrBetter.determinePayout();
-            setWinText();
-            setCreditText();
-            removeHolds();
+
+            isNewHand = true;
             handleToggles();
         }
     }
@@ -106,11 +115,11 @@ class GameLogic {
     private void toggleHoldButtons() {
         if (isNewHand) {
             for (ImageView card : gameScreenFragment.getCards()) {
-                card.setEnabled(true);
+                card.setEnabled(false);
             }
         } else {
             for (ImageView card : gameScreenFragment.getCards()) {
-                card.setEnabled(false);
+                card.setEnabled(true);
             }
         }
     }
@@ -214,9 +223,9 @@ class GameLogic {
      */
     private void toggleDenominationButton() {
         if (isNewHand) {
-            gameScreenFragment.getImageViewDenomination().setEnabled(false);
-        } else {
             gameScreenFragment.getImageViewDenomination().setEnabled(true);
+        } else {
+            gameScreenFragment.getImageViewDenomination().setEnabled(false);
         }
     }
 
@@ -245,26 +254,27 @@ class GameLogic {
     void setBetText() {
         TextView betTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_BET];
+        String betText = resources.getString(R.string.bet);
         switch (jacksOrBetter.getBet()) {
             case 1:
                 processChangeBet(2);
-                betTextView.setText("2");
+                betTextView.setText(betText + "2");
                 break;
             case 2:
                 processChangeBet(3);
-                betTextView.setText("3");
+                betTextView.setText(betText + "3");
                 break;
             case 3:
                 processChangeBet(4);
-                betTextView.setText("4");
+                betTextView.setText(betText + "4");
                 break;
             case 4:
                 processChangeBet(5);
-                betTextView.setText("5");
+                betTextView.setText(betText + "5");
                 break;
             case 5:
                 processChangeBet(1);
-                betTextView.setText("1");
+                betTextView.setText(betText + "1");
                 break;
         }
     }
@@ -283,9 +293,9 @@ class GameLogic {
     private void toggleBetButton() {
         Button betButton = gameScreenFragment.getButtons()[gameScreenFragment.ARRAY_BUTTON_BET];
         if (isNewHand) {
-            betButton.setEnabled(false);
-        } else {
             betButton.setEnabled(true);
+        } else {
+            betButton.setEnabled(false);
         }
     }
 
