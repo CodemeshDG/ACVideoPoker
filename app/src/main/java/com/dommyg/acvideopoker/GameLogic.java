@@ -63,12 +63,12 @@ class GameLogic {
             deck.hold(holds);
             deck.deal();
             deck.determineHandStatus();
+            jacksOrBetter.determinePayout();
 
             setCardImages();
             setCreditText();
             setResultText();
-
-            jacksOrBetter.determinePayout();
+            setWinText();
 
             deck.resetDeck();
             deck.resetHandDisplay();
@@ -87,7 +87,7 @@ class GameLogic {
      * Sets a hold for an index and updates the visibility of the appropriate hold textView.
      */
     void setHolds(int index) {
-        if (holds[index] = false) {
+        if (!holds[index]) {
             holds[index] = true;
             gameScreenFragment.getTextViewHolds()[index].setVisibility(View.VISIBLE);
         } else {
@@ -100,8 +100,8 @@ class GameLogic {
      * Sets all holds to false.
      */
     private void removeHolds() {
-        for (boolean hold : holds) {
-            hold = false;
+        for (int i = 0; i < deck.HAND_SIZE; i++) {
+            holds[i] = false;
         }
         for (TextView hold : gameScreenFragment.getTextViewHolds()) {
             hold.setVisibility(View.INVISIBLE);

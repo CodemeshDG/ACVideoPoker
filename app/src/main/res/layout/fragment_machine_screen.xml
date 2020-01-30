@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:text="@string/button_hold"
             android:textAlignment="center"
-            android:visibility="invisible"
+            android:visibility="visible"
             tools:text="HOLD" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:text="@string/button_hold"
             android:textAlignment="center"
-            android:visibility="invisible"
+            android:visibility="visible"
             tools:text="HOLD" />
 
         <TextView
@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:text="@string/button_hold"
             android:textAlignment="center"
-            android:visibility="invisible"
+            android:visibility="visible"
             tools:text="HOLD" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:layout_weight="1"
             android:text="@string/button_hold"
             android:textAlignment="center"
-            android:visibility="invisible"
+            android:visibility="visible"
             tools:text="HOLD" />
 
         <TextView
@@ -75,7 +75,7 @@
             android:layout_weight="1"
             android:text="@string/button_hold"
             android:textAlignment="center"
-            android:visibility="invisible"
+            android:visibility="visible"
             tools:text="HOLD" />
     </LinearLayout>
 
