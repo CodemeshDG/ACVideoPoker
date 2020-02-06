@@ -124,7 +124,7 @@ public class GameScreenFragment extends Fragment {
         buttonBet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gameLogic.setBetText();
+                gameLogic.processChangeBet();
             }
         });
 

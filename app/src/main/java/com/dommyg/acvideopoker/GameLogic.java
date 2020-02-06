@@ -80,7 +80,11 @@ class GameLogic {
 
     void initializeGameElements() {
         resetCardImages();
+        removeHolds();
+        toggleHoldButtons();
         setDenominationImage(DENOM_25);
+        setCreditText();
+        setBetText();
     }
 
     /**
@@ -168,16 +172,16 @@ class GameLogic {
      * value.
      */
     void setDenominationText() {
-            if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.25))) {
-                processChangeDenomination(.50);
-                setDenominationImage(DENOM_50);
-            } else if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.50))) {
-                processChangeDenomination(1.00);
-                setDenominationImage(DENOM_100);
-            } else {
-                processChangeDenomination(.25);
-                setDenominationImage(DENOM_25);
-            }
+        if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.25))) {
+            processChangeDenomination(.50);
+            setDenominationImage(DENOM_50);
+        } else if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.50))) {
+            processChangeDenomination(1.00);
+            setDenominationImage(DENOM_100);
+        } else {
+            processChangeDenomination(.25);
+            setDenominationImage(DENOM_25);
+        }
     }
 
     private void setDenominationImage(int value) {
@@ -243,47 +247,36 @@ class GameLogic {
      * Sets the gameScreenFragment's textViewResult based upon the deck's handStatus.
      */
     private void setResultText() {
-        gameScreenFragment.getTextViewOperations()[gameScreenFragment.ARRAY_OPERATIONS_RESULT]
-                .setText(deck.getHandStatus().getStringValue());
-    }
-
-    /**
-     * Sets the gameScreenFragment's textViewBet and updates the machine's bet value to the next
-     * increment depending on its current value.
-     */
-    void setBetText() {
-        TextView betTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_BET];
-        String betText = resources.getString(R.string.bet);
-        switch (jacksOrBetter.getBet()) {
-            case 1:
-                processChangeBet(2);
-                betTextView.setText(betText + "2");
-                break;
-            case 2:
-                processChangeBet(3);
-                betTextView.setText(betText + "3");
-                break;
-            case 3:
-                processChangeBet(4);
-                betTextView.setText(betText + "4");
-                break;
-            case 4:
-                processChangeBet(5);
-                betTextView.setText(betText + "5");
-                break;
-            case 5:
-                processChangeBet(1);
-                betTextView.setText(betText + "1");
-                break;
+        TextView resultTextView = gameScreenFragment.getTextViewOperations()
+                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
+        resultTextView.setText(deck.getHandStatus().getStringValue());
+        if (deck.getHandStatus().equals(Deck.Result.NOTHING)) {
+            resultTextView.setVisibility(View.INVISIBLE);
+        } else {
+            resultTextView.setVisibility(View.VISIBLE);
         }
     }
 
     /**
-     * Updates the machine's bet value.
+     * Sets the gameScreenFragment's textViewBet based upon the machine's bet.
      */
-    private void processChangeBet(int amount) {
-        jacksOrBetter.setBet(amount);
+    private void setBetText() {
+        TextView betTextView = gameScreenFragment.getTextViewOperations()
+                [gameScreenFragment.ARRAY_OPERATIONS_BET];
+        String betText = resources.getString(R.string.bet);
+        betTextView.setText(betText + " " + jacksOrBetter.getBet());
+    }
+
+    /**
+     * Updates the machine's bet value to the next increment depending on its current value.
+     */
+    void processChangeBet() {
+        if (jacksOrBetter.getBet() < 5) {
+            jacksOrBetter.setBet(jacksOrBetter.getBet() + 1);
+        } else {
+            jacksOrBetter.setBet(1);
+        }
+        setBetText();
     }
 
     /**
@@ -300,13 +293,28 @@ class GameLogic {
     }
 
     /**
+     * Sets visibility of the gameScreenFragment's textViewGameOver based upon the isNewHand
+     * variable.
+     */
+    private void toggleGameOver() {
+        TextView gameOverTextView = gameScreenFragment.getTextViewOperations()
+                [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER];
+        if (isNewHand) {
+            gameOverTextView.setVisibility(View.VISIBLE);
+        } else {
+            gameOverTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    /**
      * Sets the gameScreenFragment's textViewWin's String value and visibility based upon the
      * machine's winAmount value.
      */
     private void setWinText() {
         TextView winTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_WIN];
-        if (jacksOrBetter.getWinAmount().equals(BigDecimal.valueOf(0))) {
+        if (jacksOrBetter.getWinAmount().equals(
+                BigDecimal.valueOf(0).setScale(2, RoundingMode.HALF_EVEN))) {
             // No win; do not show win textView.
             winTextView.setVisibility(View.INVISIBLE);
         } else {
@@ -322,16 +330,18 @@ class GameLogic {
      * textViewWin is set to invisible.
      */
     private void resetWinText() {
-        jacksOrBetter.setWinAmount(BigDecimal.valueOf(0));
+        jacksOrBetter.setWinAmount(
+                BigDecimal.valueOf(0.00).setScale(2, RoundingMode.HALF_EVEN));
         setWinText();
     }
 
     /**
-     * Enables or disables important gameplay buttons depending upon isNewHand value.
+     * Enables or disables important gameplay features depending upon isNewHand value.
      */
     private void handleToggles() {
         toggleDenominationButton();
         toggleBetButton();
         toggleHoldButtons();
+        toggleGameOver();
     }
 }

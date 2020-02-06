@@ -289,7 +289,7 @@ class Deck {
                 // First card is either a two or a ten; a straight is possible.
                 for (int i = 0; i < HAND_SIZE - 2; i++) {
                     if (handCalculation.get(i).getValue().getNumValue() !=
-                            handCalculation.get(i + 1).getValue().getNumValue() + 1) {
+                            handCalculation.get(i + 1).getValue().getNumValue() - 1) {
                         return false;
                     }
                 }
@@ -300,7 +300,7 @@ class Deck {
             // Last card is not an ace. Checking all cards for a straight.
             for (int i = 0; i < HAND_SIZE - 1; i++) {
                 if (handCalculation.get(i).getValue().getNumValue() !=
-                        handCalculation.get(i + 1).getValue().getNumValue() + 1) {
+                        handCalculation.get(i + 1).getValue().getNumValue() - 1) {
                     return false;
                 }
             }
