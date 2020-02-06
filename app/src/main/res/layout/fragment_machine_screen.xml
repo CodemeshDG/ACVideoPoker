@@ -19,6 +19,8 @@
             android:id="@+id/textViewResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textColor="@color/colorRedFont"
             android:textSize="24sp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
                 android:visibility="visible"
@@ -49,6 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
                 android:visibility="visible"
@@ -59,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
                 android:visibility="visible"
@@ -69,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
                 android:visibility="visible"
@@ -79,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
                 android:visibility="visible"
@@ -143,6 +150,8 @@
             android:id="@+id/textViewWin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textColor="@color/colorRedFont"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
             app:layout_constraintStart_toStartOf="parent"
@@ -152,6 +161,8 @@
             android:id="@+id/textViewCredit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textColor="@color/colorRedFont"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -161,6 +172,7 @@
             android:id="@+id/textViewBet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:text="@string/bet"
             app:layout_constraintEnd_toEndOf="@+id/imageViewDenom"
             app:layout_constraintStart_toStartOf="@+id/imageViewDenom"
@@ -177,22 +189,32 @@
 
             <Button
                 android:id="@+id/buttonMenu"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_game_menu"
                 tools:text="Game Menu" />
 
             <Button
                 android:id="@+id/buttonSpeed"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_speed"
                 tools:text="Speed (1)" />
 
             <Button
                 android:id="@+id/buttonSound"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_sound"
                 tools:text="Sound (2)" />
         </LinearLayout>
@@ -207,22 +229,32 @@
 
             <Button
                 android:id="@+id/buttonDoubleUp"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_double_up"
                 tools:text="Double Up" />
 
             <Button
                 android:id="@+id/buttonBet"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/bet"
                 tools:text="@string/bet" />
 
             <Button
                 android:id="@+id/buttonDeal"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_deal"
                 tools:text="Deal" />
 
@@ -244,6 +276,7 @@
             android:id="@+id/textViewGameType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:text="@string/result_jacks_or_better"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -254,6 +287,7 @@
             android:id="@+id/textViewGameOver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:text="@string/game_over"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
