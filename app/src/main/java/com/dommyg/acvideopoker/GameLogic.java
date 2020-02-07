@@ -52,6 +52,7 @@ class GameLogic {
         this.gameScreenFragment = gameScreenFragment;
         this.resources = resources;
         this.handlerCards = new Handler();
+        this.handlerCredits = new Handler();
     }
 
     /**
@@ -89,9 +90,12 @@ class GameLogic {
 
     private void finalCycle() {
         deck.determineHandStatus();
+//        BigDecimal previousBankroll = jacksOrBetter.getBank().getBankroll();
         jacksOrBetter.determinePayout();
+//        BigDecimal currentBankroll = jacksOrBetter.getBank().getBankroll();
 
         setCreditText();
+//        animateCreditText(previousBankroll, currentBankroll);
         setResultText();
         setWinText();
 
@@ -259,6 +263,14 @@ class GameLogic {
                 jacksOrBetter.getBank().getBankroll();
         gameScreenFragment.getTextViewOperations()[gameScreenFragment.ARRAY_OPERATIONS_CREDIT]
                 .setText(creditText);
+    }
+
+    private void animateCreditText(BigDecimal previousBankroll, BigDecimal currentBankroll) {
+        TextView creditText = gameScreenFragment.getTextViewOperations()
+                [gameScreenFragment.ARRAY_OPERATIONS_CREDIT];
+        handlerCredits.post(
+                new AnimateCreditsRunnable(previousBankroll, currentBankroll, creditText)
+        );
     }
 
     /**
@@ -462,12 +474,12 @@ class GameLogic {
     }
 
     private class AnimateCreditsRunnable implements Runnable {
-        double startAmount;
-        double currentAmount;
-        double newAmount;
+        BigDecimal startAmount;
+        BigDecimal currentAmount;
+        BigDecimal newAmount;
         TextView creditTextView;
 
-        public AnimateCreditsRunnable(double startAmount, double newAmount, TextView creditTextView) {
+        AnimateCreditsRunnable(BigDecimal startAmount, BigDecimal newAmount, TextView creditTextView) {
             this.startAmount = startAmount;
             this.currentAmount = startAmount;
             this.newAmount = newAmount;
@@ -476,10 +488,11 @@ class GameLogic {
 
         @Override
         public void run() {
-            currentAmount += .01;
+            currentAmount = currentAmount.add(BigDecimal.valueOf(.01)
+                    .setScale(2, BigDecimal.ROUND_HALF_EVEN));
             creditTextView.setText(resources.getString(R.string.credit) + currentAmount);
-            if (currentAmount != newAmount) {
-                handlerCredits.postDelayed(this, 20);
+            if (!currentAmount.equals(newAmount)) {
+                handlerCredits.postDelayed(this, 1);
             }
         }
     }
