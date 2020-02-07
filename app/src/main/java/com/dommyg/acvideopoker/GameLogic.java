@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,9 +21,18 @@ class GameLogic {
     private final int DENOM_50 = 2;
     private final int DENOM_100 = 3;
 
+    private final int SPEED_1 = 145;
+    private final int SPEED_2 = 60;
+    private final int SPEED_3 = 25;
+
+    private final int SPEED_1_TEXT = 1;
+    private final int SPEED_2_TEXT = 2;
+    private final int SPEED_3_TEXT = 3;
+
     private boolean[] holds;
 
     private boolean isNewHand;
+    private int currentSpeed;
 
     private Machine jacksOrBetter;
 
@@ -30,14 +40,18 @@ class GameLogic {
 
     private GameScreenFragment gameScreenFragment;
     private Resources resources;
+    private Handler handlerCards;
+    private Handler handlerCredits;
 
     GameLogic(GameScreenFragment gameScreenFragment, Resources resources) {
         this.holds = new boolean[5];
         this.isNewHand = true;
+        this.currentSpeed = SPEED_1;
         this.jacksOrBetter = new Machine();
         this.deck = jacksOrBetter.getDeck();
         this.gameScreenFragment = gameScreenFragment;
         this.resources = resources;
+        this.handlerCards = new Handler();
     }
 
     /**
@@ -48,34 +62,44 @@ class GameLogic {
         if (isNewHand) {
             removeHolds();
             resetWinText();
+            resetResultText();
 
             jacksOrBetter.processWager();
-            deck.deal();
-            deck.determineHandStatus();
 
-            setCardImages();
             setCreditText();
-            setResultText();
 
-            isNewHand = false;
-            handleToggles();
+            deck.deal();
+            setCardImages();
         } else {
             deck.hold(holds);
             deck.deal();
-            deck.determineHandStatus();
-            jacksOrBetter.determinePayout();
 
             setCardImages();
-            setCreditText();
-            setResultText();
-            setWinText();
-
-            deck.resetDeck();
-            deck.resetHandDisplay();
-
-            isNewHand = true;
-            handleToggles();
         }
+    }
+
+    private void firstCycle() {
+        deck.determineHandStatus();
+
+        setResultText();
+
+        isNewHand = false;
+        handleToggles();
+    }
+
+    private void finalCycle() {
+        deck.determineHandStatus();
+        jacksOrBetter.determinePayout();
+
+        setCreditText();
+        setResultText();
+        setWinText();
+
+        deck.resetDeck();
+        deck.resetHandDisplay();
+
+        isNewHand = true;
+        handleToggles();
     }
 
     void initializeGameElements() {
@@ -85,6 +109,7 @@ class GameLogic {
         setDenominationImage(DENOM_25);
         setCreditText();
         setBetText();
+        setSpeedButtonText(SPEED_1_TEXT);
     }
 
     /**
@@ -133,20 +158,11 @@ class GameLogic {
      * face image by using the deck's handDisplay array.
      */
     private void setCardImages() {
+        resetCardImages();
         AssetManager assetManager = gameScreenFragment.getContext().getAssets();
-        InputStream inputStream;
-        for (int i = 0; i < deck.HAND_SIZE; i++) {
-            String value = resources.getString(deck.getHandDisplay()[i].getValue().getStringValue());
-            String suit = resources.getString(deck.getHandDisplay()[i].getSuit().getStringValue());
-            String path = "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
-            try {
-                inputStream = assetManager.open(path);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                gameScreenFragment.getCards()[i].setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        handlerCards.postDelayed(
+                new CardImageRunnable(assetManager, 0), currentSpeed
+        );
     }
 
     /**
@@ -159,8 +175,10 @@ class GameLogic {
         try {
             inputStream = assetManager.open(path);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            for (ImageView image : gameScreenFragment.getCards()) {
-                image.setImageBitmap(bitmap);
+            for (int i = 0; i < deck.HAND_SIZE; i++) {
+                if (!holds[i]) {
+                    gameScreenFragment.getCards()[i].setImageBitmap(bitmap);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -258,6 +276,15 @@ class GameLogic {
     }
 
     /**
+     * Clears the contents of the gameScreenFragment's textViewResult.
+     */
+    private void resetResultText() {
+        TextView resultTextView = gameScreenFragment.getTextViewOperations()
+                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
+        resultTextView.setText(null);
+    }
+
+    /**
      * Sets the gameScreenFragment's textViewBet based upon the machine's bet.
      */
     private void setBetText() {
@@ -289,6 +316,53 @@ class GameLogic {
             betButton.setEnabled(true);
         } else {
             betButton.setEnabled(false);
+        }
+    }
+
+    /**
+     * Sets the gameScreenFragment's textViewSpeed based upon the currentSpeed.
+     */
+    private void setSpeedButtonText(int currentSpeedText) {
+        Button speedButton = gameScreenFragment.getButtons()
+                [gameScreenFragment.ARRAY_BUTTON_SPEED];
+        String speedText = resources.getString(R.string.button_speed);
+        speedButton.setText(speedText + " (" + currentSpeedText + ")");
+    }
+
+    /**
+     * Updates the currentSpeed to the next increment depending on its current value.
+     */
+    void processChangeSpeed() {
+        switch (currentSpeed) {
+            case SPEED_1:
+                currentSpeed = SPEED_2;
+                setSpeedButtonText(SPEED_2_TEXT);
+                break;
+
+            case SPEED_2:
+                currentSpeed = SPEED_3;
+                setSpeedButtonText(SPEED_3_TEXT);
+                break;
+
+            case SPEED_3:
+                currentSpeed = SPEED_1;
+                setSpeedButtonText(SPEED_1_TEXT);
+                break;
+        }
+    }
+
+    /**
+     * Enables or disables the gameScreenFragment's buttonSpeed based upon the isNewHand variable so
+     * the player may or may not interact with the speed button to change the speed of dealing
+     * cards.
+     */
+    private void toggleSpeedButton() {
+        Button speedButton = gameScreenFragment.getButtons()
+                [gameScreenFragment.ARRAY_BUTTON_SPEED];
+        if (isNewHand) {
+            speedButton.setEnabled(true);
+        } else {
+            speedButton.setEnabled(false);
         }
     }
 
@@ -342,6 +416,71 @@ class GameLogic {
         toggleDenominationButton();
         toggleBetButton();
         toggleHoldButtons();
+        toggleSpeedButton();
         toggleGameOver();
+    }
+
+    private class CardImageRunnable implements Runnable {
+        AssetManager assetManager;
+        int index;
+
+        CardImageRunnable(AssetManager assetManager, int index) {
+            this.assetManager = assetManager;
+            this.index = index;
+        }
+
+        @Override
+        public void run() {
+            if (!holds[index]) {
+                InputStream inputStream;
+                String value = resources.getString(deck.getHandDisplay()[index].getValue().getStringValue());
+                String suit = resources.getString(deck.getHandDisplay()[index].getSuit().getStringValue());
+                String path = "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
+                try {
+                    inputStream = assetManager.open(path);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    gameScreenFragment.getCards()[index].setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            index++;
+
+            if (index < deck.HAND_SIZE) {
+                if (!holds[index]) {
+                    handlerCards.postDelayed(this, currentSpeed);
+                } else {
+                    handlerCards.post(this);
+                }
+            } else if (isNewHand) {
+                firstCycle();
+            } else {
+                finalCycle();
+            }
+        }
+    }
+
+    private class AnimateCreditsRunnable implements Runnable {
+        double startAmount;
+        double currentAmount;
+        double newAmount;
+        TextView creditTextView;
+
+        public AnimateCreditsRunnable(double startAmount, double newAmount, TextView creditTextView) {
+            this.startAmount = startAmount;
+            this.currentAmount = startAmount;
+            this.newAmount = newAmount;
+            this.creditTextView = creditTextView;
+        }
+
+        @Override
+        public void run() {
+            currentAmount += .01;
+            creditTextView.setText(resources.getString(R.string.credit) + currentAmount);
+            if (currentAmount != newAmount) {
+                handlerCredits.postDelayed(this, 20);
+            }
+        }
     }
 }

@@ -117,6 +117,12 @@ public class GameScreenFragment extends Fragment {
         buttonSound = v.findViewById(R.id.buttonSound);
 
         buttonSpeed = v.findViewById(R.id.buttonSpeed);
+        buttonSpeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameLogic.processChangeSpeed();
+            }
+        });
 
         buttonDoubleUp = v.findViewById(R.id.buttonDoubleUp);
 
