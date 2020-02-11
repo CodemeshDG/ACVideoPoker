@@ -50,7 +50,8 @@ public class GameScreenFragment extends Fragment {
     private TextView textViewWin;
     private TextView textViewCredit;
     private TextView textViewBet;
-    private TextView textViewGameOver;
+    private TextView textViewGameOverCorner;
+    private TextView textViewGameOverCenter;
 
     private TextView[] textViewHolds;
 
@@ -66,7 +67,8 @@ public class GameScreenFragment extends Fragment {
     final int ARRAY_OPERATIONS_WIN = 1;
     final int ARRAY_OPERATIONS_CREDIT = 2;
     final int ARRAY_OPERATIONS_BET = 3;
-    final int ARRAY_OPERATIONS_GAME_OVER = 4;
+    final int ARRAY_OPERATIONS_GAME_OVER_CORNER = 4;
+    final int ARRAY_OPERATIONS_GAME_OVER_CENTER = 5;
 
     private GameLogic gameLogic;
 
@@ -183,7 +185,9 @@ public class GameScreenFragment extends Fragment {
 
         textViewBet = v.findViewById(R.id.textViewBet);
 
-        textViewGameOver = v.findViewById(R.id.textViewGameOver);
+        textViewGameOverCorner = v.findViewById(R.id.textViewGameOverCorner);
+
+        textViewGameOverCenter = v.findViewById(R.id.textViewGameOverCenter);
     }
 
     private void setArrays() {
@@ -194,7 +198,7 @@ public class GameScreenFragment extends Fragment {
         textViewHolds = new TextView[] {textViewHold1, textViewHold2, textViewHold3, textViewHold4,
                 textViewHold5};
         textViewOperations = new TextView[] {textViewResult, textViewWin, textViewCredit,
-                textViewBet, textViewGameOver};
+                textViewBet, textViewGameOverCorner, textViewGameOverCenter};
     }
 
     private class cardClickListener implements View.OnClickListener {

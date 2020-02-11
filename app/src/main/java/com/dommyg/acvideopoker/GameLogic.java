@@ -44,6 +44,7 @@ class GameLogic {
     private Resources resources;
     private Handler handlerCards;
     private Handler handlerCredits;
+    private Handler handlerGameOver;
 
     GameLogic(GameScreenFragment gameScreenFragment, Resources resources) {
         this.holds = new boolean[5];
@@ -56,6 +57,7 @@ class GameLogic {
         this.resources = resources;
         this.handlerCards = new Handler();
         this.handlerCredits = new Handler();
+        this.handlerGameOver = new Handler();
     }
 
     /**
@@ -425,12 +427,18 @@ class GameLogic {
      * isInDeal values.
      */
     private void toggleGameOver() {
-        TextView gameOverTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER];
+        TextView gameOverCornerTextView = gameScreenFragment.getTextViewOperations()
+                [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER_CORNER];
+        TextView gameOverCenterTextView = gameScreenFragment.getTextViewOperations()
+                [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER_CENTER];
+        AnimateGameOverRunnable runnable = new AnimateGameOverRunnable(gameOverCenterTextView);
         if (isNewHand && !isInDeal) {
-            gameOverTextView.setVisibility(View.VISIBLE);
+            gameOverCornerTextView.setVisibility(View.VISIBLE);
+            handlerGameOver.post(runnable);
         } else {
-            gameOverTextView.setVisibility(View.INVISIBLE);
+            gameOverCornerTextView.setVisibility(View.INVISIBLE);
+            handlerGameOver.removeCallbacks(runnable);
+            gameOverCenterTextView.setVisibility(View.GONE);
         }
     }
 
@@ -536,6 +544,26 @@ class GameLogic {
             creditTextView.setText(resources.getString(R.string.credit) + currentAmount);
             if (!currentAmount.equals(newAmount)) {
                 handlerCredits.postDelayed(this, 1);
+            }
+        }
+    }
+
+    private class AnimateGameOverRunnable implements Runnable {
+        TextView gameOverTextView;
+
+        AnimateGameOverRunnable(TextView gameOverTextView) {
+            this.gameOverTextView = gameOverTextView;
+        }
+
+        @Override
+        public void run() {
+            if (gameOverTextView.getVisibility() == View.INVISIBLE ||
+                    gameOverTextView.getVisibility() == View.GONE) {
+                gameOverTextView.setVisibility(View.VISIBLE);
+                handlerGameOver.postDelayed(this, 2000);
+            } else {
+                gameOverTextView.setVisibility(View.INVISIBLE);
+                handlerGameOver.postDelayed(this, 500);
             }
         }
     }

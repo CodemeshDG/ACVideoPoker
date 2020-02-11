@@ -36,6 +36,7 @@
             tools:text="FULL HOUSE" />
 
         <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -145,6 +146,20 @@
                 android:scaleType="fitCenter" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textViewGameOverCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlueBackground"
+            android:fontFamily="monospace"
+            android:text="@string/game_over"
+            android:textColor="@color/colorRedFont"
+            android:textSize="46sp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+            app:layout_constraintTop_toTopOf="@+id/guidelineCardTop" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -233,7 +248,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/textViewGameOver"
+            app:layout_constraintBottom_toTopOf="@+id/textViewGameOverCorner"
             app:layout_constraintEnd_toEndOf="parent">
 
             <Button
@@ -296,7 +311,7 @@
             tools:text="JACKS OR BETTER" />
 
         <TextView
-            android:id="@+id/textViewGameOver"
+            android:id="@+id/textViewGameOverCorner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
