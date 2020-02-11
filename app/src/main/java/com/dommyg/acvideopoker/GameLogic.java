@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ class GameLogic {
     private boolean[] holds;
 
     private boolean isNewHand;
+    private boolean isInDeal;
     private int currentSpeed;
 
     private Machine jacksOrBetter;
@@ -46,6 +48,7 @@ class GameLogic {
     GameLogic(GameScreenFragment gameScreenFragment, Resources resources) {
         this.holds = new boolean[5];
         this.isNewHand = true;
+        this.isInDeal = false;
         this.currentSpeed = SPEED_1;
         this.jacksOrBetter = new Machine();
         this.deck = jacksOrBetter.getDeck();
@@ -61,9 +64,11 @@ class GameLogic {
      */
     void run() {
         if (isNewHand) {
+            isInDeal = true;
+            handleToggles();
+
             removeHolds();
             resetWinText();
-            resetResultText();
 
             jacksOrBetter.processWager();
 
@@ -72,6 +77,9 @@ class GameLogic {
             deck.deal();
             setCardImages();
         } else {
+            isInDeal = true;
+            handleToggles();
+
             deck.hold(holds);
             deck.deal();
 
@@ -82,9 +90,11 @@ class GameLogic {
     private void firstCycle() {
         deck.determineHandStatus();
 
+        toggleResultTextStyle();
         setResultText();
 
         isNewHand = false;
+        isInDeal = false;
         handleToggles();
     }
 
@@ -96,6 +106,7 @@ class GameLogic {
 
         setCreditText();
 //        animateCreditText(previousBankroll, currentBankroll);
+        toggleResultTextStyle();
         setResultText();
         setWinText();
 
@@ -103,6 +114,7 @@ class GameLogic {
         deck.resetHandDisplay();
 
         isNewHand = true;
+        isInDeal = false;
         handleToggles();
     }
 
@@ -114,6 +126,20 @@ class GameLogic {
         setCreditText();
         setBetText();
         setSpeedButtonText(SPEED_1_TEXT);
+    }
+
+    /**
+     * Enables or disables the gameScreenFragment's buttonDeal based upon the isInDeal value so the
+     * player may or may not interact with the deal button to deal new cards.
+     */
+    private void toggleDealButton() {
+        Button dealButton = gameScreenFragment.getButtons()
+                [gameScreenFragment.ARRAY_BUTTON_DEAL];
+        if (isInDeal) {
+            dealButton.setEnabled(false);
+        } else {
+            dealButton.setEnabled(true);
+        }
     }
 
     /**
@@ -143,10 +169,11 @@ class GameLogic {
 
     /**
      * Enables or disables all indexes in gameScreenFragment's cards ImageView array based upon the
-     * isNewHand value so that the player may or may not interact with the cards to hold them.
+     * isNewHand or isInDeal values so that the player may or may not interact with the cards to
+     * hold them.
      */
     private void toggleHoldButtons() {
-        if (isNewHand) {
+        if (isNewHand || isInDeal) {
             for (ImageView card : gameScreenFragment.getCards()) {
                 card.setEnabled(false);
             }
@@ -244,11 +271,11 @@ class GameLogic {
 
     /**
      * Enables or disables the gameScreenFragment's imageViewDenomination based upon the isNewHand
-     * variable so the player may or may not interact with the denomination button to change the bet
-     * denomination.
+     * and isInDeal values so the player may or may not interact with the denomination button to
+     * change the bet denomination.
      */
     private void toggleDenominationButton() {
-        if (isNewHand) {
+        if (isNewHand && !isInDeal) {
             gameScreenFragment.getImageViewDenomination().setEnabled(true);
         } else {
             gameScreenFragment.getImageViewDenomination().setEnabled(false);
@@ -280,7 +307,16 @@ class GameLogic {
         TextView resultTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
         resultTextView.setText(deck.getHandStatus().getStringValue());
-        if (deck.getHandStatus().equals(Deck.Result.NOTHING)) {
+    }
+
+    /**
+     * Sets visibility of the gameScreenFragment's textViewResult based upon the isInDeal and deck's
+     * handStatus values.
+     */
+    private void toggleResultText() {
+        TextView resultTextView = gameScreenFragment.getTextViewOperations()
+                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
+        if (deck.getHandStatus().equals(Deck.Result.NOTHING) || isInDeal) {
             resultTextView.setVisibility(View.INVISIBLE);
         } else {
             resultTextView.setVisibility(View.VISIBLE);
@@ -288,12 +324,18 @@ class GameLogic {
     }
 
     /**
-     * Clears the contents of the gameScreenFragment's textViewResult.
+     * Sets the color of the gameScreenFragment's textViewResult based upon the isNewHand value.
      */
-    private void resetResultText() {
+    private void toggleResultTextStyle() {
         TextView resultTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
-        resultTextView.setText(null);
+        if (isNewHand) {
+            resultTextView.setTextColor(resources.getColor(R.color.colorWhiteFont));
+            resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        } else {
+            resultTextView.setTextColor(resources.getColor(R.color.colorRedFont));
+            resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+        }
     }
 
     /**
@@ -324,7 +366,7 @@ class GameLogic {
      */
     private void toggleBetButton() {
         Button betButton = gameScreenFragment.getButtons()[gameScreenFragment.ARRAY_BUTTON_BET];
-        if (isNewHand) {
+        if (isNewHand && !isInDeal) {
             betButton.setEnabled(true);
         } else {
             betButton.setEnabled(false);
@@ -364,14 +406,14 @@ class GameLogic {
     }
 
     /**
-     * Enables or disables the gameScreenFragment's buttonSpeed based upon the isNewHand variable so
-     * the player may or may not interact with the speed button to change the speed of dealing
-     * cards.
+     * Enables or disables the gameScreenFragment's buttonSpeed based upon the isNewHand and
+     * isInDeal values so the player may or may not interact with the speed button to change the
+     * speed of dealing cards.
      */
     private void toggleSpeedButton() {
         Button speedButton = gameScreenFragment.getButtons()
                 [gameScreenFragment.ARRAY_BUTTON_SPEED];
-        if (isNewHand) {
+        if (isNewHand && !isInDeal) {
             speedButton.setEnabled(true);
         } else {
             speedButton.setEnabled(false);
@@ -379,13 +421,13 @@ class GameLogic {
     }
 
     /**
-     * Sets visibility of the gameScreenFragment's textViewGameOver based upon the isNewHand
-     * variable.
+     * Sets visibility of the gameScreenFragment's textViewGameOver based upon the isNewHand and
+     * isInDeal values.
      */
     private void toggleGameOver() {
         TextView gameOverTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER];
-        if (isNewHand) {
+        if (isNewHand && !isInDeal) {
             gameOverTextView.setVisibility(View.VISIBLE);
         } else {
             gameOverTextView.setVisibility(View.INVISIBLE);
@@ -399,8 +441,7 @@ class GameLogic {
     private void setWinText() {
         TextView winTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_WIN];
-        if (jacksOrBetter.getWinAmount().equals(
-                BigDecimal.valueOf(0).setScale(2, RoundingMode.HALF_EVEN))) {
+        if (jacksOrBetter.getWinAmount().doubleValue() <= 0) {
             // No win; do not show win textView.
             winTextView.setVisibility(View.INVISIBLE);
         } else {
@@ -422,9 +463,11 @@ class GameLogic {
     }
 
     /**
-     * Enables or disables important gameplay features depending upon isNewHand value.
+     * Enables or disables important gameplay features depending upon isNewHand and isInDeal values.
      */
     private void handleToggles() {
+        toggleResultText();
+        toggleDealButton();
         toggleDenominationButton();
         toggleBetButton();
         toggleHoldButtons();
