@@ -195,7 +195,8 @@
 
             <Button
                 android:id="@+id/buttonMenu"
-                style="@style/Button"
+                android:background="@drawable/operation_buttons"
+                android:textColor="@color/colorBlackFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -205,7 +206,8 @@
 
             <Button
                 android:id="@+id/buttonSpeed"
-                style="@style/Button"
+                android:background="@drawable/operation_buttons"
+                android:textColor="@color/colorBlackFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -216,7 +218,8 @@
 
             <Button
                 android:id="@+id/buttonSound"
-                style="@style/Button"
+                android:background="@drawable/operation_buttons"
+                android:textColor="@color/colorBlackFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -235,7 +238,8 @@
 
             <Button
                 android:id="@+id/buttonDoubleUp"
-                style="@style/Button"
+                android:background="@drawable/operation_buttons"
+                android:textColor="@color/colorBlackFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -245,7 +249,8 @@
 
             <Button
                 android:id="@+id/buttonBet"
-                style="@style/Button"
+                android:background="@drawable/operation_buttons"
+                android:textColor="@color/colorBlackFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -256,7 +261,8 @@
 
             <Button
                 android:id="@+id/buttonDeal"
-                style="@style/Button"
+                android:background="@drawable/operation_buttons"
+                android:textColor="@color/colorBlackFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"

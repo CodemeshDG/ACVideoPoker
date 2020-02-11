@@ -8,9 +8,4 @@
         <item name="android:colorBackground">@color/colorBlueBackground</item>
     </style>
 
-    <style name="Button">
-        <item name="android:background">@color/colorYellowOutline</item>
-        <item name="android:textColor">@color/colorBlackFont</item>
-    </style>
-
 </resources>
