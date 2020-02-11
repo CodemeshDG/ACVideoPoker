@@ -437,7 +437,7 @@ class GameLogic {
             handlerGameOver.post(runnable);
         } else {
             gameOverCornerTextView.setVisibility(View.INVISIBLE);
-            handlerGameOver.removeCallbacks(runnable);
+            handlerGameOver.removeCallbacksAndMessages(null);
             gameOverCenterTextView.setVisibility(View.GONE);
         }
     }
