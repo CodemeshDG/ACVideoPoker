@@ -1,5 +1,6 @@
 package com.dommyg.acvideopoker;
 
+import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -125,7 +126,7 @@ class GameLogic {
         resetCardImages();
         removeHolds();
         toggleHoldButtons();
-        setDenominationImage(DENOM_25);
+        setDenominationButtonText(DENOM_25);
         setCreditText();
         setBetText();
         setSpeedButtonText(SPEED_1_TEXT);
@@ -225,45 +226,33 @@ class GameLogic {
      * Updates the machine's betDenomination value to the next increment depending on its current
      * value.
      */
-    void setDenominationText() {
+    void processChangeDenomination() {
         if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.25))) {
             processChangeDenomination(.50);
-            setDenominationImage(DENOM_50);
+            setDenominationButtonText(DENOM_50);
         } else if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.50))) {
             processChangeDenomination(1.00);
-            setDenominationImage(DENOM_100);
+            setDenominationButtonText(DENOM_100);
         } else {
             processChangeDenomination(.25);
-            setDenominationImage(DENOM_25);
+            setDenominationButtonText(DENOM_25);
         }
     }
 
-    private void setDenominationImage(int value) {
-        ImageView denomButton = gameScreenFragment.getImageViewDenomination();
-        AssetManager assetManager = gameScreenFragment.getContext().getAssets();
-        InputStream inputStream;
-        Bitmap bitmap;
-        String path = "denom/";
-        try {
+    @SuppressLint("SetTextI18n")
+    private void setDenominationButtonText(int value) {
+        Button denomButton = gameScreenFragment.getButtons()
+                [gameScreenFragment.ARRAY_BUTTON_DENOMINATION];
             switch (value) {
                 case DENOM_25:
-                    inputStream = assetManager.open(path + "denom_25.png");
-                    bitmap = BitmapFactory.decodeStream(inputStream);
-                    denomButton.setImageBitmap(bitmap);
+                    denomButton.setText("25¢");
                     break;
                 case DENOM_50:
-                    inputStream = assetManager.open(path + "denom_50.png");
-                    bitmap = BitmapFactory.decodeStream(inputStream);
-                    denomButton.setImageBitmap(bitmap);
+                    denomButton.setText("50¢");
                     break;
                 case DENOM_100:
-                    inputStream = assetManager.open(path + "denom_100.png");
-                    bitmap = BitmapFactory.decodeStream(inputStream);
-                    denomButton.setImageBitmap(bitmap);
+                    denomButton.setText("$1");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -280,10 +269,12 @@ class GameLogic {
      * change the bet denomination.
      */
     private void toggleDenominationButton() {
+        Button denomButton = gameScreenFragment.getButtons()
+                [gameScreenFragment.ARRAY_BUTTON_DENOMINATION];
         if (isNewHand && !isInDeal) {
-            gameScreenFragment.getImageViewDenomination().setEnabled(true);
+            denomButton.setEnabled(true);
         } else {
-            gameScreenFragment.getImageViewDenomination().setEnabled(false);
+            denomButton.setEnabled(false);
         }
     }
 

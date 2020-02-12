@@ -52,8 +52,10 @@
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
+                android:textScaleX="1.5"
+                android:textStyle="bold"
                 android:visibility="visible"
-                tools:text="HOLD" />
+                tools:text="HELD" />
 
             <TextView
                 android:id="@+id/textViewHold2"
@@ -63,8 +65,10 @@
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
+                android:textScaleX="1.5"
+                android:textStyle="bold"
                 android:visibility="visible"
-                tools:text="HOLD" />
+                tools:text="HELD" />
 
             <TextView
                 android:id="@+id/textViewHold3"
@@ -74,8 +78,10 @@
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
+                android:textScaleX="1.5"
+                android:textStyle="bold"
                 android:visibility="visible"
-                tools:text="HOLD" />
+                tools:text="HELD" />
 
             <TextView
                 android:id="@+id/textViewHold4"
@@ -85,8 +91,10 @@
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
+                android:textScaleX="1.5"
+                android:textStyle="bold"
                 android:visibility="visible"
-                tools:text="HOLD" />
+                tools:text="HELD" />
 
             <TextView
                 android:id="@+id/textViewHold5"
@@ -96,8 +104,10 @@
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
                 android:textAlignment="center"
+                android:textScaleX="1.5"
+                android:textStyle="bold"
                 android:visibility="visible"
-                tools:text="HOLD" />
+                tools:text="HELD" />
         </LinearLayout>
 
         <LinearLayout
@@ -195,8 +205,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="@string/bet"
-            app:layout_constraintEnd_toEndOf="@+id/imageViewDenom"
-            app:layout_constraintStart_toStartOf="@+id/imageViewDenom"
+            android:textScaleX="1.5"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/buttonDenom"
+            app:layout_constraintStart_toStartOf="@+id/buttonDenom"
             app:layout_constraintTop_toTopOf="@+id/textViewWin"
             tools:text="BET 5" />
 
@@ -287,17 +299,20 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageViewDenom"
-            android:layout_width="0dp"
+        <Button
+            android:id="@+id/buttonDenom"
+            android:layout_width="88dp"
             android:layout_height="0dp"
-            android:scaleType="fitCenter"
+            android:background="@drawable/denom_button"
+            android:fontFamily="@font/ultra"
+            android:textColor="@color/colorRedFont"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout"
             app:layout_constraintStart_toEndOf="@+id/linearLayout3"
             app:layout_constraintTop_toBottomOf="@+id/textViewBet"
             app:layout_constraintVertical_bias="0.0"
-            tools:srcCompat="@android:drawable/btn_dialog" />
+            tools:text="25¢" />
 
         <TextView
             android:id="@+id/textViewGameType"

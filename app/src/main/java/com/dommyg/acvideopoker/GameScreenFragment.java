@@ -21,6 +21,7 @@ public class GameScreenFragment extends Fragment {
     private Button buttonDoubleUp;
     private Button buttonBet;
     private Button buttonDeal;
+    private Button buttonDenomination;
 
     private Button[] buttons;
 
@@ -30,8 +31,7 @@ public class GameScreenFragment extends Fragment {
     final int ARRAY_BUTTON_DOUBLE_UP = 3;
     final int ARRAY_BUTTON_BET = 4;
     final int ARRAY_BUTTON_DEAL = 5;
-
-    private ImageView imageViewDenomination;
+    final int ARRAY_BUTTON_DENOMINATION = 6;
 
     private ImageView imageViewCard1;
     private ImageView imageViewCard2;
@@ -96,10 +96,6 @@ public class GameScreenFragment extends Fragment {
         return textViewOperations;
     }
 
-    ImageView getImageViewDenomination() {
-        return imageViewDenomination;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -150,11 +146,11 @@ public class GameScreenFragment extends Fragment {
             }
         });
 
-        imageViewDenomination = v.findViewById(R.id.imageViewDenom);
-        imageViewDenomination.setOnClickListener(new View.OnClickListener() {
+        buttonDenomination = v.findViewById(R.id.buttonDenom);
+        buttonDenomination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gameLogic.setDenominationText();
+                gameLogic.processChangeDenomination();
             }
         });
 
@@ -198,7 +194,7 @@ public class GameScreenFragment extends Fragment {
 
     private void setArrays() {
         buttons = new Button[] {buttonMenu, buttonSound, buttonSpeed, buttonDoubleUp, buttonBet,
-                buttonDeal};
+                buttonDeal, buttonDenomination};
         cards = new ImageView[] {imageViewCard1, imageViewCard2, imageViewCard3, imageViewCard4,
                 imageViewCard5};
         textViewHolds = new TextView[] {textViewHold1, textViewHold2, textViewHold3, textViewHold4,

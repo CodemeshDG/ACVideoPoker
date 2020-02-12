@@ -36,7 +36,7 @@
     <string name="button_speed">SPEED</string>
     <string name="button_sound">SOUND</string>
     <string name="button_game_menu">GAME MENU</string>
-    <string name="button_hold">HOLD</string>
+    <string name="button_hold">HELD</string>
     <string name="bet">BET</string>
     <string name="game_over">GAME OVER</string>
     <string name="win">WIN $</string>
