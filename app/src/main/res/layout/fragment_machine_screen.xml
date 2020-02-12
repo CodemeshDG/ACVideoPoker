@@ -211,7 +211,7 @@
             <Button
                 android:id="@+id/buttonMenu"
                 android:background="@drawable/operation_buttons"
-                android:textColor="@color/colorBlackFont"
+                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -222,7 +222,7 @@
             <Button
                 android:id="@+id/buttonSpeed"
                 android:background="@drawable/operation_buttons"
-                android:textColor="@color/colorBlackFont"
+                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -234,7 +234,7 @@
             <Button
                 android:id="@+id/buttonSound"
                 android:background="@drawable/operation_buttons"
-                android:textColor="@color/colorBlackFont"
+                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -254,7 +254,7 @@
             <Button
                 android:id="@+id/buttonDoubleUp"
                 android:background="@drawable/operation_buttons"
-                android:textColor="@color/colorBlackFont"
+                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -265,7 +265,7 @@
             <Button
                 android:id="@+id/buttonBet"
                 android:background="@drawable/operation_buttons"
-                android:textColor="@color/colorBlackFont"
+                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -277,7 +277,7 @@
             <Button
                 android:id="@+id/buttonDeal"
                 android:background="@drawable/operation_buttons"
-                android:textColor="@color/colorBlackFont"
+                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
