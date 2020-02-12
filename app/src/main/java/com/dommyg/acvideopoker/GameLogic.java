@@ -134,6 +134,19 @@ class GameLogic {
     }
 
     /**
+     * Sets the gameScreenFragment's textViewCredit based upon the isNewHand value.
+     */
+    private void setDealButtonText() {
+        Button dealButton = gameScreenFragment.getButtons()
+                [gameScreenFragment.ARRAY_BUTTON_DEAL];
+        if (isNewHand) {
+            dealButton.setText(resources.getString(R.string.button_deal));
+        } else {
+            dealButton.setText(resources.getString(R.string.button_draw));
+        }
+    }
+
+    /**
      * Enables or disables the gameScreenFragment's buttonDeal based upon the isInDeal value so the
      * player may or may not interact with the deal button to deal new cards.
      */
@@ -143,6 +156,7 @@ class GameLogic {
         if (isInDeal) {
             dealButton.setEnabled(false);
         } else {
+            setDealButtonText();
             dealButton.setEnabled(true);
         }
     }
@@ -324,14 +338,16 @@ class GameLogic {
      * Sets the color of the gameScreenFragment's textViewResult based upon the isNewHand value.
      */
     private void toggleResultTextStyle() {
-        TextView resultTextView = gameScreenFragment.getTextViewOperations()
+        TextViewOutline resultTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
         if (isNewHand) {
             resultTextView.setTextColor(resources.getColor(R.color.colorWhiteFont));
             resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            resultTextView.setOutlineSize(0);
         } else {
             resultTextView.setTextColor(resources.getColor(R.color.colorRedFont));
             resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+            resultTextView.setOutlineSize(8);
         }
     }
 

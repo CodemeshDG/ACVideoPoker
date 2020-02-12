@@ -41,19 +41,19 @@ public class GameScreenFragment extends Fragment {
 
     private ImageView[] cards;
 
-    private TextView textViewResult;
-    private TextView textViewHold1;
-    private TextView textViewHold2;
-    private TextView textViewHold3;
-    private TextView textViewHold4;
-    private TextView textViewHold5;
-    private TextView textViewWin;
-    private TextView textViewCredit;
-    private TextView textViewBet;
-    private TextView textViewGameOverCorner;
-    private TextView textViewGameOverCenter;
+    private TextViewOutline textViewResult;
+    private TextViewOutline textViewHold1;
+    private TextViewOutline textViewHold2;
+    private TextViewOutline textViewHold3;
+    private TextViewOutline textViewHold4;
+    private TextViewOutline textViewHold5;
+    private TextViewOutline textViewWin;
+    private TextViewOutline textViewCredit;
+    private TextViewOutline textViewBet;
+    private TextViewOutline textViewGameOverCorner;
+    private TextViewOutline textViewGameOverCenter;
 
-    private TextView[] textViewHolds;
+    private TextViewOutline[] textViewHolds;
 
     final int ARRAY_CARD_1 = 0;
     final int ARRAY_CARD_2 = 1;
@@ -61,7 +61,7 @@ public class GameScreenFragment extends Fragment {
     final int ARRAY_CARD_4 = 3;
     final int ARRAY_CARD_5 = 4;
 
-    private TextView[] textViewOperations;
+    private TextViewOutline[] textViewOperations;
 
     final int ARRAY_OPERATIONS_RESULT = 0;
     final int ARRAY_OPERATIONS_WIN = 1;
@@ -88,11 +88,11 @@ public class GameScreenFragment extends Fragment {
         return cards;
     }
 
-    TextView[] getTextViewHolds() {
+    TextViewOutline[] getTextViewHolds() {
         return textViewHolds;
     }
 
-    TextView[] getTextViewOperations() {
+    TextViewOutline[] getTextViewOperations() {
         return textViewOperations;
     }
 
@@ -197,9 +197,9 @@ public class GameScreenFragment extends Fragment {
                 buttonDeal, buttonDenomination};
         cards = new ImageView[] {imageViewCard1, imageViewCard2, imageViewCard3, imageViewCard4,
                 imageViewCard5};
-        textViewHolds = new TextView[] {textViewHold1, textViewHold2, textViewHold3, textViewHold4,
+        textViewHolds = new TextViewOutline[] {textViewHold1, textViewHold2, textViewHold3, textViewHold4,
                 textViewHold5};
-        textViewOperations = new TextView[] {textViewResult, textViewWin, textViewCredit,
+        textViewOperations = new TextViewOutline[] {textViewResult, textViewWin, textViewCredit,
                 textViewBet, textViewGameOverCorner, textViewGameOverCenter};
     }
 

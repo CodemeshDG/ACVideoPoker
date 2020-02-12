@@ -22,14 +22,15 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.2364341" />
 
-        <TextView
+        <com.dommyg.acvideopoker.TextViewOutline
             android:id="@+id/textViewResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:textColor="@color/colorRedFont"
             android:textSize="24sp"
-            android:visibility="visible"
+            app:outlineSize="2dp"
+            app:outlineColor="@color/colorYellowOutline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="@+id/linearLayout2">
 
-            <TextView
+            <com.dommyg.acvideopoker.TextViewOutline
                 android:id="@+id/textViewHold1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,59 +55,74 @@
                 android:textAlignment="center"
                 android:textScaleX="1.5"
                 android:textStyle="bold"
-                android:visibility="visible"
+                android:shadowColor="@color/colorBlackShadow"
+                android:shadowRadius="1"
+                android:shadowDx="5"
+                android:shadowDy="5"
                 tools:text="HELD" />
 
-            <TextView
+            <com.dommyg.acvideopoker.TextViewOutline
                 android:id="@+id/textViewHold2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
+                android:shadowColor="@color/colorBlackShadow"
+                android:shadowRadius="1"
+                android:shadowDx="5"
+                android:shadowDy="5"
                 android:textAlignment="center"
                 android:textScaleX="1.5"
                 android:textStyle="bold"
-                android:visibility="visible"
                 tools:text="HELD" />
 
-            <TextView
+            <com.dommyg.acvideopoker.TextViewOutline
                 android:id="@+id/textViewHold3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
+                android:shadowColor="@color/colorBlackShadow"
+                android:shadowRadius="1"
+                android:shadowDx="5"
+                android:shadowDy="5"
                 android:textAlignment="center"
                 android:textScaleX="1.5"
                 android:textStyle="bold"
-                android:visibility="visible"
                 tools:text="HELD" />
 
-            <TextView
+            <com.dommyg.acvideopoker.TextViewOutline
                 android:id="@+id/textViewHold4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
+                android:shadowColor="@color/colorBlackShadow"
+                android:shadowRadius="1"
+                android:shadowDx="5"
+                android:shadowDy="5"
                 android:textAlignment="center"
                 android:textScaleX="1.5"
                 android:textStyle="bold"
-                android:visibility="visible"
                 tools:text="HELD" />
 
-            <TextView
+            <com.dommyg.acvideopoker.TextViewOutline
                 android:id="@+id/textViewHold5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="monospace"
                 android:text="@string/button_hold"
+                android:shadowColor="@color/colorBlackShadow"
+                android:shadowRadius="1"
+                android:shadowDx="5"
+                android:shadowDy="5"
                 android:textAlignment="center"
                 android:textScaleX="1.5"
                 android:textStyle="bold"
-                android:visibility="visible"
                 tools:text="HELD" />
         </LinearLayout>
 
@@ -156,7 +172,7 @@
                 android:scaleType="fitCenter" />
         </LinearLayout>
 
-        <TextView
+        <com.dommyg.acvideopoker.TextViewOutline
             android:id="@+id/textViewGameOverCenter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -165,6 +181,8 @@
             android:text="@string/game_over"
             android:textColor="@color/colorRedFont"
             android:textSize="46sp"
+            app:outlineSize="5dp"
+            app:outlineColor="@color/colorYellowOutline"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
             app:layout_constraintStart_toStartOf="@+id/linearLayout2"
@@ -177,29 +195,33 @@
         android:layout_height="match_parent"
         android:layout_weight="2">
 
-        <TextView
+        <com.dommyg.acvideopoker.TextViewOutline
             android:id="@+id/textViewWin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:textColor="@color/colorRedFont"
             android:textSize="24sp"
+            app:outlineSize="2dp"
+            app:outlineColor="@color/colorYellowOutline"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="WIN $100.00" />
 
-        <TextView
+        <com.dommyg.acvideopoker.TextViewOutline
             android:id="@+id/textViewCredit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:textColor="@color/colorRedFont"
             android:textSize="24sp"
+            app:outlineSize="2dp"
+            app:outlineColor="@color/colorYellowOutline"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="CREDIT $.00" />
 
-        <TextView
+        <com.dommyg.acvideopoker.TextViewOutline
             android:id="@+id/textViewBet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -207,6 +229,10 @@
             android:text="@string/bet"
             android:textScaleX="1.5"
             android:textStyle="bold"
+            android:shadowColor="@color/colorBlackShadow"
+            android:shadowRadius="1"
+            android:shadowDx="5"
+            android:shadowDy="5"
             app:layout_constraintEnd_toEndOf="@+id/buttonDenom"
             app:layout_constraintStart_toStartOf="@+id/buttonDenom"
             app:layout_constraintTop_toTopOf="@+id/textViewWin"
@@ -314,7 +340,7 @@
             app:layout_constraintVertical_bias="0.0"
             tools:text="25¢" />
 
-        <TextView
+        <com.dommyg.acvideopoker.TextViewOutline
             android:id="@+id/textViewGameType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -325,7 +351,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="JACKS OR BETTER" />
 
-        <TextView
+        <com.dommyg.acvideopoker.TextViewOutline
             android:id="@+id/textViewGameOverCorner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

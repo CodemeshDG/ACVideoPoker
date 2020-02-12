@@ -32,6 +32,7 @@
     <string name="result_nothing">NOTHING</string>
 
     <string name="button_deal">DEAL</string>
+    <string name="button_draw">DRAW</string>
     <string name="button_double_up">DOUBLE UP</string>
     <string name="button_speed">SPEED</string>
     <string name="button_sound">SOUND</string>
