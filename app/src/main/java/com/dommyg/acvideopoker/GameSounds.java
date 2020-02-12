@@ -19,7 +19,7 @@ class GameSounds {
     private final float VOLUME_1 = 0.33f;
     private final float VOLUME_0 = 0;
 
-    private final int VOLUME_3_ITERATOR = 3;
+    final int VOLUME_3_ITERATOR = 3;
     private final int VOLUME_2_ITERATOR = 2;
     private final int VOLUME_1_ITERATOR = 1;
     private final int VOLUME_0_ITERATOR = 0;
@@ -75,7 +75,7 @@ class GameSounds {
         }
     }
 
-    void changeVolume() {
+    int changeVolume() {
         switch (currentVolumeIterator) {
             case VOLUME_3_ITERATOR:
                 currentVolumeIterator = VOLUME_2_ITERATOR;
@@ -90,10 +90,13 @@ class GameSounds {
             case VOLUME_1_ITERATOR:
                 currentVolumeIterator = VOLUME_0_ITERATOR;
                 currentVolume = VOLUME_0;
+                break;
 
             case VOLUME_0_ITERATOR:
                 currentVolumeIterator = VOLUME_3_ITERATOR;
                 currentVolume = VOLUME_3;
+                break;
         }
+        return currentVolumeIterator;
     }
 }

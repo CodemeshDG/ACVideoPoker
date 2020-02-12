@@ -121,6 +121,7 @@ class GameLogic {
     }
 
     void initializeGameElements() {
+        gameSounds = new GameSounds(gameScreenFragment.getContext());
         resetCardImages();
         removeHolds();
         toggleHoldButtons();
@@ -128,7 +129,7 @@ class GameLogic {
         setCreditText();
         setBetText();
         setSpeedButtonText(SPEED_1_TEXT);
-        gameSounds = new GameSounds(gameScreenFragment.getContext());
+        setSoundButtonText(gameSounds.VOLUME_3_ITERATOR);
     }
 
     /**
@@ -426,6 +427,37 @@ class GameLogic {
     }
 
     /**
+     * Sets the gameScreenFragment's textViewSound based upon gameSounds's currentVolumeIterator.
+     */
+    private void setSoundButtonText(int currentVolume) {
+        Button soundButton = gameScreenFragment.getButtons()
+                [gameScreenFragment.ARRAY_BUTTON_SOUND];
+        String soundText = resources.getString(R.string.button_sound);
+        soundButton.setText(soundText + " (" + currentVolume + ")");
+    }
+
+    /**
+     * Updates gameSounds's currentVolume to the next increment depending on its current value.
+     */
+    void processChangeVolume() {
+        setSoundButtonText(gameSounds.changeVolume());
+    }
+
+    /**
+     * Enables or disables the gameScreenFragment's buttonSound based upon the isInDeal value so the
+     * player may or may not interact with the sound button to change the volume of game sounds.
+     */
+    private void toggleSoundButton() {
+        Button soundButton = gameScreenFragment.getButtons()
+                [gameScreenFragment.ARRAY_BUTTON_SOUND];
+        if (isInDeal) {
+            soundButton.setEnabled(false);
+        } else {
+            soundButton.setEnabled(true);
+        }
+    }
+
+    /**
      * Sets visibility of the gameScreenFragment's textViewGameOver based upon the isNewHand and
      * isInDeal values.
      */
@@ -483,6 +515,7 @@ class GameLogic {
         toggleBetButton();
         toggleHoldButtons();
         toggleSpeedButton();
+        toggleSoundButton();
         toggleGameOver();
     }
 
