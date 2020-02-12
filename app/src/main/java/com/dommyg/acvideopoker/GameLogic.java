@@ -37,8 +37,8 @@ class GameLogic {
     private int currentSpeed;
 
     private Machine jacksOrBetter;
-
     private Deck deck;
+    private GameSounds gameSounds;
 
     private GameScreenFragment gameScreenFragment;
     private Resources resources;
@@ -54,6 +54,7 @@ class GameLogic {
         this.jacksOrBetter = new Machine();
         this.deck = jacksOrBetter.getDeck();
         this.gameScreenFragment = gameScreenFragment;
+        this.gameSounds = new GameSounds(gameScreenFragment.getContext());
         this.resources = resources;
         this.handlerCards = new Handler();
         this.handlerCredits = new Handler();
