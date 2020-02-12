@@ -33,7 +33,7 @@ class GameSounds {
     GameSounds(Context context) {
         this.context = context;
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build();
 
@@ -52,8 +52,8 @@ class GameSounds {
         AssetManager assetManager = context.getAssets();
 
         try {
-            bing = soundPool.load(assetManager.openFd("sounds/bing"), 1);
-            doot = soundPool.load(assetManager.openFd("sounds/doot"), 1);
+            bing = soundPool.load(assetManager.openFd("sounds/bing.wav"), 1);
+            doot = soundPool.load(assetManager.openFd("sounds/doot.wav"), 1);
         } catch (IOException e) {
             e.printStackTrace();
         }

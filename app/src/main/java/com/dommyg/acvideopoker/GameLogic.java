@@ -54,7 +54,6 @@ class GameLogic {
         this.jacksOrBetter = new Machine();
         this.deck = jacksOrBetter.getDeck();
         this.gameScreenFragment = gameScreenFragment;
-        this.gameSounds = new GameSounds(gameScreenFragment.getContext());
         this.resources = resources;
         this.handlerCards = new Handler();
         this.handlerCredits = new Handler();
@@ -129,6 +128,7 @@ class GameLogic {
         setCreditText();
         setBetText();
         setSpeedButtonText(SPEED_1_TEXT);
+        gameSounds = new GameSounds(gameScreenFragment.getContext());
     }
 
     /**
@@ -149,6 +149,7 @@ class GameLogic {
      * Sets a hold for an index and updates the visibility of the appropriate hold textView.
      */
     void setHolds(int index) {
+        gameSounds.play(gameSounds.SOUND_DOOT);
         if (!holds[index]) {
             holds[index] = true;
             gameScreenFragment.getTextViewHolds()[index].setVisibility(View.VISIBLE);
@@ -323,6 +324,7 @@ class GameLogic {
             resultTextView.setVisibility(View.INVISIBLE);
         } else {
             resultTextView.setVisibility(View.VISIBLE);
+            gameSounds.play(gameSounds.SOUND_BING);
         }
     }
 
@@ -504,6 +506,7 @@ class GameLogic {
                     inputStream = assetManager.open(path);
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     gameScreenFragment.getCards()[index].setImageBitmap(bitmap);
+                    gameSounds.play(gameSounds.SOUND_DOOT);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
