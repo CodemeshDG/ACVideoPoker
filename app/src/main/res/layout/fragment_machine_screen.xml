@@ -195,6 +195,20 @@
         android:layout_height="match_parent"
         android:layout_weight="2">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineDenomLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineDemonRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+
         <com.dommyg.acvideopoker.TextViewOutline
             android:id="@+id/textViewWin"
             android:layout_width="wrap_content"
@@ -240,87 +254,99 @@
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
+            android:weightSum="3"
             app:layout_constraintBottom_toTopOf="@+id/textViewGameType"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDenomLeft"
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
                 android:id="@+id/buttonMenu"
-                android:background="@drawable/operation_buttons"
-                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/operation_buttons"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_game_menu"
+                android:textColor="@drawable/operation_buttons"
                 tools:text="Game Menu" />
 
             <Button
                 android:id="@+id/buttonSpeed"
-                android:background="@drawable/operation_buttons"
-                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/operation_buttons"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_speed"
+                android:textColor="@drawable/operation_buttons"
                 tools:text="Speed (1)" />
 
             <Button
                 android:id="@+id/buttonSound"
-                android:background="@drawable/operation_buttons"
-                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/operation_buttons"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_sound"
+                android:textColor="@drawable/operation_buttons"
                 tools:text="Sound (2)" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:weightSum="3"
             app:layout_constraintBottom_toTopOf="@+id/textViewGameOverCorner"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDemonRight">
 
             <Button
                 android:id="@+id/buttonDoubleUp"
-                android:background="@drawable/operation_buttons"
-                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/operation_buttons"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_double_up"
+                android:textColor="@drawable/operation_buttons"
                 tools:text="Double Up" />
 
             <Button
                 android:id="@+id/buttonBet"
-                android:background="@drawable/operation_buttons"
-                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/operation_buttons"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/bet"
+                android:textColor="@drawable/operation_buttons"
                 tools:text="@string/bet" />
 
             <Button
                 android:id="@+id/buttonDeal"
-                android:background="@drawable/operation_buttons"
-                android:textColor="@drawable/operation_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/operation_buttons"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/button_deal"
+                android:textColor="@drawable/operation_buttons"
                 tools:text="Deal" />
 
         </LinearLayout>
@@ -334,8 +360,8 @@
             android:textColor="@color/colorRedFont"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineDemonRight"
+            app:layout_constraintStart_toStartOf="@+id/guidelineDenomLeft"
             app:layout_constraintTop_toBottomOf="@+id/textViewBet"
             app:layout_constraintVertical_bias="0.0"
             tools:text="25¢" />
