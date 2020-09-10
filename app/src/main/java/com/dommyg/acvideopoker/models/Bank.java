@@ -1,4 +1,4 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.models;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 /**
  * Holds the player's money.
  */
-class Bank {
+public class Bank {
 
     private BigDecimal bankroll;
 
@@ -14,7 +14,7 @@ class Bank {
         this.bankroll = BigDecimal.valueOf(200.00).setScale(2, RoundingMode.HALF_EVEN);
     }
 
-    BigDecimal getBankroll() {
+    public BigDecimal getBankroll() {
         return bankroll;
     }
 

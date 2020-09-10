@@ -5,11 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="isInDeal"
-            type="boolean" />
-        <variable
-            name="isNewHand"
-            type="boolean" />
+            name="viewModel"
+            type="com.dommyg.acvideopoker.viewmodels.GameViewModel" />
+        <import type="com.dommyg.acvideopoker.utils.StringUtil"/>
+        <import type="com.dommyg.acvideopoker.models.Deck.Result"/>
+        <import type="java.math.BigDecimal"/>
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
@@ -38,14 +39,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:textColor="@color/colorRedFont"
-                android:textSize="24sp"
-                app:outlineSize="2dp"
+                android:text="@{StringUtil.createResultText(viewModel.handValue, viewModel.application)}"
+                android:textColor="@{viewModel.isNewHand ? context.getColor(@color/colorWhiteFont) : context.getColor(@color/colorRedFont)}"
+                android:textSize="@{viewModel.isNewHand ? 14 : 24}"
+                android:visibility="@{viewModel.handStatus.equals(Result.NOTHING) || viewModel.isInDeal ? View.INVISIBLE : View.VISIBLE}"
+                app:outlineSize="@{viewModel.isNewHand ? 0 : 8}"
                 app:outlineColor="@color/colorYellowOutline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="FULL HOUSE" />
+                tools:text="FULL HOUSE"
+                tools:textColor="@color/colorRedFont"
+                tools:textSize="24sp"
+                tools:outlineSize="8"/>
 
             <LinearLayout
                 android:id="@+id/linearLayout4"
@@ -194,6 +200,7 @@
                 android:textSize="46sp"
                 app:outlineSize="5dp"
                 app:outlineColor="@color/colorYellowOutline"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout2"
@@ -229,6 +236,8 @@
                 android:textSize="24sp"
                 app:outlineSize="2dp"
                 app:outlineColor="@color/colorYellowOutline"
+                android:text="@{StringUtil.createWinText(viewModel.winAmount, viewModel.application)}"
+                android:visibility="@{viewModel.winAmount &lt;= BigDecimal.valueOf(0) ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="WIN $100.00" />
@@ -242,6 +251,7 @@
                 android:textSize="24sp"
                 app:outlineSize="2dp"
                 app:outlineColor="@color/colorYellowOutline"
+                android:text="@{StringUtil.createCreditText(viewModel.bank.bankroll, viewModel.application)}"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="CREDIT $.00" />
@@ -251,7 +261,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="@string/bet"
+                android:text="@{StringUtil.createBetButtonText(viewModel.bet, viewModel.application)}"
                 android:textScaleX="1.5"
                 android:textStyle="bold"
                 android:shadowColor="@color/colorBlackShadow"
@@ -295,8 +305,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/operation_buttons"
                     android:fontFamily="sans-serif-condensed-medium"
-                    android:text="@string/button_speed"
+                    android:text="@{StringUtil.createSpeedButtonText(viewModel.currentSpeed, viewModel.application)}"
                     android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{viewModel.isNewHand &amp;&amp; !viewModel.isInDeal}"
                     tools:text="Speed (1)" />
 
                 <Button
@@ -307,8 +318,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/operation_buttons"
                     android:fontFamily="sans-serif-condensed-medium"
-                    android:text="@string/button_sound"
+                    android:text="@{StringUtil.createSoundButtonText(viewModel.currentVolume, viewModel.application)}"
                     android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{!viewModel.isInDeal}"
                     tools:text="Sound (2)" />
             </LinearLayout>
 
@@ -346,6 +358,7 @@
                     android:fontFamily="sans-serif-condensed-medium"
                     android:text="@string/bet"
                     android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{viewModel.isNewHand &amp;&amp; !viewModel.isInDeal}"
                     tools:text="@string/bet" />
 
                 <Button
@@ -356,8 +369,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/operation_buttons"
                     android:fontFamily="sans-serif-condensed-medium"
-                    android:text="@string/button_deal"
+                    android:text="@{viewModel.isNewHand ? @string/button_deal : @string/button_draw}"
                     android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{!viewModel.isInDeal}"
                     tools:text="Deal" />
 
             </LinearLayout>
@@ -370,6 +384,9 @@
                 android:fontFamily="@font/ultra"
                 android:textColor="@color/colorRedFont"
                 android:textSize="30sp"
+                android:text="@{StringUtil.createDenominationButtonText(viewModel.betDenomination)}"
+                android:onClick="@{() -> viewModel.processChangeDenomination()}"
+                android:enabled="@{viewModel.isNewHand &amp;&amp; !viewModel.isInDeal}"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineDemonRight"
                 app:layout_constraintStart_toStartOf="@+id/guidelineDenomLeft"
@@ -395,6 +412,7 @@
                 android:fontFamily="sans-serif-light"
                 android:text="@string/game_over"
                 android:textSize="12sp"
+                android:visibility="@{viewModel.isNewHand &amp;&amp; !viewModel.isInDeal ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="GAME OVER" />

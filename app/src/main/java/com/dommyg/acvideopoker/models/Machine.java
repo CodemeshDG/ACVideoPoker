@@ -1,11 +1,11 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.models;
 
 import java.math.BigDecimal;
 
 /**
  * Contains all the elements for playing the game. Holds a deck and a bank.
  */
-class Machine {
+public class Machine {
 
     // These are possible hand outcomes with prize values.
     static final private int ROYAL_FLUSH_PRIZE = 800;
@@ -25,7 +25,7 @@ class Machine {
     private int bet;
     private BigDecimal winAmount;
 
-    Machine() {
+    public Machine() {
         this.deck = new Deck();
         this.bank = new Bank();
         this.betDenomination = BigDecimal.valueOf(.25);
@@ -33,42 +33,42 @@ class Machine {
         this.winAmount = BigDecimal.valueOf(0);
     }
 
-    Deck getDeck() {
+    public Deck getDeck() {
         return deck;
     }
 
-    Bank getBank() {
+    public Bank getBank() {
         return bank;
     }
 
-    BigDecimal getBetDenomination() {
+    public BigDecimal getBetDenomination() {
         return betDenomination;
     }
 
-    void setBetDenomination(BigDecimal betDenomination) {
+    public void setBetDenomination(BigDecimal betDenomination) {
         this.betDenomination = betDenomination;
     }
 
-    int getBet() {
+    public int getBet() {
         return bet;
     }
 
-    void setBet(int bet) {
+    public void setBet(int bet) {
         this.bet = bet;
     }
 
-    BigDecimal getWinAmount() {
+    public BigDecimal getWinAmount() {
         return winAmount;
     }
 
-    void setWinAmount(BigDecimal winAmount) {
+    public void setWinAmount(BigDecimal winAmount) {
         this.winAmount = winAmount;
     }
 
     /**
      * Determines which amount to payout to the player based upon the deck's handStatus.
      */
-    void determinePayout() {
+    public void determinePayout() {
         switch (deck.getHandStatus()) {
             case ROYAL_FLUSH:
                 processPayout(ROYAL_FLUSH_PRIZE);
@@ -123,7 +123,7 @@ class Machine {
     /**
      * Removes the wager amount from the bankroll.
      */
-    void processWager() {
+    public void processWager() {
         bank.setBankroll(bank.getBankroll().subtract(calculateWager()));
     }
 

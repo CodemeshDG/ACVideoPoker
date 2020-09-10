@@ -1,6 +1,8 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.models;
 
-class Card {
+import com.dommyg.acvideopoker.R;
+
+public class Card {
     enum Suit {
         SPADE (1, R.string.suit_spade),
         CLUB (2, R.string.suit_club),
@@ -72,11 +74,11 @@ class Card {
         this.value = card.value;
     }
 
-    Suit getSuit() {
+    public Suit getSuit() {
         return suit;
     }
 
-    Value getValue() {
+    public Value getValue() {
         return value;
     }
 }

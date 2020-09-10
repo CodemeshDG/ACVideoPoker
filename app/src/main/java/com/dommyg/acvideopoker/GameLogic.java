@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dommyg.acvideopoker.models.Deck;
+import com.dommyg.acvideopoker.models.Machine;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -19,27 +22,27 @@ import java.math.RoundingMode;
 
 class GameLogic {
 
-    private final int DENOM_25 = 1;
-    private final int DENOM_50 = 2;
-    private final int DENOM_100 = 3;
+//    private final int DENOM_25 = 1;
+//    private final int DENOM_50 = 2;
+//    private final int DENOM_100 = 3;
+//
+//    private final int SPEED_1 = 145;
+//    private final int SPEED_2 = 60;
+//    private final int SPEED_3 = 25;
+//
+//    private final int SPEED_1_TEXT = 1;
+//    private final int SPEED_2_TEXT = 2;
+//    private final int SPEED_3_TEXT = 3;
 
-    private final int SPEED_1 = 145;
-    private final int SPEED_2 = 60;
-    private final int SPEED_3 = 25;
-
-    private final int SPEED_1_TEXT = 1;
-    private final int SPEED_2_TEXT = 2;
-    private final int SPEED_3_TEXT = 3;
-
-    private boolean[] holds;
-
-    private boolean isNewHand;
-    private boolean isInDeal;
-    private int currentSpeed;
-
-    private Machine jacksOrBetter;
-    private Deck deck;
-    private GameSounds gameSounds;
+//    private boolean[] holds;
+//
+//    private boolean isNewHand;
+//    private boolean isInDeal;
+//    private int currentSpeed;
+//
+//    private Machine jacksOrBetter;
+//    private Deck deck;
+//    private GameSounds gameSounds;
 
     private GameScreenFragment gameScreenFragment;
     private Resources resources;
@@ -48,12 +51,12 @@ class GameLogic {
     private Handler handlerGameOver;
 
     GameLogic(GameScreenFragment gameScreenFragment, Resources resources) {
-        this.holds = new boolean[5];
-        this.isNewHand = true;
-        this.isInDeal = false;
-        this.currentSpeed = SPEED_1;
-        this.jacksOrBetter = new Machine();
-        this.deck = jacksOrBetter.getDeck();
+//        this.holds = new boolean[5];
+//        this.isNewHand = true;
+//        this.isInDeal = false;
+//        this.currentSpeed = SPEED_1;
+//        this.jacksOrBetter = new Machine();
+//        this.deck = jacksOrBetter.getDeck();
         this.gameScreenFragment = gameScreenFragment;
         this.resources = resources;
         this.handlerCards = new Handler();
@@ -66,6 +69,7 @@ class GameLogic {
      * at the start of the game or mid game.
      */
     void run() {
+        // TODO: Fragment
         if (isNewHand) {
             isInDeal = true;
             handleToggles();
@@ -91,6 +95,7 @@ class GameLogic {
     }
 
     private void firstCycle() {
+        // TODO: Fragment
         deck.determineHandStatus();
 
         toggleResultTextStyle();
@@ -102,6 +107,7 @@ class GameLogic {
     }
 
     private void finalCycle() {
+        // TODO: Fragment
         deck.determineHandStatus();
 //        BigDecimal previousBankroll = jacksOrBetter.getBank().getBankroll();
         jacksOrBetter.determinePayout();
@@ -122,7 +128,8 @@ class GameLogic {
     }
 
     void initializeGameElements() {
-        gameSounds = new GameSounds(gameScreenFragment.getContext());
+        // TODO: Probably all data binding except gameSounds (ViewModel?)
+//        gameSounds = new GameSounds(gameScreenFragment.getContext());
         resetCardImages();
         removeHolds();
         toggleHoldButtons();
@@ -133,38 +140,41 @@ class GameLogic {
         setSoundButtonText(gameSounds.VOLUME_3_ITERATOR);
     }
 
-    /**
-     * Sets the gameScreenFragment's textViewCredit based upon the isNewHand value.
-     */
-    private void setDealButtonText() {
-        Button dealButton = gameScreenFragment.getButtons()
-                [gameScreenFragment.ARRAY_BUTTON_DEAL];
-        if (isNewHand) {
-            dealButton.setText(resources.getString(R.string.button_deal));
-        } else {
-            dealButton.setText(resources.getString(R.string.button_draw));
-        }
-    }
+//    /**
+//     * Sets the gameScreenFragment's textViewCredit based upon the isNewHand value.
+//     */
+//    private void setDealButtonText() {
+//        // TODO: Data binding (RECORDED)
+//        Button dealButton = gameScreenFragment.getButtons()
+//                [gameScreenFragment.ARRAY_BUTTON_DEAL];
+//        if (isNewHand) {
+//            dealButton.setText(resources.getString(R.string.button_deal));
+//        } else {
+//            dealButton.setText(resources.getString(R.string.button_draw));
+//        }
+//    }
 
-    /**
-     * Enables or disables the gameScreenFragment's buttonDeal based upon the isInDeal value so the
-     * player may or may not interact with the deal button to deal new cards.
-     */
-    private void toggleDealButton() {
-        Button dealButton = gameScreenFragment.getButtons()
-                [gameScreenFragment.ARRAY_BUTTON_DEAL];
-        if (isInDeal) {
-            dealButton.setEnabled(false);
-        } else {
-            setDealButtonText();
-            dealButton.setEnabled(true);
-        }
-    }
+//    /**
+//     * Enables or disables the gameScreenFragment's buttonDeal based upon the isInDeal value so the
+//     * player may or may not interact with the deal button to deal new cards.
+//     */
+//    private void toggleDealButton() {
+//        // TODO: Data binding (RECORDED)
+//        Button dealButton = gameScreenFragment.getButtons()
+//                [gameScreenFragment.ARRAY_BUTTON_DEAL];
+//        if (isInDeal) {
+//            dealButton.setEnabled(false);
+//        } else {
+//            setDealButtonText();
+//            dealButton.setEnabled(true);
+//        }
+//    }
 
     /**
      * Sets a hold for an index and updates the visibility of the appropriate hold textView.
      */
     void setHolds(int index) {
+        // TODO: Data binding (and util?) (RECORDED)
         gameSounds.play(gameSounds.SOUND_DOOT);
         if (!holds[index]) {
             holds[index] = true;
@@ -179,6 +189,7 @@ class GameLogic {
      * Sets all holds to false.
      */
     private void removeHolds() {
+        // TODO: Fragment and data binding
         for (int i = 0; i < deck.HAND_SIZE; i++) {
             holds[i] = false;
         }
@@ -193,6 +204,7 @@ class GameLogic {
      * hold them.
      */
     private void toggleHoldButtons() {
+        // TODO: Data binding (RECORDED)
         if (isNewHand || isInDeal) {
             for (ImageView card : gameScreenFragment.getCards()) {
                 card.setEnabled(false);
@@ -209,6 +221,7 @@ class GameLogic {
      * face image by using the deck's handDisplay array.
      */
     private void setCardImages() {
+        // TODO: Data binding (util?)
         resetCardImages();
         AssetManager assetManager = gameScreenFragment.getContext().getAssets();
         handlerCards.postDelayed(
@@ -220,6 +233,7 @@ class GameLogic {
      * Sets each index of the gameScreenFragment's cards ImageView array to an image of a card back.
      */
     private void resetCardImages() {
+        // TODO: Data binding (util?)
         AssetManager assetManager = gameScreenFragment.getContext().getAssets();
         InputStream inputStream;
         String path = "card_faces/back.png";
@@ -236,73 +250,78 @@ class GameLogic {
         }
     }
 
-    /**
-     * Updates the machine's betDenomination value to the next increment depending on its current
-     * value.
-     */
-    void processChangeDenomination() {
-        if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.25))) {
-            processChangeDenomination(.50);
-            setDenominationButtonText(DENOM_50);
-        } else if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.50))) {
-            processChangeDenomination(1.00);
-            setDenominationButtonText(DENOM_100);
-        } else {
-            processChangeDenomination(.25);
-            setDenominationButtonText(DENOM_25);
-        }
-    }
+//    /**
+//     * Updates the machine's betDenomination value to the next increment depending on its current
+//     * value.
+//     */
+//    void processChangeDenomination() {
+//        // TODO: ViewModel and data binding
+//        if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.25))) {
+//            processChangeDenomination(.50);
+//            setDenominationButtonText(DENOM_50);
+//        } else if (jacksOrBetter.getBetDenomination().equals(BigDecimal.valueOf(.50))) {
+//            processChangeDenomination(1.00);
+//            setDenominationButtonText(DENOM_100);
+//        } else {
+//            processChangeDenomination(.25);
+//            setDenominationButtonText(DENOM_25);
+//        }
+//    }
 
-    @SuppressLint("SetTextI18n")
-    private void setDenominationButtonText(int value) {
-        Button denomButton = gameScreenFragment.getButtons()
-                [gameScreenFragment.ARRAY_BUTTON_DENOMINATION];
-            switch (value) {
-                case DENOM_25:
-                    denomButton.setText("25¢");
-                    break;
-                case DENOM_50:
-                    denomButton.setText("50¢");
-                    break;
-                case DENOM_100:
-                    denomButton.setText("$1");
-            }
-    }
+//    @SuppressLint("SetTextI18n")
+//    private void setDenominationButtonText(int value) {
+//        // TODO: Data binding (put function into Util) (RECORDED)
+//        Button denomButton = gameScreenFragment.getButtons()
+//                [gameScreenFragment.ARRAY_BUTTON_DENOMINATION];
+//            switch (value) {
+//                case DENOM_25:
+//                    denomButton.setText("25¢");
+//                    break;
+//                case DENOM_50:
+//                    denomButton.setText("50¢");
+//                    break;
+//                case DENOM_100:
+//                    denomButton.setText("$1");
+//            }
+//    }
 
-    /**
-     * Updates the machine's betDenomination value.
-     */
-    private void processChangeDenomination(double amount) {
+//    /**
+//     * Updates the machine's betDenomination value.
+//     */
+//    private void processChangeDenomination(double amount) {
+//        // TODO: ViewModel
+//        jacksOrBetter.setBetDenomination(BigDecimal.valueOf(amount));
+//    }
 
-        jacksOrBetter.setBetDenomination(BigDecimal.valueOf(amount));
-    }
+//    /**
+//     * Enables or disables the gameScreenFragment's imageViewDenomination based upon the isNewHand
+//     * and isInDeal values so the player may or may not interact with the denomination button to
+//     * change the bet denomination.
+//     */
+//    private void toggleDenominationButton() {
+//        // TODO: Data binding (RECORDED)
+//        Button denomButton = gameScreenFragment.getButtons()
+//                [gameScreenFragment.ARRAY_BUTTON_DENOMINATION];
+//        if (isNewHand && !isInDeal) {
+//            denomButton.setEnabled(true);
+//        } else {
+//            denomButton.setEnabled(false);
+//        }
+//    }
 
-    /**
-     * Enables or disables the gameScreenFragment's imageViewDenomination based upon the isNewHand
-     * and isInDeal values so the player may or may not interact with the denomination button to
-     * change the bet denomination.
-     */
-    private void toggleDenominationButton() {
-        Button denomButton = gameScreenFragment.getButtons()
-                [gameScreenFragment.ARRAY_BUTTON_DENOMINATION];
-        if (isNewHand && !isInDeal) {
-            denomButton.setEnabled(true);
-        } else {
-            denomButton.setEnabled(false);
-        }
-    }
-
-    /**
-     * Sets the gameScreenFragment's textViewCredit based upon the bank's bankroll value.
-     */
-    private void setCreditText() {
-        String creditText = resources.getString(R.string.credit) +
-                jacksOrBetter.getBank().getBankroll();
-        gameScreenFragment.getTextViewOperations()[gameScreenFragment.ARRAY_OPERATIONS_CREDIT]
-                .setText(creditText);
-    }
+//    /**
+//     * Sets the gameScreenFragment's textViewCredit based upon the bank's bankroll value.
+//     */
+//    private void setCreditText() {
+//        // TODO: Data binding (RECORDED)
+//        String creditText = resources.getString(R.string.credit) +
+//                jacksOrBetter.getBank().getBankroll();
+//        gameScreenFragment.getTextViewOperations()[gameScreenFragment.ARRAY_OPERATIONS_CREDIT]
+//                .setText(creditText);
+//    }
 
     private void animateCreditText(BigDecimal previousBankroll, BigDecimal currentBankroll) {
+        // TODO: Data binding (util)
         TextView creditText = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_CREDIT];
         handlerCredits.post(
@@ -310,34 +329,37 @@ class GameLogic {
         );
     }
 
-    /**
-     * Sets the gameScreenFragment's textViewResult based upon the deck's handStatus.
-     */
-    private void setResultText() {
-        TextView resultTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
-        resultTextView.setText(deck.getHandStatus().getStringValue());
-    }
+//    /**
+//     * Sets the gameScreenFragment's textViewResult based upon the deck's handStatus.
+//     */
+//    private void setResultText() {
+//        // TODO: Data binding (RECORDED)
+//        TextView resultTextView = gameScreenFragment.getTextViewOperations()
+//                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
+//        resultTextView.setText(deck.getHandStatus().getStringValue());
+//    }
 
-    /**
-     * Sets visibility of the gameScreenFragment's textViewResult based upon the isInDeal and deck's
-     * handStatus values.
-     */
-    private void toggleResultText() {
-        TextView resultTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
-        if (deck.getHandStatus().equals(Deck.Result.NOTHING) || isInDeal) {
-            resultTextView.setVisibility(View.INVISIBLE);
-        } else {
-            resultTextView.setVisibility(View.VISIBLE);
-            gameSounds.play(gameSounds.SOUND_BING);
-        }
-    }
+//    /**
+//     * Sets visibility of the gameScreenFragment's textViewResult based upon the isInDeal and deck's
+//     * handStatus values.
+//     */
+//    private void toggleResultText() {
+//        // TODO: Data binding (RECORDED)
+//        TextView resultTextView = gameScreenFragment.getTextViewOperations()
+//                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
+//        if (deck.getHandStatus().equals(Deck.Result.NOTHING) || isInDeal) {
+//            resultTextView.setVisibility(View.INVISIBLE);
+//        } else {
+//            resultTextView.setVisibility(View.VISIBLE);
+//            gameSounds.play(gameSounds.SOUND_BING);
+//        }
+//    }
 
     /**
      * Sets the color of the gameScreenFragment's textViewResult based upon the isNewHand value.
      */
     private void toggleResultTextStyle() {
+        // TODO: Data binding (RECORDED)
         TextViewOutline resultTextView = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
         if (isNewHand) {
@@ -351,171 +373,184 @@ class GameLogic {
         }
     }
 
-    /**
-     * Sets the gameScreenFragment's textViewBet based upon the machine's bet.
-     */
-    private void setBetText() {
-        TextView betTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_BET];
-        String betText = resources.getString(R.string.bet);
-        betTextView.setText(betText + " " + jacksOrBetter.getBet());
-    }
+//    /**
+//     * Sets the gameScreenFragment's textViewBet based upon the machine's bet.
+//     */
+//    private void setBetText() {
+//        // TODO: Data binding (util) (RECORDED)
+//        TextView betTextView = gameScreenFragment.getTextViewOperations()
+//                [gameScreenFragment.ARRAY_OPERATIONS_BET];
+//        String betText = resources.getString(R.string.bet);
+//        betTextView.setText(betText + " " + jacksOrBetter.getBet());
+//    }
 
-    /**
-     * Updates the machine's bet value to the next increment depending on its current value.
-     */
-    void processChangeBet() {
-        if (jacksOrBetter.getBet() < 5) {
-            jacksOrBetter.setBet(jacksOrBetter.getBet() + 1);
-        } else {
-            jacksOrBetter.setBet(1);
-        }
-        setBetText();
-    }
+//    /**
+//     * Updates the machine's bet value to the next increment depending on its current value.
+//     */
+//    void processChangeBet() {
+//        // TODO: ViewModel
+//        if (jacksOrBetter.getBet() < 5) {
+//            jacksOrBetter.setBet(jacksOrBetter.getBet() + 1);
+//        } else {
+//            jacksOrBetter.setBet(1);
+//        }
+//        setBetText();
+//    }
 
-    /**
-     * Enables or disables the gameScreenFragment's buttonBet based upon the isNewHand variable so
-     * the player may or may not interact with the bet button to change the bet amount.
-     */
-    private void toggleBetButton() {
-        Button betButton = gameScreenFragment.getButtons()[gameScreenFragment.ARRAY_BUTTON_BET];
-        if (isNewHand && !isInDeal) {
-            betButton.setEnabled(true);
-        } else {
-            betButton.setEnabled(false);
-        }
-    }
+//    /**
+//     * Enables or disables the gameScreenFragment's buttonBet based upon the isNewHand variable so
+//     * the player may or may not interact with the bet button to change the bet amount.
+//     */
+//    private void toggleBetButton() {
+//        // TODO: Data binding (RECORDED)
+//        Button betButton = gameScreenFragment.getButtons()[gameScreenFragment.ARRAY_BUTTON_BET];
+//        if (isNewHand && !isInDeal) {
+//            betButton.setEnabled(true);
+//        } else {
+//            betButton.setEnabled(false);
+//        }
+//    }
 
-    /**
-     * Sets the gameScreenFragment's textViewSpeed based upon the currentSpeed.
-     */
-    private void setSpeedButtonText(int currentSpeedText) {
-        Button speedButton = gameScreenFragment.getButtons()
-                [gameScreenFragment.ARRAY_BUTTON_SPEED];
-        String speedText = resources.getString(R.string.button_speed);
-        speedButton.setText(speedText + " (" + currentSpeedText + ")");
-    }
+//    /**
+//     * Sets the gameScreenFragment's textViewSpeed based upon the currentSpeed.
+//     */
+//    private void setSpeedButtonText(int currentSpeedText) {
+//        // TODO: Data binding (RECORDED)
+//        Button speedButton = gameScreenFragment.getButtons()
+//                [gameScreenFragment.ARRAY_BUTTON_SPEED];
+//        String speedText = resources.getString(R.string.button_speed);
+//        speedButton.setText(speedText + " (" + currentSpeedText + ")");
+//    }
 
-    /**
-     * Updates the currentSpeed to the next increment depending on its current value.
-     */
-    void processChangeSpeed() {
-        switch (currentSpeed) {
-            case SPEED_1:
-                currentSpeed = SPEED_2;
-                setSpeedButtonText(SPEED_2_TEXT);
-                break;
+//    /**
+//     * Updates the currentSpeed to the next increment depending on its current value.
+//     */
+//    void processChangeSpeed() {
+//        // TODO: ViewModel
+//        switch (currentSpeed) {
+//            case SPEED_1:
+//                currentSpeed = SPEED_2;
+//                setSpeedButtonText(SPEED_2_TEXT);
+//                break;
+//
+//            case SPEED_2:
+//                currentSpeed = SPEED_3;
+//                setSpeedButtonText(SPEED_3_TEXT);
+//                break;
+//
+//            case SPEED_3:
+//                currentSpeed = SPEED_1;
+//                setSpeedButtonText(SPEED_1_TEXT);
+//                break;
+//        }
+//    }
 
-            case SPEED_2:
-                currentSpeed = SPEED_3;
-                setSpeedButtonText(SPEED_3_TEXT);
-                break;
+//    /**
+//     * Enables or disables the gameScreenFragment's buttonSpeed based upon the isNewHand and
+//     * isInDeal values so the player may or may not interact with the speed button to change the
+//     * speed of dealing cards.
+//     */
+//    private void toggleSpeedButton() {
+//        // TODO: Data binding (RECORDED)
+//        Button speedButton = gameScreenFragment.getButtons()
+//                [gameScreenFragment.ARRAY_BUTTON_SPEED];
+//        if (isNewHand && !isInDeal) {
+//            speedButton.setEnabled(true);
+//        } else {
+//            speedButton.setEnabled(false);
+//        }
+//    }
 
-            case SPEED_3:
-                currentSpeed = SPEED_1;
-                setSpeedButtonText(SPEED_1_TEXT);
-                break;
-        }
-    }
+//    /**
+//     * Sets the gameScreenFragment's textViewSound based upon gameSounds's currentVolumeIterator.
+//     */
+//    private void setSoundButtonText(int currentVolume) {
+//        // TODO: Data binding (RECORDED)
+//        Button soundButton = gameScreenFragment.getButtons()
+//                [gameScreenFragment.ARRAY_BUTTON_SOUND];
+//        String soundText = resources.getString(R.string.button_sound);
+//        soundButton.setText(soundText + " (" + currentVolume + ")");
+//    }
 
-    /**
-     * Enables or disables the gameScreenFragment's buttonSpeed based upon the isNewHand and
-     * isInDeal values so the player may or may not interact with the speed button to change the
-     * speed of dealing cards.
-     */
-    private void toggleSpeedButton() {
-        Button speedButton = gameScreenFragment.getButtons()
-                [gameScreenFragment.ARRAY_BUTTON_SPEED];
-        if (isNewHand && !isInDeal) {
-            speedButton.setEnabled(true);
-        } else {
-            speedButton.setEnabled(false);
-        }
-    }
+//    /**
+//     * Updates gameSounds's currentVolume to the next increment depending on its current value.
+//     */
+//    void processChangeVolume() {
+//        // TODO: ViewModel
+//        setSoundButtonText(gameSounds.changeVolume());
+//    }
 
-    /**
-     * Sets the gameScreenFragment's textViewSound based upon gameSounds's currentVolumeIterator.
-     */
-    private void setSoundButtonText(int currentVolume) {
-        Button soundButton = gameScreenFragment.getButtons()
-                [gameScreenFragment.ARRAY_BUTTON_SOUND];
-        String soundText = resources.getString(R.string.button_sound);
-        soundButton.setText(soundText + " (" + currentVolume + ")");
-    }
+//    /**
+//     * Enables or disables the gameScreenFragment's buttonSound based upon the isInDeal value so the
+//     * player may or may not interact with the sound button to change the volume of game sounds.
+//     */
+//    private void toggleSoundButton() {
+//        // TODO: Data binding (RECORDED)
+//        Button soundButton = gameScreenFragment.getButtons()
+//                [gameScreenFragment.ARRAY_BUTTON_SOUND];
+//        if (isInDeal) {
+//            soundButton.setEnabled(false);
+//        } else {
+//            soundButton.setEnabled(true);
+//        }
+//    }
 
-    /**
-     * Updates gameSounds's currentVolume to the next increment depending on its current value.
-     */
-    void processChangeVolume() {
-        setSoundButtonText(gameSounds.changeVolume());
-    }
+//    /**
+//     * Sets visibility of the gameScreenFragment's textViewGameOver based upon the isNewHand and
+//     * isInDeal values.
+//     */
+//    private void toggleGameOver() {
+//        // TODO: Data binding (util?) (RECORDED)
+//        TextView gameOverCornerTextView = gameScreenFragment.getTextViewOperations()
+//                [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER_CORNER];
+//        TextView gameOverCenterTextView = gameScreenFragment.getTextViewOperations()
+//                [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER_CENTER];
+//        AnimateGameOverRunnable runnable = new AnimateGameOverRunnable(gameOverCenterTextView);
+//        if (isNewHand && !isInDeal) {
+//            gameOverCornerTextView.setVisibility(View.VISIBLE);
+//            handlerGameOver.post(runnable);
+//        } else {
+//            gameOverCornerTextView.setVisibility(View.INVISIBLE);
+//            handlerGameOver.removeCallbacksAndMessages(null);
+//            gameOverCenterTextView.setVisibility(View.GONE);
+//        }
+//    }
 
-    /**
-     * Enables or disables the gameScreenFragment's buttonSound based upon the isInDeal value so the
-     * player may or may not interact with the sound button to change the volume of game sounds.
-     */
-    private void toggleSoundButton() {
-        Button soundButton = gameScreenFragment.getButtons()
-                [gameScreenFragment.ARRAY_BUTTON_SOUND];
-        if (isInDeal) {
-            soundButton.setEnabled(false);
-        } else {
-            soundButton.setEnabled(true);
-        }
-    }
+//    /**
+//     * Sets the gameScreenFragment's textViewWin's String value and visibility based upon the
+//     * machine's winAmount value.
+//     */
+//    private void setWinText() {
+//        // TODO: Data binding (RECORDED)
+//        TextView winTextView = gameScreenFragment.getTextViewOperations()
+//                [gameScreenFragment.ARRAY_OPERATIONS_WIN];
+//        if (jacksOrBetter.getWinAmount().doubleValue() <= 0) {
+//            // No win; do not show win textView.
+//            winTextView.setVisibility(View.INVISIBLE);
+//        } else {
+//            String winText = resources.getString(R.string.win) +
+//                    jacksOrBetter.getWinAmount().setScale(2, RoundingMode.HALF_EVEN);
+//            winTextView.setText(winText);
+//            winTextView.setVisibility(View.VISIBLE);
+//        }
+//    }
 
-    /**
-     * Sets visibility of the gameScreenFragment's textViewGameOver based upon the isNewHand and
-     * isInDeal values.
-     */
-    private void toggleGameOver() {
-        TextView gameOverCornerTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER_CORNER];
-        TextView gameOverCenterTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_GAME_OVER_CENTER];
-        AnimateGameOverRunnable runnable = new AnimateGameOverRunnable(gameOverCenterTextView);
-        if (isNewHand && !isInDeal) {
-            gameOverCornerTextView.setVisibility(View.VISIBLE);
-            handlerGameOver.post(runnable);
-        } else {
-            gameOverCornerTextView.setVisibility(View.INVISIBLE);
-            handlerGameOver.removeCallbacksAndMessages(null);
-            gameOverCenterTextView.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * Sets the gameScreenFragment's textViewWin's String value and visibility based upon the
-     * machine's winAmount value.
-     */
-    private void setWinText() {
-        TextView winTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_WIN];
-        if (jacksOrBetter.getWinAmount().doubleValue() <= 0) {
-            // No win; do not show win textView.
-            winTextView.setVisibility(View.INVISIBLE);
-        } else {
-            String winText = resources.getString(R.string.win) +
-                    jacksOrBetter.getWinAmount().setScale(2, RoundingMode.HALF_EVEN);
-            winTextView.setText(winText);
-            winTextView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * Sets the machine's winAmount to 0 and runs setWinText() so that the gameScreenFragment's
-     * textViewWin is set to invisible.
-     */
-    private void resetWinText() {
-        jacksOrBetter.setWinAmount(
-                BigDecimal.valueOf(0.00).setScale(2, RoundingMode.HALF_EVEN));
-        setWinText();
-    }
+//    /**
+//     * Sets the machine's winAmount to 0 and runs setWinText() so that the gameScreenFragment's
+//     * textViewWin is set to invisible.
+//     */
+//    private void resetWinText() {
+//        // TODO: ViewModel
+//        jacksOrBetter.setWinAmount(
+//                BigDecimal.valueOf(0.00).setScale(2, RoundingMode.HALF_EVEN));
+//        setWinText();
+//    }
 
     /**
      * Enables or disables important gameplay features depending upon isNewHand and isInDeal values.
      */
     private void handleToggles() {
+        // TODO: Data binding
         toggleResultText();
         toggleDealButton();
         toggleDenominationButton();

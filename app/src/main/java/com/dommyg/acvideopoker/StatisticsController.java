@@ -3,6 +3,8 @@ package com.dommyg.acvideopoker;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.dommyg.acvideopoker.models.Deck;
+
 import java.math.BigDecimal;
 
 public class StatisticsController {

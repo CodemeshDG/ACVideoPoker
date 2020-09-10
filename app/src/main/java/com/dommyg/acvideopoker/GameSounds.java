@@ -7,7 +7,7 @@ import android.media.SoundPool;
 
 import java.io.IOException;
 
-class GameSounds {
+public class GameSounds {
     private int bing;
     private int doot;
 
@@ -30,7 +30,7 @@ class GameSounds {
     private SoundPool soundPool;
     private Context context;
 
-    GameSounds(Context context) {
+    public GameSounds(Context context) {
         this.context = context;
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -59,7 +59,7 @@ class GameSounds {
         }
     }
 
-    int getCurrentVolumeIterator() {
+    public int getCurrentVolumeIterator() {
         return currentVolumeIterator;
     }
 
@@ -75,7 +75,7 @@ class GameSounds {
         }
     }
 
-    int changeVolume() {
+    public int changeVolume() {
         switch (currentVolumeIterator) {
             case VOLUME_3_ITERATOR:
                 currentVolumeIterator = VOLUME_2_ITERATOR;

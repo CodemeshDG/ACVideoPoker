@@ -1,15 +1,17 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.models;
+
+import com.dommyg.acvideopoker.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
-class Deck {
+public class Deck {
     /**
      * Contains hierarchical values and Strings reflective of handCalculation outcomes.
      */
-    enum Result {
+    public enum Result {
         ROYAL_FLUSH(9, R.string.result_royal_flush),
         STRAIGHT_FLUSH(8, R.string.result_straight_flush),
         FOUR_OF_A_KIND(7, R.string.result_four_of_a_kind),
@@ -104,7 +106,7 @@ class Deck {
      */
     private Result handStatus;
 
-    final int HAND_SIZE = 5;
+    public final int HAND_SIZE = 5;
     private final int FIRST_CARD = 0;
     private final int HAND_LAST_CARD = 4;
 
@@ -116,11 +118,11 @@ class Deck {
         this.handStatus = Result.NOTHING;
     }
 
-    Result getHandStatus() {
+    public Result getHandStatus() {
         return handStatus;
     }
 
-    Card[] getHandDisplay() {
+    public Card[] getHandDisplay() {
         return handDisplay;
     }
 
@@ -128,7 +130,7 @@ class Deck {
      * Resets the currentDeck by clearing all cards in it and copying over the masterDeck. Used when
      * the game is over and a fresh deck must be prepared for the next game.
      */
-    void resetDeck() {
+    public void resetDeck() {
         currentDeck.subList(FIRST_CARD, currentDeck.size()).clear();
         currentDeck.addAll(masterDeck);
     }
@@ -137,7 +139,7 @@ class Deck {
      * Resets the handDisplay by setting all indexes to null. Used when the game is over and the
      * player's hand must be discarded.
      */
-    void resetHandDisplay() {
+    public void resetHandDisplay() {
         for (int i = 0; i < HAND_SIZE; i++) {
             handDisplay[i] = null;
         }
@@ -147,7 +149,7 @@ class Deck {
      * Deals cards from the currentDeck into the player's handCalculation until it has five cards
      * total.
      */
-    void deal() {
+    public void deal() {
         for (int i = 0; i < HAND_SIZE; i++) {
             // Checking if there are empty positions in the handDisplay. All positions would be
             // empty at the start of the game. Some positions might be empty during mid game if a
@@ -180,7 +182,7 @@ class Deck {
      * Processes holds in the handDisplay. If a card is not selected to be held by the player, it
      * will be discarded.
      */
-    void hold(boolean[] holds) {
+    public void hold(boolean[] holds) {
         if (!holds[0]) {
             discard(1);
         }
@@ -233,7 +235,7 @@ class Deck {
      * Sets the hand status by using various checking functions: checkStraight(), checkFlush(),
      * checkRoyalFlush(), and checkPair().
      */
-    void determineHandStatus() {
+    public void determineHandStatus() {
         sortHandCalculationByValue();
         boolean straight = checkStraight();
 
