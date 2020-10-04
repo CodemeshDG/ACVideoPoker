@@ -170,51 +170,51 @@ class GameLogic {
 //        }
 //    }
 
-    /**
-     * Sets a hold for an index and updates the visibility of the appropriate hold textView.
-     */
-    void setHolds(int index) {
-        // TODO: Data binding (and util?) (RECORDED)
-        gameSounds.play(gameSounds.SOUND_DOOT);
-        if (!holds[index]) {
-            holds[index] = true;
-            gameScreenFragment.getTextViewHolds()[index].setVisibility(View.VISIBLE);
-        } else {
-            holds[index] = false;
-            gameScreenFragment.getTextViewHolds()[index].setVisibility(View.INVISIBLE);
-        }
-    }
+//    /**
+//     * Sets a hold for an index and updates the visibility of the appropriate hold textView.
+//     */
+//    void setHolds(int index) {
+//        // TODO: Data binding (and util?) (RECORDED)
+//        gameSounds.play(gameSounds.SOUND_DOOT);
+//        if (!holds[index]) {
+//            holds[index] = true;
+//            gameScreenFragment.getTextViewHolds()[index].setVisibility(View.VISIBLE);
+//        } else {
+//            holds[index] = false;
+//            gameScreenFragment.getTextViewHolds()[index].setVisibility(View.INVISIBLE);
+//        }
+//    }
 
-    /**
-     * Sets all holds to false.
-     */
-    private void removeHolds() {
-        // TODO: Fragment and data binding
-        for (int i = 0; i < deck.HAND_SIZE; i++) {
-            holds[i] = false;
-        }
-        for (TextView hold : gameScreenFragment.getTextViewHolds()) {
-            hold.setVisibility(View.INVISIBLE);
-        }
-    }
+//    /**
+//     * Sets all holds to false.
+//     */
+//    private void removeHolds() {
+//        // TODO: Fragment and data binding
+//        for (int i = 0; i < deck.HAND_SIZE; i++) {
+//            holds[i] = false;
+//        }
+//        for (TextView hold : gameScreenFragment.getTextViewHolds()) {
+//            hold.setVisibility(View.INVISIBLE);
+//        }
+//    }
 
-    /**
-     * Enables or disables all indexes in gameScreenFragment's cards ImageView array based upon the
-     * isNewHand or isInDeal values so that the player may or may not interact with the cards to
-     * hold them.
-     */
-    private void toggleHoldButtons() {
-        // TODO: Data binding (RECORDED)
-        if (isNewHand || isInDeal) {
-            for (ImageView card : gameScreenFragment.getCards()) {
-                card.setEnabled(false);
-            }
-        } else {
-            for (ImageView card : gameScreenFragment.getCards()) {
-                card.setEnabled(true);
-            }
-        }
-    }
+//    /**
+//     * Enables or disables all indexes in gameScreenFragment's cards ImageView array based upon the
+//     * isNewHand or isInDeal values so that the player may or may not interact with the cards to
+//     * hold them.
+//     */
+//    private void toggleHoldButtons() {
+//        // TODO: Data binding (RECORDED)
+//        if (isNewHand || isInDeal) {
+//            for (ImageView card : gameScreenFragment.getCards()) {
+//                card.setEnabled(false);
+//            }
+//        } else {
+//            for (ImageView card : gameScreenFragment.getCards()) {
+//                card.setEnabled(true);
+//            }
+//        }
+//    }
 
     /**
      * Sets each index of the gameScreenFragment's cards ImageView array to the appropriate card
@@ -321,7 +321,7 @@ class GameLogic {
 //    }
 
     private void animateCreditText(BigDecimal previousBankroll, BigDecimal currentBankroll) {
-        // TODO: Data binding (util)
+        // TODO: Data binding (JUST INCREASE BANK INT AMOUNT; DATA BINDING WILL TAKE CARE OF IT)
         TextView creditText = gameScreenFragment.getTextViewOperations()
                 [gameScreenFragment.ARRAY_OPERATIONS_CREDIT];
         handlerCredits.post(
@@ -355,23 +355,23 @@ class GameLogic {
 //        }
 //    }
 
-    /**
-     * Sets the color of the gameScreenFragment's textViewResult based upon the isNewHand value.
-     */
-    private void toggleResultTextStyle() {
-        // TODO: Data binding (RECORDED)
-        TextViewOutline resultTextView = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
-        if (isNewHand) {
-            resultTextView.setTextColor(resources.getColor(R.color.colorWhiteFont));
-            resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            resultTextView.setOutlineSize(0);
-        } else {
-            resultTextView.setTextColor(resources.getColor(R.color.colorRedFont));
-            resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-            resultTextView.setOutlineSize(8);
-        }
-    }
+//    /**
+//     * Sets the color of the gameScreenFragment's textViewResult based upon the isNewHand value.
+//     */
+//    private void toggleResultTextStyle() {
+//        // TODO: Data binding (RECORDED)
+//        TextViewOutline resultTextView = gameScreenFragment.getTextViewOperations()
+//                [gameScreenFragment.ARRAY_OPERATIONS_RESULT];
+//        if (isNewHand) {
+//            resultTextView.setTextColor(resources.getColor(R.color.colorWhiteFont));
+//            resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//            resultTextView.setOutlineSize(0);
+//        } else {
+//            resultTextView.setTextColor(resources.getColor(R.color.colorRedFont));
+//            resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+//            resultTextView.setOutlineSize(8);
+//        }
+//    }
 
 //    /**
 //     * Sets the gameScreenFragment's textViewBet based upon the machine's bet.

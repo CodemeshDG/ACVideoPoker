@@ -1,11 +1,9 @@
 package com.dommyg.acvideopoker.viewmodels;
 
 import android.app.Application;
-import android.content.res.Resources;
 
 import androidx.lifecycle.AndroidViewModel;
 
-import com.dommyg.acvideopoker.GameSounds;
 import com.dommyg.acvideopoker.models.Bank;
 import com.dommyg.acvideopoker.models.Deck;
 import com.dommyg.acvideopoker.models.Machine;
@@ -15,41 +13,27 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class GameViewModel extends AndroidViewModel {
-    private boolean[] holds;
-
-    private boolean isNewHand;
-    private boolean isInDeal;
-    private int currentSpeed;
-
     private Machine jacksOrBetter;
-    private Deck deck;
-    private GameSounds gameSounds;
 
     public GameViewModel(Application application) {
         super(application);
-        this.gameSounds = new GameSounds(application.getBaseContext());
-        this.holds = new boolean[5];
-        this.isNewHand = true;
-        this.isInDeal = false;
-        this.currentSpeed = Constants.SPEED_1;
-        this.jacksOrBetter = new Machine();
-        this.deck = jacksOrBetter.getDeck();
+        this.jacksOrBetter = new Machine(application);
     }
 
     public boolean[] getHolds() {
-        return holds;
+        return jacksOrBetter.getHolds();
     }
 
     public boolean getIsNewHand() {
-        return isNewHand;
+        return jacksOrBetter.getIsNewHand();
     }
 
     public boolean getIsInDeal() {
-        return isInDeal;
+        return jacksOrBetter.getIsInDeal();
     }
 
     public int getCurrentSpeed() {
-        return currentSpeed;
+        return jacksOrBetter.getCurrentSpeed();
     }
 
     public BigDecimal getBetDenomination() {
@@ -65,7 +49,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public int getCurrentVolume() {
-        return gameSounds.getCurrentVolumeIterator();
+        return jacksOrBetter.getGameSounds().getCurrentVolumeIterator();
     }
 
     public BigDecimal getWinAmount() {
@@ -146,8 +130,15 @@ public class GameViewModel extends AndroidViewModel {
      */
     void processChangeVolume() {
         // TODO: Data binding
-        gameSounds.changeVolume();
+        jacksOrBetter.getGameSounds().changeVolume();
 //        setSoundButtonText(gameSounds.changeVolume());
+    }
+
+    /**
+     * Sets a hold for an index.
+     */
+    public void processHold(int index) {
+        jacksOrBetter.setHolds(index);
     }
 
     /**

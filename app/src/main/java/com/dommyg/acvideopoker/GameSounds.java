@@ -1,5 +1,6 @@
 package com.dommyg.acvideopoker;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.media.AudioAttributes;
@@ -11,27 +12,27 @@ public class GameSounds {
     private int bing;
     private int doot;
 
-    final int SOUND_BING = 0;
-    final int SOUND_DOOT = 1;
+    public static final int SOUND_BING = 0;
+    public static final int SOUND_DOOT = 1;
 
-    private final float VOLUME_3 = 1.0f;
-    private final float VOLUME_2 = 0.66f;
-    private final float VOLUME_1 = 0.33f;
-    private final float VOLUME_0 = 0;
+    private static final float VOLUME_3 = 1.0f;
+    private static final float VOLUME_2 = 0.66f;
+    private static final float VOLUME_1 = 0.33f;
+    private static final float VOLUME_0 = 0;
 
-    final int VOLUME_3_ITERATOR = 3;
-    private final int VOLUME_2_ITERATOR = 2;
-    private final int VOLUME_1_ITERATOR = 1;
-    private final int VOLUME_0_ITERATOR = 0;
+    static final int VOLUME_3_ITERATOR = 3;
+    private static final int VOLUME_2_ITERATOR = 2;
+    private static final int VOLUME_1_ITERATOR = 1;
+    private static final int VOLUME_0_ITERATOR = 0;
 
     private float currentVolume;
     private int currentVolumeIterator;
 
     private SoundPool soundPool;
-    private Context context;
+    private AssetManager assetManager;
 
-    public GameSounds(Context context) {
-        this.context = context;
+    public GameSounds(Application application) {
+        this.assetManager = application.getAssets();
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -49,8 +50,6 @@ public class GameSounds {
     }
 
     private void setSounds() {
-        AssetManager assetManager = context.getAssets();
-
         try {
             bing = soundPool.load(assetManager.openFd("sounds/bing.wav"), 1);
             doot = soundPool.load(assetManager.openFd("sounds/doot.wav"), 1);
@@ -63,7 +62,7 @@ public class GameSounds {
         return currentVolumeIterator;
     }
 
-    void play(int sound) {
+    public void play(int sound) {
         switch (sound) {
             case SOUND_BING:
                 soundPool.play(bing, currentVolume, currentVolume, 1, 0, 1);
