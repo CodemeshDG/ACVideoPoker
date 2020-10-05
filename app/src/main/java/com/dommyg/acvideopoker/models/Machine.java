@@ -2,6 +2,8 @@ package com.dommyg.acvideopoker.models;
 
 import android.app.Application;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 
 import androidx.databinding.BaseObservable;
@@ -11,6 +13,8 @@ import com.dommyg.acvideopoker.BR;
 import com.dommyg.acvideopoker.GameSounds;
 import com.dommyg.acvideopoker.utils.Constants;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -20,16 +24,18 @@ import java.math.RoundingMode;
 public class Machine extends BaseObservable {
 
     // These are possible hand outcomes with prize values.
-    static final private int ROYAL_FLUSH_PRIZE = 800;
-    static final private int STRAIGHT_FLUSH_PRIZE = 50;
-    static final private int FOUR_OF_A_KIND_PRIZE = 25;
-    static final private int FULL_HOUSE_PRIZE = 9;
-    static final private int FLUSH_PRIZE = 6;
-    static final private int STRAIGHT_PRIZE = 4;
-    static final private int THREE_OF_A_KIND_PRIZE = 3;
-    static final private int TWO_PAIR_PRIZE = 2;
-    static final private int JACKS_OR_BETTER_PRIZE = 1;
-    static final private int NOTHING_PRIZE = 0;
+    private static final int ROYAL_FLUSH_PRIZE = 800;
+    private static final int STRAIGHT_FLUSH_PRIZE = 50;
+    private static final int FOUR_OF_A_KIND_PRIZE = 25;
+    private static final int FULL_HOUSE_PRIZE = 9;
+    private static final int FLUSH_PRIZE = 6;
+    private static final int STRAIGHT_PRIZE = 4;
+    private static final int THREE_OF_A_KIND_PRIZE = 3;
+    private static final int TWO_PAIR_PRIZE = 2;
+    private static final int JACKS_OR_BETTER_PRIZE = 1;
+    private static final int NOTHING_PRIZE = 0;
+
+    private static final int BLANK_CARD_INDEX = -1;
 
     private Deck deck;
     private Bank bank;
@@ -40,7 +46,7 @@ public class Machine extends BaseObservable {
     private GameSounds gameSounds;
 
     private boolean[] holds;
-    private String[] cardImagePaths = new String[5];
+    private Bitmap[] cardImages;
 
     private boolean isNewHand;
     private boolean isInDeal;
@@ -63,6 +69,7 @@ public class Machine extends BaseObservable {
         this.bet = 1;
         this.winAmount = BigDecimal.valueOf(0);
         this.holds = new boolean[5];
+        this.cardImages = new Bitmap[5];
         this.isNewHand = true;
         this.isInDeal = false;
         this.isDisplayingGameOver = true;
@@ -87,7 +94,7 @@ public class Machine extends BaseObservable {
 //            setCreditText();
 
             deck.deal();
-            setCardImages();
+            processCardImages();
         } else {
             setIsInDeal(true);
 //            handleToggles();
@@ -95,7 +102,7 @@ public class Machine extends BaseObservable {
             deck.hold(holds);
             deck.deal();
 
-            setCardImages();
+            processCardImages();
         }
     }
 
@@ -248,8 +255,13 @@ public class Machine extends BaseObservable {
     }
 
     @Bindable
-    public String[] getCardImagePaths() {
-        return cardImagePaths;
+    public Bitmap[] getCardImages() {
+        return cardImages;
+    }
+
+    private void setCardImages(int index, Bitmap cardImage) {
+        cardImages[index] = cardImage;
+        notifyPropertyChanged(BR.cardImages);
     }
 
     @Bindable
@@ -289,15 +301,42 @@ public class Machine extends BaseObservable {
     /**
      * Returns the path of a card's image in String format based upon a card's index position in the
      * {@link Deck}'s handDisplay.
+     * @param readIndex Index position of {@link Deck}'s handDisplay to retrieve. Pass
+     *                  BLANK_CARD_INDEX (-1) to retrieve the back of a card.
      */
-    public String createCardImagePath(int index) {
-        String value = application.getResources().getString(
-                deck.getHandDisplay()[index].getValue().getStringValue()
-        );
-        String suit = application.getResources().getString(
-                deck.getHandDisplay()[index].getSuit().getStringValue()
-        );
-        return "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
+    public String getCardImagePath(int readIndex) {
+        if (readIndex >= 0 && readIndex <= (deck.getHandDisplay().length - 1)) {
+            String value = application.getResources().getString(
+                    deck.getHandDisplay()[readIndex].getValue().getStringValue()
+            );
+            String suit = application.getResources().getString(
+                    deck.getHandDisplay()[readIndex].getSuit().getStringValue()
+            );
+            return "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
+        } else {
+            return "card_faces/back.png";
+        }
+    }
+
+
+    /**
+     * Retrieves the card image in {@link Bitmap} format based upon the index of the {@link Deck}'s
+     * handDisplay array.
+     * @param readIndex The index to read from the handDisplay when retrieving the card image path.
+     *                  Should be same as writeIndex except when you want to set the card image path
+     *                  as a card back. In that case, use BLANK_CARD_INDEX (-1).
+     * @param writeIndex The index of the cardImages array into which to set the retrieved
+     *                   {@link Bitmap}.
+     */
+    public void getCardImage(int readIndex, int writeIndex) {
+        InputStream inputStream;
+        try {
+            inputStream = application.getAssets().open(getCardImagePath(readIndex));
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            setCardImages(writeIndex, bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -307,17 +346,16 @@ public class Machine extends BaseObservable {
     private void resetCardImages() {
         for (int i = 0; i < deck.HAND_SIZE; i++) {
             if (!holds[i]) {
-                cardImagePaths[i] = "card_faces/back.png";
+                getCardImage(BLANK_CARD_INDEX, i);
             }
         }
-        notifyPropertyChanged(BR.cardImagePaths);
     }
 
     /**
      * Sets each index of the cardImagePaths array to the appropriate card face image path by using
      * the {@link Deck}'s handDisplay array.
      */
-    private void setCardImages() {
+    private void processCardImages() {
         resetCardImages();
         AssetManager assetManager = application.getAssets();
         handlerCards.postDelayed(
@@ -413,8 +451,7 @@ public class Machine extends BaseObservable {
         @Override
         public void run() {
             if (!holds[index]) {
-                cardImagePaths[index] = createCardImagePath(index);
-                notifyPropertyChanged(BR.cardImagePaths);
+                getCardImage(index, index);
                 gameSounds.play(GameSounds.SOUND_DOOT);
             }
 
