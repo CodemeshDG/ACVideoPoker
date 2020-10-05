@@ -20,15 +20,15 @@ public class BindingAdapters {
         textViewOutline.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
     }
 
-    @BindingAdapter("android:src")
-    public static void setImage(ImageView imageView, AssetManager assetManager, String imagePath) {
-        InputStream inputStream;
-        try {
-            inputStream = assetManager.open(imagePath);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            imageView.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @BindingAdapter("android:src")
+//    public static void setImage(ImageView imageView, AssetManager assetManager, String imagePath) {
+//        InputStream inputStream;
+//        try {
+//            inputStream = assetManager.open(imagePath);
+//            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//            imageView.setImageBitmap(bitmap);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

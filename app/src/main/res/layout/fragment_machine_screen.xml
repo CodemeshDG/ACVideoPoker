@@ -11,6 +11,7 @@
         <import type="com.dommyg.acvideopoker.models.Deck.Result"/>
         <import type="java.math.BigDecimal"/>
         <import type="android.view.View"/>
+        <import type="com.dommyg.acvideopoker.R"/>
     </data>
 
     <LinearLayout
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="@{StringUtil.createResultText(viewModel.handValue, viewModel.application)}"
-                android:textColor="@{viewModel.isNewHand ? context.getColor(@color/colorWhiteFont) : context.getColor(@color/colorRedFont)}"
+                android:textColor="@{viewModel.isNewHand ? context.getColor(R.color.colorWhiteFont) : context.getColor(R.color.colorRedFont)}"
                 android:textSize="@{viewModel.isNewHand ? 14 : 24}"
                 android:visibility="@{viewModel.handStatus.equals(Result.NOTHING) || viewModel.isInDeal ? View.INVISIBLE : View.VISIBLE}"
                 app:outlineSize="@{viewModel.isNewHand ? 0 : 8}"
@@ -173,7 +174,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
-                    android:src="@{context.assets, viewModel.cardImagePaths[0]}"
                     android:enabled="@{viewModel.isNewHand || viewModel.isInDeal ? false : true}"
                     android:onClick="@{() -> viewModel.processHold(1)}"/>
 
@@ -253,7 +253,7 @@
                 app:outlineSize="2dp"
                 app:outlineColor="@color/colorYellowOutline"
                 android:text="@{StringUtil.createWinText(viewModel.winAmount, viewModel.application)}"
-                android:visibility="@{viewModel.winAmount &lt;= BigDecimal.valueOf(0) ? View.INVISIBLE : View.VISIBLE}"
+                android:visibility="@{viewModel.winAmount.equals(BigDecimal.valueOf(0)) ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="WIN $100.00" />
