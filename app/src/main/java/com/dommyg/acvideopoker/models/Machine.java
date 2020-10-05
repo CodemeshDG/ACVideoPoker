@@ -75,7 +75,7 @@ public class Machine extends BaseObservable {
      */
     public void run() {
         if (isNewHand) {
-            handlerGameOver.removeCallbacksAndMessages(null);
+            terminateGameOverAnimation();
             setIsInDeal(true);
 //            handleToggles();
 
@@ -131,6 +131,15 @@ public class Machine extends BaseObservable {
 //        handleToggles();
     }
 
+    /**
+     * Removes any callbacks and messages from handlerGameOver and sets isDisplayingGameOver to
+     * false.
+     */
+    private void terminateGameOverAnimation() {
+        handlerGameOver.removeCallbacksAndMessages(null);
+        setIsDisplayingGameOver(false);
+    }
+
     public Deck getDeck() {
         return deck;
     }
@@ -181,7 +190,7 @@ public class Machine extends BaseObservable {
     }
 
     public void setWinAmount(BigDecimal winAmount) {
-        this.winAmount = winAmount;
+        this.winAmount = winAmount.setScale(2, RoundingMode.HALF_EVEN);
         notifyPropertyChanged(BR.winAmount);
     }
 

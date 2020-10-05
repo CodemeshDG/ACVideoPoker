@@ -25,7 +25,7 @@ public class Bank extends BaseObservable {
     }
 
     void setBankroll(BigDecimal bankroll) {
-        this.bankroll = bankroll;
+        this.bankroll = bankroll.setScale(2, RoundingMode.HALF_EVEN);
         notifyPropertyChanged(BR.bankroll);
     }
 }
