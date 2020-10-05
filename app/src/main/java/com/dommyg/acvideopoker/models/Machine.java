@@ -84,50 +84,29 @@ public class Machine extends BaseObservable {
         if (isNewHand) {
             terminateGameOverAnimation();
             setIsInDeal(true);
-//            handleToggles();
-
             removeHolds();
             resetWinAmount();
-
             processWager();
-
-//            setCreditText();
-
-            deck.deal();
-            processCardImages();
         } else {
             setIsInDeal(true);
-//            handleToggles();
-
             deck.hold(holds);
-            deck.deal();
-
-            processCardImages();
         }
+        deck.deal();
+        processCardImages();
     }
 
     private void firstCycle() {
         deck.determineHandStatus();
-
-//        toggleResultTextStyle();
-//        setResultText();
+        checkIfPlayDing();
 
         setIsNewHand(false);
         setIsInDeal(false);
-//        handleToggles();
     }
 
     private void finalCycle() {
         deck.determineHandStatus();
-//        BigDecimal previousBankroll = jacksOrBetter.getBank().getBankroll();
+        checkIfPlayDing();
         determinePayout();
-//        BigDecimal currentBankroll = jacksOrBetter.getBank().getBankroll();
-
-//        setCreditText();
-//        animateCreditText(previousBankroll, currentBankroll);
-//        toggleResultTextStyle();
-//        setResultText();
-//        setWinText();
 
         deck.resetDeck();
         deck.resetHandDisplay();
@@ -135,7 +114,6 @@ public class Machine extends BaseObservable {
         setIsNewHand(true);
         setIsInDeal(false);
         handlerGameOver.post(new AnimateGameOverRunnable());
-//        handleToggles();
     }
 
     /**
@@ -299,6 +277,15 @@ public class Machine extends BaseObservable {
     }
 
     /**
+     * Plays ding sound if {@link Deck}'s handStatus is not set to NOTHING.
+     */
+    private void checkIfPlayDing() {
+        if (!deck.getHandStatus().equals(Deck.Result.NOTHING)) {
+            gameSounds.play(GameSounds.SOUND_BING);
+        }
+    }
+
+    /**
      * Returns the path of a card's image in String format based upon a card's index position in the
      * {@link Deck}'s handDisplay.
      * @param readIndex Index position of {@link Deck}'s handDisplay to retrieve. Pass
@@ -312,6 +299,7 @@ public class Machine extends BaseObservable {
             String suit = application.getResources().getString(
                     deck.getHandDisplay()[readIndex].getSuit().getStringValue()
             );
+            gameSounds.play(GameSounds.SOUND_DOOT);
             return "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
         } else {
             return "card_faces/back.png";
@@ -452,7 +440,7 @@ public class Machine extends BaseObservable {
         public void run() {
             if (!holds[index]) {
                 getCardImage(index, index);
-                gameSounds.play(GameSounds.SOUND_DOOT);
+//                gameSounds.play(GameSounds.SOUND_DOOT);
             }
 
             index++;
