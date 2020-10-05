@@ -44,101 +44,101 @@ class GameLogic {
 //    private Deck deck;
 //    private GameSounds gameSounds;
 
-    private GameScreenFragment gameScreenFragment;
-    private Resources resources;
-    private Handler handlerCards;
-    private Handler handlerCredits;
-    private Handler handlerGameOver;
-
-    GameLogic(GameScreenFragment gameScreenFragment, Resources resources) {
-//        this.holds = new boolean[5];
-//        this.isNewHand = true;
-//        this.isInDeal = false;
-//        this.currentSpeed = SPEED_1;
-//        this.jacksOrBetter = new Machine();
-//        this.deck = jacksOrBetter.getDeck();
-        this.gameScreenFragment = gameScreenFragment;
-        this.resources = resources;
-        this.handlerCards = new Handler();
-        this.handlerCredits = new Handler();
-        this.handlerGameOver = new Handler();
-    }
-
-    /**
-     * Runs all the methods involved with gameplay based upon if the player pressed the buttonDeal
-     * at the start of the game or mid game.
-     */
-    void run() {
-        // TODO: Fragment
-        if (isNewHand) {
-            isInDeal = true;
-            handleToggles();
-
-            removeHolds();
-            resetWinText();
-
-            jacksOrBetter.processWager();
-
-            setCreditText();
-
-            deck.deal();
-            setCardImages();
-        } else {
-            isInDeal = true;
-            handleToggles();
-
-            deck.hold(holds);
-            deck.deal();
-
-            setCardImages();
-        }
-    }
-
-    private void firstCycle() {
-        // TODO: Fragment
-        deck.determineHandStatus();
-
-        toggleResultTextStyle();
-        setResultText();
-
-        isNewHand = false;
-        isInDeal = false;
-        handleToggles();
-    }
-
-    private void finalCycle() {
-        // TODO: Fragment
-        deck.determineHandStatus();
-//        BigDecimal previousBankroll = jacksOrBetter.getBank().getBankroll();
-        jacksOrBetter.determinePayout();
-//        BigDecimal currentBankroll = jacksOrBetter.getBank().getBankroll();
-
-        setCreditText();
-//        animateCreditText(previousBankroll, currentBankroll);
-        toggleResultTextStyle();
-        setResultText();
-        setWinText();
-
-        deck.resetDeck();
-        deck.resetHandDisplay();
-
-        isNewHand = true;
-        isInDeal = false;
-        handleToggles();
-    }
-
-    void initializeGameElements() {
-        // TODO: Probably all data binding except gameSounds (ViewModel?)
-//        gameSounds = new GameSounds(gameScreenFragment.getContext());
-        resetCardImages();
-        removeHolds();
-        toggleHoldButtons();
-        setDenominationButtonText(DENOM_25);
-        setCreditText();
-        setBetText();
-        setSpeedButtonText(SPEED_1_TEXT);
-        setSoundButtonText(gameSounds.VOLUME_3_ITERATOR);
-    }
+//    private GameScreenFragment gameScreenFragment;
+//    private Resources resources;
+//    private Handler handlerCards;
+//    private Handler handlerCredits;
+//    private Handler handlerGameOver;
+//
+//    GameLogic(GameScreenFragment gameScreenFragment, Resources resources) {
+////        this.holds = new boolean[5];
+////        this.isNewHand = true;
+////        this.isInDeal = false;
+////        this.currentSpeed = SPEED_1;
+////        this.jacksOrBetter = new Machine();
+////        this.deck = jacksOrBetter.getDeck();
+//        this.gameScreenFragment = gameScreenFragment;
+//        this.resources = resources;
+//        this.handlerCards = new Handler();
+//        this.handlerCredits = new Handler();
+//        this.handlerGameOver = new Handler();
+//    }
+//
+//    /**
+//     * Runs all the methods involved with gameplay based upon if the player pressed the buttonDeal
+//     * at the start of the game or mid game.
+//     */
+//    void run() {
+//        // TODO: Fragment
+//        if (isNewHand) {
+//            isInDeal = true;
+//            handleToggles();
+//
+//            removeHolds();
+//            resetWinText();
+//
+//            jacksOrBetter.processWager();
+//
+//            setCreditText();
+//
+//            deck.deal();
+//            setCardImages();
+//        } else {
+//            isInDeal = true;
+//            handleToggles();
+//
+//            deck.hold(holds);
+//            deck.deal();
+//
+//            setCardImages();
+//        }
+//    }
+//
+//    private void firstCycle() {
+//        // TODO: Fragment
+//        deck.determineHandStatus();
+//
+//        toggleResultTextStyle();
+//        setResultText();
+//
+//        isNewHand = false;
+//        isInDeal = false;
+//        handleToggles();
+//    }
+//
+//    private void finalCycle() {
+//        // TODO: Fragment
+//        deck.determineHandStatus();
+////        BigDecimal previousBankroll = jacksOrBetter.getBank().getBankroll();
+//        jacksOrBetter.determinePayout();
+////        BigDecimal currentBankroll = jacksOrBetter.getBank().getBankroll();
+//
+//        setCreditText();
+////        animateCreditText(previousBankroll, currentBankroll);
+//        toggleResultTextStyle();
+//        setResultText();
+//        setWinText();
+//
+//        deck.resetDeck();
+//        deck.resetHandDisplay();
+//
+//        isNewHand = true;
+//        isInDeal = false;
+//        handleToggles();
+//    }
+//
+//    void initializeGameElements() {
+//        // TODO: Probably all data binding except gameSounds (ViewModel?)
+////        gameSounds = new GameSounds(gameScreenFragment.getContext());
+//        resetCardImages();
+//        removeHolds();
+//        toggleHoldButtons();
+//        setDenominationButtonText(DENOM_25);
+//        setCreditText();
+//        setBetText();
+//        setSpeedButtonText(SPEED_1_TEXT);
+//        setSoundButtonText(gameSounds.VOLUME_3_ITERATOR);
+//    }
 
 //    /**
 //     * Sets the gameScreenFragment's textViewCredit based upon the isNewHand value.
@@ -216,39 +216,39 @@ class GameLogic {
 //        }
 //    }
 
-    /**
-     * Sets each index of the gameScreenFragment's cards ImageView array to the appropriate card
-     * face image by using the deck's handDisplay array.
-     */
-    private void setCardImages() {
-        // TODO: Data binding (util?)
-        resetCardImages();
-        AssetManager assetManager = gameScreenFragment.getContext().getAssets();
-        handlerCards.postDelayed(
-                new CardImageRunnable(assetManager, 0), currentSpeed
-        );
-    }
+//    /**
+//     * Sets each index of the gameScreenFragment's cards ImageView array to the appropriate card
+//     * face image by using the deck's handDisplay array.
+//     */
+//    private void setCardImages() {
+//        // TODO: Data binding (util?)
+//        resetCardImages();
+//        AssetManager assetManager = gameScreenFragment.getContext().getAssets();
+//        handlerCards.postDelayed(
+//                new CardImageRunnable(assetManager, 0), currentSpeed
+//        );
+//    }
 
-    /**
-     * Sets each index of the gameScreenFragment's cards ImageView array to an image of a card back.
-     */
-    private void resetCardImages() {
-        // TODO: Data binding (util?)
-        AssetManager assetManager = gameScreenFragment.getContext().getAssets();
-        InputStream inputStream;
-        String path = "card_faces/back.png";
-        try {
-            inputStream = assetManager.open(path);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            for (int i = 0; i < deck.HAND_SIZE; i++) {
-                if (!holds[i]) {
-                    gameScreenFragment.getCards()[i].setImageBitmap(bitmap);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * Sets each index of the gameScreenFragment's cards ImageView array to an image of a card back.
+//     */
+//    private void resetCardImages() {
+//        // TODO: Data binding (util?)
+//        AssetManager assetManager = gameScreenFragment.getContext().getAssets();
+//        InputStream inputStream;
+//        String path = "card_faces/back.png";
+//        try {
+//            inputStream = assetManager.open(path);
+//            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//            for (int i = 0; i < deck.HAND_SIZE; i++) {
+//                if (!holds[i]) {
+//                    gameScreenFragment.getCards()[i].setImageBitmap(bitmap);
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 //    /**
 //     * Updates the machine's betDenomination value to the next increment depending on its current
@@ -320,14 +320,14 @@ class GameLogic {
 //                .setText(creditText);
 //    }
 
-    private void animateCreditText(BigDecimal previousBankroll, BigDecimal currentBankroll) {
-        // TODO: Data binding (JUST INCREASE BANK INT AMOUNT; DATA BINDING WILL TAKE CARE OF IT)
-        TextView creditText = gameScreenFragment.getTextViewOperations()
-                [gameScreenFragment.ARRAY_OPERATIONS_CREDIT];
-        handlerCredits.post(
-                new AnimateCreditsRunnable(previousBankroll, currentBankroll, creditText)
-        );
-    }
+//    private void animateCreditText(BigDecimal previousBankroll, BigDecimal currentBankroll) {
+//        // TODO: Data binding (JUST INCREASE BANK INT AMOUNT; DATA BINDING WILL TAKE CARE OF IT)
+//        TextView creditText = gameScreenFragment.getTextViewOperations()
+//                [gameScreenFragment.ARRAY_OPERATIONS_CREDIT];
+//        handlerCredits.post(
+//                new AnimateCreditsRunnable(previousBankroll, currentBankroll, creditText)
+//        );
+//    }
 
 //    /**
 //     * Sets the gameScreenFragment's textViewResult based upon the deck's handStatus.
@@ -546,104 +546,104 @@ class GameLogic {
 //        setWinText();
 //    }
 
-    /**
-     * Enables or disables important gameplay features depending upon isNewHand and isInDeal values.
-     */
-    private void handleToggles() {
-        // TODO: Data binding
-        toggleResultText();
-        toggleDealButton();
-        toggleDenominationButton();
-        toggleBetButton();
-        toggleHoldButtons();
-        toggleSpeedButton();
-        toggleSoundButton();
-        toggleGameOver();
-    }
+//    /**
+//     * Enables or disables important gameplay features depending upon isNewHand and isInDeal values.
+//     */
+//    private void handleToggles() {
+//        // TODO: Data binding
+//        toggleResultText();
+//        toggleDealButton();
+//        toggleDenominationButton();
+//        toggleBetButton();
+//        toggleHoldButtons();
+//        toggleSpeedButton();
+//        toggleSoundButton();
+//        toggleGameOver();
+//    }
 
-    private class CardImageRunnable implements Runnable {
-        AssetManager assetManager;
-        int index;
+//    private class CardImageRunnable implements Runnable {
+//        AssetManager assetManager;
+//        int index;
+//
+//        CardImageRunnable(AssetManager assetManager, int index) {
+//            this.assetManager = assetManager;
+//            this.index = index;
+//        }
+//
+//        @Override
+//        public void run() {
+//            if (!holds[index]) {
+//                InputStream inputStream;
+//                String value = resources.getString(deck.getHandDisplay()[index].getValue().getStringValue());
+//                String suit = resources.getString(deck.getHandDisplay()[index].getSuit().getStringValue());
+//                String path = "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
+//                try {
+//                    inputStream = assetManager.open(path);
+//                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//                    gameScreenFragment.getCards()[index].setImageBitmap(bitmap);
+//                    gameSounds.play(gameSounds.SOUND_DOOT);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            index++;
+//
+//            if (index < deck.HAND_SIZE) {
+//                if (!holds[index]) {
+//                    handlerCards.postDelayed(this, currentSpeed);
+//                } else {
+//                    handlerCards.post(this);
+//                }
+//            } else if (isNewHand) {
+//                firstCycle();
+//            } else {
+//                finalCycle();
+//            }
+//        }
+//    }
 
-        CardImageRunnable(AssetManager assetManager, int index) {
-            this.assetManager = assetManager;
-            this.index = index;
-        }
+//    private class AnimateCreditsRunnable implements Runnable {
+//        BigDecimal startAmount;
+//        BigDecimal currentAmount;
+//        BigDecimal newAmount;
+//        TextView creditTextView;
+//
+//        AnimateCreditsRunnable(BigDecimal startAmount, BigDecimal newAmount, TextView creditTextView) {
+//            this.startAmount = startAmount;
+//            this.currentAmount = startAmount;
+//            this.newAmount = newAmount;
+//            this.creditTextView = creditTextView;
+//        }
+//
+//        @Override
+//        public void run() {
+//            currentAmount = currentAmount.add(BigDecimal.valueOf(.01)
+//                    .setScale(2, BigDecimal.ROUND_HALF_EVEN));
+//            creditTextView.setText(resources.getString(R.string.credit) + currentAmount);
+//            if (!currentAmount.equals(newAmount)) {
+//                handlerCredits.postDelayed(this, 1);
+//            }
+//        }
+//    }
 
-        @Override
-        public void run() {
-            if (!holds[index]) {
-                InputStream inputStream;
-                String value = resources.getString(deck.getHandDisplay()[index].getValue().getStringValue());
-                String suit = resources.getString(deck.getHandDisplay()[index].getSuit().getStringValue());
-                String path = "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
-                try {
-                    inputStream = assetManager.open(path);
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    gameScreenFragment.getCards()[index].setImageBitmap(bitmap);
-                    gameSounds.play(gameSounds.SOUND_DOOT);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            index++;
-
-            if (index < deck.HAND_SIZE) {
-                if (!holds[index]) {
-                    handlerCards.postDelayed(this, currentSpeed);
-                } else {
-                    handlerCards.post(this);
-                }
-            } else if (isNewHand) {
-                firstCycle();
-            } else {
-                finalCycle();
-            }
-        }
-    }
-
-    private class AnimateCreditsRunnable implements Runnable {
-        BigDecimal startAmount;
-        BigDecimal currentAmount;
-        BigDecimal newAmount;
-        TextView creditTextView;
-
-        AnimateCreditsRunnable(BigDecimal startAmount, BigDecimal newAmount, TextView creditTextView) {
-            this.startAmount = startAmount;
-            this.currentAmount = startAmount;
-            this.newAmount = newAmount;
-            this.creditTextView = creditTextView;
-        }
-
-        @Override
-        public void run() {
-            currentAmount = currentAmount.add(BigDecimal.valueOf(.01)
-                    .setScale(2, BigDecimal.ROUND_HALF_EVEN));
-            creditTextView.setText(resources.getString(R.string.credit) + currentAmount);
-            if (!currentAmount.equals(newAmount)) {
-                handlerCredits.postDelayed(this, 1);
-            }
-        }
-    }
-
-    private class AnimateGameOverRunnable implements Runnable {
-        TextView gameOverTextView;
-
-        AnimateGameOverRunnable(TextView gameOverTextView) {
-            this.gameOverTextView = gameOverTextView;
-        }
-
-        @Override
-        public void run() {
-            if (gameOverTextView.getVisibility() == View.INVISIBLE ||
-                    gameOverTextView.getVisibility() == View.GONE) {
-                gameOverTextView.setVisibility(View.VISIBLE);
-                handlerGameOver.postDelayed(this, 2000);
-            } else {
-                gameOverTextView.setVisibility(View.INVISIBLE);
-                handlerGameOver.postDelayed(this, 500);
-            }
-        }
-    }
+//    private class AnimateGameOverRunnable implements Runnable {
+//        TextView gameOverTextView;
+//
+//        AnimateGameOverRunnable(TextView gameOverTextView) {
+//            this.gameOverTextView = gameOverTextView;
+//        }
+//
+//        @Override
+//        public void run() {
+//            if (gameOverTextView.getVisibility() == View.INVISIBLE ||
+//                    gameOverTextView.getVisibility() == View.GONE) {
+//                gameOverTextView.setVisibility(View.VISIBLE);
+//                handlerGameOver.postDelayed(this, 2000);
+//            } else {
+//                gameOverTextView.setVisibility(View.INVISIBLE);
+//                handlerGameOver.postDelayed(this, 500);
+//            }
+//        }
+//    }
 }

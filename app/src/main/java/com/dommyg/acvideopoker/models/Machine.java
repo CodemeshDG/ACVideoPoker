@@ -2,22 +2,22 @@ package com.dommyg.acvideopoker.models;
 
 import android.app.Application;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.view.View;
-import android.widget.TextView;
+import android.os.Handler;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import com.dommyg.acvideopoker.BR;
 import com.dommyg.acvideopoker.GameSounds;
 import com.dommyg.acvideopoker.utils.Constants;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Contains all the elements for playing the game. Holds a deck and a bank.
  */
-public class Machine {
+public class Machine extends BaseObservable {
 
     // These are possible hand outcomes with prize values.
     static final private int ROYAL_FLUSH_PRIZE = 800;
@@ -40,11 +40,15 @@ public class Machine {
     private GameSounds gameSounds;
 
     private boolean[] holds;
-    private Bitmap[] cardImages;
+    private String[] cardImagePaths = new String[5];
 
     private boolean isNewHand;
     private boolean isInDeal;
+    private boolean isDisplayingGameOver;
     private int currentSpeed;
+
+    private Handler handlerCards;
+    private Handler handlerGameOver;
 
     private Application application;
 
@@ -52,14 +56,79 @@ public class Machine {
         this.application = application;
         this.deck = new Deck();
         this.bank = new Bank();
+        this.gameSounds = new GameSounds(application);
+        this.handlerCards = new Handler();
+        this.handlerGameOver = new Handler();
         this.betDenomination = BigDecimal.valueOf(.25);
         this.bet = 1;
         this.winAmount = BigDecimal.valueOf(0);
-        this.gameSounds = new GameSounds(application);
         this.holds = new boolean[5];
         this.isNewHand = true;
         this.isInDeal = false;
+        this.isDisplayingGameOver = true;
         this.currentSpeed = Constants.SPEED_1;
+    }
+
+    /**
+     * Runs all the methods involved with gameplay based upon if the player pressed the deal/draw
+     * button at the start of the game or mid game.
+     */
+    public void run() {
+        if (isNewHand) {
+            handlerGameOver.removeCallbacksAndMessages(null);
+            setIsInDeal(true);
+//            handleToggles();
+
+            removeHolds();
+            resetWinAmount();
+
+            processWager();
+
+//            setCreditText();
+
+            deck.deal();
+            setCardImages();
+        } else {
+            setIsInDeal(true);
+//            handleToggles();
+
+            deck.hold(holds);
+            deck.deal();
+
+            setCardImages();
+        }
+    }
+
+    private void firstCycle() {
+        deck.determineHandStatus();
+
+//        toggleResultTextStyle();
+//        setResultText();
+
+        setIsNewHand(false);
+        setIsInDeal(false);
+//        handleToggles();
+    }
+
+    private void finalCycle() {
+        deck.determineHandStatus();
+//        BigDecimal previousBankroll = jacksOrBetter.getBank().getBankroll();
+        determinePayout();
+//        BigDecimal currentBankroll = jacksOrBetter.getBank().getBankroll();
+
+//        setCreditText();
+//        animateCreditText(previousBankroll, currentBankroll);
+//        toggleResultTextStyle();
+//        setResultText();
+//        setWinText();
+
+        deck.resetDeck();
+        deck.resetHandDisplay();
+
+        setIsNewHand(true);
+        setIsInDeal(false);
+        handlerGameOver.post(new AnimateGameOverRunnable());
+//        handleToggles();
     }
 
     public Deck getDeck() {
@@ -70,37 +139,93 @@ public class Machine {
         return bank;
     }
 
+    @Bindable
     public BigDecimal getBetDenomination() {
         return betDenomination;
     }
 
-    public void setBetDenomination(BigDecimal betDenomination) {
-        this.betDenomination = betDenomination;
+    /**
+     * Updates the betDenomination value to the next increment depending on its current value.
+     */
+    public void changeDenomination() {
+        if (betDenomination.equals(Constants.DENOM_25)) {
+            betDenomination = Constants.DENOM_50;
+        } else if (betDenomination.equals(Constants.DENOM_50)) {
+            betDenomination = Constants.DENOM_100;
+        } else {
+            betDenomination = Constants.DENOM_25;
+        }
+        notifyPropertyChanged(BR.betDenomination);
     }
 
+    @Bindable
     public int getBet() {
         return bet;
     }
 
-    public void setBet(int bet) {
-        this.bet = bet;
+    /**
+     * Updates the bet value to the next increment depending on its current value.
+     */
+    public void changeBet() {
+        if (bet < 5) {
+            bet++;
+        } else {
+            bet = 1;
+        }
+        notifyPropertyChanged(BR.bet);
     }
 
+    @Bindable
     public BigDecimal getWinAmount() {
         return winAmount;
     }
 
     public void setWinAmount(BigDecimal winAmount) {
         this.winAmount = winAmount;
+        notifyPropertyChanged(BR.winAmount);
     }
 
+    /**
+     * Sets the winAmount to 0.
+     */
+    private void resetWinAmount() {
+        setWinAmount(BigDecimal.valueOf(0.00).setScale(2, RoundingMode.HALF_EVEN));
+    }
+
+    @Bindable
     public int getCurrentSpeed() {
         return currentSpeed;
+    }
+
+    /**
+     * Updates the currentSpeed to the next increment depending on its current value.
+     */
+    public void changeSpeed() {
+        switch (currentSpeed) {
+            case Constants.SPEED_1:
+                currentSpeed = Constants.SPEED_2;
+                break;
+
+            case Constants.SPEED_2:
+                currentSpeed = Constants.SPEED_3;
+                break;
+
+            case Constants.SPEED_3:
+                currentSpeed = Constants.SPEED_1;
+                break;
+        }
+        notifyPropertyChanged(BR.currentSpeed);
+    }
+
+    @Bindable
+    public boolean[] getHolds() {
+        return holds;
     }
 
     public void setHolds(int index) {
         gameSounds.play(GameSounds.SOUND_DOOT);
         holds[index] = !holds[index];
+        notifyPropertyChanged(BR.holds);
     }
 
     /**
@@ -110,18 +235,42 @@ public class Machine {
         for (int i = 0; i < deck.HAND_SIZE; i++) {
             holds[i] = false;
         }
+        notifyPropertyChanged(BR.holds);
     }
 
-    public boolean[] getHolds() {
-        return holds;
+    @Bindable
+    public String[] getCardImagePaths() {
+        return cardImagePaths;
     }
 
+    @Bindable
     public boolean getIsNewHand() {
         return isNewHand;
     }
 
+    private void setIsNewHand(boolean isNewHand) {
+        this.isNewHand = isNewHand;
+        notifyPropertyChanged(BR.isNewHand);
+    }
+
+    @Bindable
     public boolean getIsInDeal() {
         return isInDeal;
+    }
+
+    private void setIsInDeal(boolean isInDeal) {
+        this.isInDeal = isInDeal;
+        notifyPropertyChanged(BR.isInDeal);
+    }
+
+    @Bindable
+    public boolean getIsDisplayingGameOver() {
+        return isDisplayingGameOver;
+    }
+
+    public void setIsDisplayingGameOver(boolean isDisplayingGameOver) {
+        this.isDisplayingGameOver = isDisplayingGameOver;
+        notifyPropertyChanged(BR.isDisplayingGameOver);
     }
 
     public GameSounds getGameSounds() {
@@ -129,7 +278,46 @@ public class Machine {
     }
 
     /**
-     * Determines which amount to payout to the player based upon the deck's handStatus.
+     * Returns the path of a card's image in String format based upon a card's index position in the
+     * {@link Deck}'s handDisplay.
+     */
+    public String createCardImagePath(int index) {
+        String value = application.getResources().getString(
+                deck.getHandDisplay()[index].getValue().getStringValue()
+        );
+        String suit = application.getResources().getString(
+                deck.getHandDisplay()[index].getSuit().getStringValue()
+        );
+        return "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
+    }
+
+    /**
+     * Sets the image path of each index of the cardImagePaths array which is not marked as held by
+     * holds array to be the back of a card.
+     */
+    private void resetCardImages() {
+        for (int i = 0; i < deck.HAND_SIZE; i++) {
+            if (!holds[i]) {
+                cardImagePaths[i] = "card_faces/back.png";
+            }
+        }
+        notifyPropertyChanged(BR.cardImagePaths);
+    }
+
+    /**
+     * Sets each index of the cardImagePaths array to the appropriate card face image path by using
+     * the {@link Deck}'s handDisplay array.
+     */
+    private void setCardImages() {
+        resetCardImages();
+        AssetManager assetManager = application.getAssets();
+        handlerCards.postDelayed(
+                new CardImagePathsRunnable(assetManager, 0), currentSpeed
+        );
+    }
+
+    /**
+     * Determines which amount to payout to the player based upon the {@link Deck}'s handStatus.
      */
     public void determinePayout() {
         switch (deck.getHandStatus()) {
@@ -176,15 +364,15 @@ public class Machine {
     }
 
     /**
-     * Updates and adds the winAmount to the bankroll.
+     * Updates and adds the winAmount to the {@link Bank}'s bankroll.
      */
     private void processPayout(int prize) {
-        this.winAmount = calculatePayout(prize);
+        setWinAmount(calculatePayout(prize));
         bank.setBankroll(bank.getBankroll().add(winAmount));
     }
 
     /**
-     * Removes the wager amount from the bankroll.
+     * Removes the wager amount from the {@link Bank}'s bankroll.
      */
     public void processWager() {
         bank.setBankroll(bank.getBankroll().subtract(calculateWager()));
@@ -204,11 +392,11 @@ public class Machine {
         return betDenomination.multiply(BigDecimal.valueOf(bet));
     }
 
-    private class CardImageRunnable implements Runnable {
+    private class CardImagePathsRunnable implements Runnable {
         AssetManager assetManager;
         int index;
 
-        CardImageRunnable(AssetManager assetManager, int index) {
+        CardImagePathsRunnable(AssetManager assetManager, int index) {
             this.assetManager = assetManager;
             this.index = index;
         }
@@ -216,18 +404,9 @@ public class Machine {
         @Override
         public void run() {
             if (!holds[index]) {
-                InputStream inputStream;
-                String value = application.getResources().getString(deck.getHandDisplay()[index].getValue().getStringValue());
-                String suit = application.getResources().getString(deck.getHandDisplay()[index].getSuit().getStringValue());
-                String path = "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
-                try {
-                    inputStream = assetManager.open(path);
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    gameScreenFragment.getCards()[index].setImageBitmap(bitmap);
-                    gameSounds.play(gameSounds.SOUND_DOOT);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                cardImagePaths[index] = createCardImagePath(index);
+                notifyPropertyChanged(BR.cardImagePaths);
+                gameSounds.play(GameSounds.SOUND_DOOT);
             }
 
             index++;
@@ -242,6 +421,20 @@ public class Machine {
                 firstCycle();
             } else {
                 finalCycle();
+            }
+        }
+    }
+
+    private class AnimateGameOverRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            if (!isDisplayingGameOver) {
+                setIsDisplayingGameOver(true);
+                handlerGameOver.postDelayed(this, 2000);
+            } else {
+                setIsDisplayingGameOver(false);
+                handlerGameOver.postDelayed(this, 500);
             }
         }
     }

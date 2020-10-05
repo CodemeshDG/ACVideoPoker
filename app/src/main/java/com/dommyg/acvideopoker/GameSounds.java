@@ -1,14 +1,16 @@
 package com.dommyg.acvideopoker;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
 import java.io.IOException;
 
-public class GameSounds {
+public class GameSounds extends BaseObservable {
     private int bing;
     private int doot;
 
@@ -58,6 +60,7 @@ public class GameSounds {
         }
     }
 
+    @Bindable
     public int getCurrentVolumeIterator() {
         return currentVolumeIterator;
     }
@@ -74,7 +77,10 @@ public class GameSounds {
         }
     }
 
-    public int changeVolume() {
+    /**
+     * Updates currentVolume to the next increment depending on its current value.
+     */
+    public void changeVolume() {
         switch (currentVolumeIterator) {
             case VOLUME_3_ITERATOR:
                 currentVolumeIterator = VOLUME_2_ITERATOR;
@@ -96,6 +102,6 @@ public class GameSounds {
                 currentVolume = VOLUME_3;
                 break;
         }
-        return currentVolumeIterator;
+        notifyPropertyChanged(BR.currentVolumeIterator);
     }
 }

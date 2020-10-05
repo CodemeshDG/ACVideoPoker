@@ -1,5 +1,9 @@
 package com.dommyg.acvideopoker.models;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import com.dommyg.acvideopoker.BR;
 import com.dommyg.acvideopoker.R;
 
 import java.util.ArrayList;
@@ -7,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
-public class Deck {
+public class Deck extends BaseObservable {
     /**
      * Contains hierarchical values and Strings reflective of handCalculation outcomes.
      */
@@ -118,6 +122,7 @@ public class Deck {
         this.handStatus = Result.NOTHING;
     }
 
+    @Bindable
     public Result getHandStatus() {
         return handStatus;
     }
@@ -245,24 +250,27 @@ public class Deck {
         if (flush && straight) {
             if (checkRoyalFlush()) {
                 handStatus = Result.ROYAL_FLUSH;
-                return;
             } else {
                 handStatus = Result.STRAIGHT_FLUSH;
-                return;
             }
+            notifyPropertyChanged(BR.handStatus);
+            return;
         }
 
         if (flush) {
             handStatus = Result.FLUSH;
+            notifyPropertyChanged(BR.handStatus);
             return;
         }
 
         if (straight) {
             handStatus = Result.STRAIGHT;
+            notifyPropertyChanged(BR.handStatus);
             return;
         }
 
         handStatus = checkPair();
+        notifyPropertyChanged(BR.handStatus);
     }
 
     /**
@@ -335,7 +343,7 @@ public class Deck {
         ArrayList<Card> firstSet = new ArrayList<>();
         ArrayList<Card> secondSet = new ArrayList<>();
 
-        while(!handCalculation.isEmpty()) {
+        while (!handCalculation.isEmpty()) {
             Card source = new Card(handCalculation.get(FIRST_CARD));
 
             if (firstSet.size() != 0) {
@@ -349,9 +357,9 @@ public class Deck {
                 }
             }
 
-            if (secondSet.size() != 0 ) {
+            if (secondSet.size() != 0) {
                 // Second set exists; checking for a match.
-                if(source.getValue()
+                if (source.getValue()
                         .equals(secondSet.get(FIRST_CARD).getValue())) {
                     // Match; add to set and restart loop.
                     secondSet.add(handCalculation.get(FIRST_CARD));

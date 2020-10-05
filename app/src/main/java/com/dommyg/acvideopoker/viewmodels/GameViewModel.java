@@ -7,10 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import com.dommyg.acvideopoker.models.Bank;
 import com.dommyg.acvideopoker.models.Deck;
 import com.dommyg.acvideopoker.models.Machine;
-import com.dommyg.acvideopoker.utils.Constants;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class GameViewModel extends AndroidViewModel {
     private Machine jacksOrBetter;
@@ -24,12 +22,20 @@ public class GameViewModel extends AndroidViewModel {
         return jacksOrBetter.getHolds();
     }
 
+    public String[] getCardImagePaths() {
+        return jacksOrBetter.getCardImagePaths();
+    }
+
     public boolean getIsNewHand() {
         return jacksOrBetter.getIsNewHand();
     }
 
     public boolean getIsInDeal() {
         return jacksOrBetter.getIsInDeal();
+    }
+
+    public boolean getIsDisplayingGameOver() {
+        return jacksOrBetter.getIsDisplayingGameOver();
     }
 
     public int getCurrentSpeed() {
@@ -65,90 +71,45 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     /**
-     * Updates the machine's betDenomination value to the next increment depending on its current
-     * value.
+     * Updates the {@link Machine}'s betDenomination value.
      */
     public void processChangeDenomination() {
-        // TODO: Data binding
-        if (jacksOrBetter.getBetDenomination().equals(Constants.DENOM_25)) {
-            processChangeDenomination(Constants.DENOM_50);
-//            setDenominationButtonText(DENOM_50);
-        } else if (jacksOrBetter.getBetDenomination().equals(Constants.DENOM_50)) {
-            processChangeDenomination(Constants.DENOM_100);
-//            setDenominationButtonText(DENOM_100);
-        } else {
-            processChangeDenomination(Constants.DENOM_25);
-//            setDenominationButtonText(DENOM_25);
-        }
+        jacksOrBetter.changeDenomination();
     }
 
     /**
-     * Updates the machine's betDenomination value.
+     * Updates the {@link Machine}'s bet value.
      */
-    private void processChangeDenomination(BigDecimal amount) {
-        jacksOrBetter.setBetDenomination(amount);
+    public void processChangeBet() {
+        jacksOrBetter.changeBet();
     }
 
     /**
-     * Updates the machine's bet value to the next increment depending on its current value.
+     * Updates the {@link Machine}'s currentSpeed.
      */
-    void processChangeBet() {
-        // TODO: Data binding
-        if (jacksOrBetter.getBet() < 5) {
-            jacksOrBetter.setBet(jacksOrBetter.getBet() + 1);
-        } else {
-            jacksOrBetter.setBet(1);
-        }
-//        setBetText();
+    public void processChangeSpeed() {
+        jacksOrBetter.changeSpeed();
     }
 
     /**
-     * Updates the currentSpeed to the next increment depending on its current value.
+     * Updates {@link com.dommyg.acvideopoker.GameSounds}'s currentVolume to the next increment
+     * depending on its current value.
      */
-    void processChangeSpeed() {
-        // TODO: Data binding
-        switch (currentSpeed) {
-            case Constants.SPEED_1:
-                currentSpeed = Constants.SPEED_2;
-//                setSpeedButtonText(SPEED_2_TEXT);
-                break;
-
-            case Constants.SPEED_2:
-                currentSpeed = Constants.SPEED_3;
-//                setSpeedButtonText(SPEED_3_TEXT);
-                break;
-
-            case Constants.SPEED_3:
-                currentSpeed = Constants.SPEED_1;
-//                setSpeedButtonText(SPEED_1_TEXT);
-                break;
-        }
-    }
-
-    /**
-     * Updates gameSounds's currentVolume to the next increment depending on its current value.
-     */
-    void processChangeVolume() {
-        // TODO: Data binding
+    public void processChangeVolume() {
         jacksOrBetter.getGameSounds().changeVolume();
-//        setSoundButtonText(gameSounds.changeVolume());
     }
 
     /**
-     * Sets a hold for an index.
+     * Sets the {@link Machine}'s hold at a specific index.
      */
     public void processHold(int index) {
         jacksOrBetter.setHolds(index);
     }
 
     /**
-     * Sets the machine's winAmount to 0 and runs setWinText() so that the gameScreenFragment's
-     * textViewWin is set to invisible.
+     * Runs the {@link Machine}'s game logic.
      */
-    private void resetWinText() {
-        // TODO: Data binding
-        jacksOrBetter.setWinAmount(
-                BigDecimal.valueOf(0.00).setScale(2, RoundingMode.HALF_EVEN));
-//        setWinText();
+    public void dealOrDraw() {
+        jacksOrBetter.run();
     }
 }
