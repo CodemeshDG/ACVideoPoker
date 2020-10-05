@@ -40,11 +40,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="@{StringUtil.createResultText(viewModel.handValue, viewModel.application)}"
-                android:textColor="@{viewModel.isNewHand ? context.getColor(R.color.colorWhiteFont) : context.getColor(R.color.colorRedFont)}"
-                android:textSize="@{viewModel.isNewHand ? 14 : 24}"
-                android:visibility="@{viewModel.handStatus.equals(Result.NOTHING) || viewModel.isInDeal ? View.INVISIBLE : View.VISIBLE}"
-                app:outlineSize="@{viewModel.isNewHand ? 0 : 8}"
+                android:text="@{StringUtil.createResultText(viewModel.jacksOrBetter.deck.handStatus.stringValue, viewModel.application)}"
+                android:textColor="@{viewModel.jacksOrBetter.isNewHand ? context.getColor(R.color.colorWhiteFont) : context.getColor(R.color.colorRedFont)}"
+                android:textSize="@{viewModel.jacksOrBetter.isNewHand ? 14 : 24}"
+                android:visibility="@{viewModel.jacksOrBetter.deck.handStatus.equals(Result.NOTHING) || viewModel.jacksOrBetter.isInDeal ? View.INVISIBLE : View.VISIBLE}"
+                app:outlineSize="@{viewModel.jacksOrBetter.isNewHand ? 0 : 8}"
                 app:outlineColor="@color/colorYellowOutline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
                     android:layout_weight="1"
                     android:fontFamily="monospace"
                     android:text="@string/button_hold"
-                    android:visibility="@{viewModel.holds[0] ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[0] ? View.VISIBLE : View.INVISIBLE}"
                     android:textAlignment="center"
                     android:textScaleX="1.5"
                     android:textStyle="bold"
@@ -87,7 +87,7 @@
                     android:layout_weight="1"
                     android:fontFamily="monospace"
                     android:text="@string/button_hold"
-                    android:visibility="@{viewModel.holds[1] ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[1] ? View.VISIBLE : View.INVISIBLE}"
                     android:shadowColor="@color/colorBlackShadow"
                     android:shadowRadius="1"
                     android:shadowDx="5"
@@ -104,7 +104,7 @@
                     android:layout_weight="1"
                     android:fontFamily="monospace"
                     android:text="@string/button_hold"
-                    android:visibility="@{viewModel.holds[2] ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[2] ? View.VISIBLE : View.INVISIBLE}"
                     android:shadowColor="@color/colorBlackShadow"
                     android:shadowRadius="1"
                     android:shadowDx="5"
@@ -121,7 +121,7 @@
                     android:layout_weight="1"
                     android:fontFamily="monospace"
                     android:text="@string/button_hold"
-                    android:visibility="@{viewModel.holds[3] ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[3] ? View.VISIBLE : View.INVISIBLE}"
                     android:shadowColor="@color/colorBlackShadow"
                     android:shadowRadius="1"
                     android:shadowDx="5"
@@ -138,7 +138,7 @@
                     android:layout_weight="1"
                     android:fontFamily="monospace"
                     android:text="@string/button_hold"
-                    android:visibility="@{viewModel.holds[4] ? View.VISIBLE : View.INVISIBLE}"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[4] ? View.VISIBLE : View.INVISIBLE}"
                     android:shadowColor="@color/colorBlackShadow"
                     android:shadowRadius="1"
                     android:shadowDx="5"
@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
-                    android:enabled="@{viewModel.isNewHand || viewModel.isInDeal ? false : true}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
                     android:onClick="@{() -> viewModel.processHold(0)}"/>
 
                 <ImageView
@@ -174,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
-                    android:enabled="@{viewModel.isNewHand || viewModel.isInDeal ? false : true}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
                     android:onClick="@{() -> viewModel.processHold(1)}"/>
 
                 <ImageView
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
-                    android:enabled="@{viewModel.isNewHand || viewModel.isInDeal ? false : true}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
                     android:onClick="@{() -> viewModel.processHold(2)}"/>
 
                 <ImageView
@@ -192,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
-                    android:enabled="@{viewModel.isNewHand || viewModel.isInDeal ? false : true}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
                     android:onClick="@{() -> viewModel.processHold(3)}"/>
 
                 <ImageView
@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
-                    android:enabled="@{viewModel.isNewHand || viewModel.isInDeal ? false : true}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
                     android:onClick="@{() -> viewModel.processHold(4)}"/>
             </LinearLayout>
 
@@ -216,7 +216,7 @@
                 android:textSize="46sp"
                 app:outlineSize="5dp"
                 app:outlineColor="@color/colorYellowOutline"
-                android:visibility="@{viewModel.isDisplayingGameOver ? View.VISIBLE : View.GONE}"
+                android:visibility="@{viewModel.jacksOrBetter.isDisplayingGameOver ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout2"
@@ -252,8 +252,8 @@
                 android:textSize="24sp"
                 app:outlineSize="2dp"
                 app:outlineColor="@color/colorYellowOutline"
-                android:text="@{StringUtil.createWinText(viewModel.winAmount, viewModel.application)}"
-                android:visibility="@{viewModel.winAmount.equals(BigDecimal.valueOf(0)) ? View.INVISIBLE : View.VISIBLE}"
+                android:text="@{StringUtil.createWinText(viewModel.jacksOrBetter.winAmount, viewModel.application)}"
+                android:visibility="@{viewModel.jacksOrBetter.winAmount.equals(BigDecimal.valueOf(0)) ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="WIN $100.00" />
@@ -267,7 +267,7 @@
                 android:textSize="24sp"
                 app:outlineSize="2dp"
                 app:outlineColor="@color/colorYellowOutline"
-                android:text="@{StringUtil.createCreditText(viewModel.bank.bankroll, viewModel.application)}"
+                android:text="@{StringUtil.createCreditText(viewModel.jacksOrBetter.bank.bankroll, viewModel.application)}"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="CREDIT $.00" />
@@ -277,7 +277,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="@{StringUtil.createBetButtonText(viewModel.bet, viewModel.application)}"
+                android:text="@{StringUtil.createBetButtonText(viewModel.jacksOrBetter.bet, viewModel.application)}"
                 android:textScaleX="1.5"
                 android:textStyle="bold"
                 android:shadowColor="@color/colorBlackShadow"
@@ -321,9 +321,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/operation_buttons"
                     android:fontFamily="sans-serif-condensed-medium"
-                    android:text="@{StringUtil.createSpeedButtonText(viewModel.currentSpeed, viewModel.application)}"
+                    android:text="@{StringUtil.createSpeedButtonText(viewModel.jacksOrBetter.currentSpeed, viewModel.application)}"
                     android:textColor="@drawable/operation_buttons"
-                    android:enabled="@{viewModel.isNewHand &amp;&amp; !viewModel.isInDeal}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
                     android:onClick="@{() -> viewModel.processChangeSpeed()}"
                     tools:text="Speed (1)" />
 
@@ -335,9 +335,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/operation_buttons"
                     android:fontFamily="sans-serif-condensed-medium"
-                    android:text="@{StringUtil.createSoundButtonText(viewModel.currentVolume, viewModel.application)}"
+                    android:text="@{StringUtil.createSoundButtonText(viewModel.jacksOrBetter.gameSounds.currentVolumeIterator, viewModel.application)}"
                     android:textColor="@drawable/operation_buttons"
-                    android:enabled="@{!viewModel.isInDeal}"
+                    android:enabled="@{!viewModel.jacksOrBetter.isInDeal}"
                     android:onClick="@{() -> viewModel.processChangeVolume()}"
                     tools:text="Sound (2)" />
             </LinearLayout>
@@ -376,7 +376,7 @@
                     android:fontFamily="sans-serif-condensed-medium"
                     android:text="@string/bet"
                     android:textColor="@drawable/operation_buttons"
-                    android:enabled="@{viewModel.isNewHand &amp;&amp; !viewModel.isInDeal}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
                     android:onClick="@{() -> viewModel.processChangeBet()}"
                     tools:text="@string/bet" />
 
@@ -388,9 +388,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/operation_buttons"
                     android:fontFamily="sans-serif-condensed-medium"
-                    android:text="@{viewModel.isNewHand ? @string/button_deal : @string/button_draw}"
+                    android:text="@{viewModel.jacksOrBetter.isNewHand ? @string/button_deal : @string/button_draw}"
                     android:textColor="@drawable/operation_buttons"
-                    android:enabled="@{!viewModel.isInDeal}"
+                    android:enabled="@{!viewModel.jacksOrBetter.isInDeal}"
                     android:onClick="@{() -> viewModel.dealOrDraw()}"
                     tools:text="Deal" />
 
@@ -404,9 +404,9 @@
                 android:fontFamily="@font/ultra"
                 android:textColor="@color/colorRedFont"
                 android:textSize="30sp"
-                android:text="@{StringUtil.createDenominationButtonText(viewModel.betDenomination)}"
+                android:text="@{StringUtil.createDenominationButtonText(viewModel.jacksOrBetter.betDenomination)}"
                 android:onClick="@{() -> viewModel.processChangeDenomination()}"
-                android:enabled="@{viewModel.isNewHand &amp;&amp; !viewModel.isInDeal}"
+                android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineDemonRight"
                 app:layout_constraintStart_toStartOf="@+id/guidelineDenomLeft"
@@ -432,7 +432,7 @@
                 android:fontFamily="sans-serif-light"
                 android:text="@string/game_over"
                 android:textSize="12sp"
-                android:visibility="@{viewModel.isNewHand &amp;&amp; !viewModel.isInDeal ? View.VISIBLE : View.INVISIBLE}"
+                android:visibility="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="GAME OVER" />

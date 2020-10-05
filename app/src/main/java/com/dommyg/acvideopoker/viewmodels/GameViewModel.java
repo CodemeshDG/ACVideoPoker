@@ -18,56 +18,8 @@ public class GameViewModel extends AndroidViewModel {
         this.jacksOrBetter = new Machine(application);
     }
 
-    public boolean[] getHolds() {
-        return jacksOrBetter.getHolds();
-    }
-
-    public String[] getCardImagePaths() {
-        return jacksOrBetter.getCardImagePaths();
-    }
-
-    public boolean getIsNewHand() {
-        return jacksOrBetter.getIsNewHand();
-    }
-
-    public boolean getIsInDeal() {
-        return jacksOrBetter.getIsInDeal();
-    }
-
-    public boolean getIsDisplayingGameOver() {
-        return jacksOrBetter.getIsDisplayingGameOver();
-    }
-
-    public int getCurrentSpeed() {
-        return jacksOrBetter.getCurrentSpeed();
-    }
-
-    public BigDecimal getBetDenomination() {
-        return jacksOrBetter.getBetDenomination();
-    }
-
-    public Bank getBank() {
-        return jacksOrBetter.getBank();
-    }
-
-    public int getBet() {
-        return jacksOrBetter.getBet();
-    }
-
-    public int getCurrentVolume() {
-        return jacksOrBetter.getGameSounds().getCurrentVolumeIterator();
-    }
-
-    public BigDecimal getWinAmount() {
-        return jacksOrBetter.getWinAmount();
-    }
-
-    public int getHandValue() {
-        return jacksOrBetter.getDeck().getHandStatus().getStringValue();
-    }
-
-    public Deck.Result getHandStatus() {
-        return jacksOrBetter.getDeck().getHandStatus();
+    public Machine getJacksOrBetter() {
+        return jacksOrBetter;
     }
 
     /**
