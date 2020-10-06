@@ -10,7 +10,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.dommyg.acvideopoker.BR;
-import com.dommyg.acvideopoker.GameSounds;
+import com.dommyg.acvideopoker.utils.GameSounds;
 import com.dommyg.acvideopoker.utils.Constants;
 
 import java.io.IOException;

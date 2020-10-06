@@ -6,8 +6,6 @@ import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
-import com.dommyg.acvideopoker.TextViewOutline;
-
 public class BindingAdapters {
 
     @BindingAdapter("android:textSize")

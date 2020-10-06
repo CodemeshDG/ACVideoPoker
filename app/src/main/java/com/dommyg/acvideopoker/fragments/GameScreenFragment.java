@@ -1,4 +1,4 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.dommyg.acvideopoker.R;
 import com.dommyg.acvideopoker.databinding.FragmentMachineScreenBinding;
 import com.dommyg.acvideopoker.viewmodels.GameViewModel;
 

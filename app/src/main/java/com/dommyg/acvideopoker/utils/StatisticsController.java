@@ -1,4 +1,4 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

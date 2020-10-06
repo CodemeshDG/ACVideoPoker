@@ -12,6 +12,7 @@
         <import type="java.math.BigDecimal"/>
         <import type="android.view.View"/>
         <import type="com.dommyg.acvideopoker.R"/>
+        <import type="androidx.core.content.ContextCompat"/>
     </data>
 
     <LinearLayout
@@ -35,13 +36,13 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.2364341" />
 
-            <com.dommyg.acvideopoker.TextViewOutline
+            <com.dommyg.acvideopoker.utils.TextViewOutline
                 android:id="@+id/textViewResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="@{StringUtil.createResultText(viewModel.jacksOrBetter.deck.handStatus.stringValue, viewModel.application)}"
-                android:textColor="@{viewModel.jacksOrBetter.isNewHand ? context.getColor(R.color.colorRedFont) : context.getColor(R.color.colorWhiteFont)}"
+                android:textColor="@{viewModel.jacksOrBetter.isNewHand ? ContextCompat.getColor(context, R.color.colorRedFont) : ContextCompat.getColor(context, R.color.colorWhiteFont)}"
                 android:textSize="@{viewModel.jacksOrBetter.isNewHand ? 24 : 14}"
                 android:visibility="@{viewModel.jacksOrBetter.deck.handStatus.equals(Result.NOTHING) || viewModel.jacksOrBetter.isInDeal ? View.INVISIBLE : View.VISIBLE}"
                 app:outlineSize="@{viewModel.jacksOrBetter.isNewHand ? 8 : 0}"
@@ -63,7 +64,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout2">
 
-                <com.dommyg.acvideopoker.TextViewOutline
+                <com.dommyg.acvideopoker.utils.TextViewOutline
                     android:id="@+id/textViewHold1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,7 +81,7 @@
                     android:shadowDy="5"
                     tools:text="HELD" />
 
-                <com.dommyg.acvideopoker.TextViewOutline
+                <com.dommyg.acvideopoker.utils.TextViewOutline
                     android:id="@+id/textViewHold2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,7 +98,7 @@
                     android:textStyle="bold"
                     tools:text="HELD" />
 
-                <com.dommyg.acvideopoker.TextViewOutline
+                <com.dommyg.acvideopoker.utils.TextViewOutline
                     android:id="@+id/textViewHold3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,7 +115,7 @@
                     android:textStyle="bold"
                     tools:text="HELD" />
 
-                <com.dommyg.acvideopoker.TextViewOutline
+                <com.dommyg.acvideopoker.utils.TextViewOutline
                     android:id="@+id/textViewHold4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -131,7 +132,7 @@
                     android:textStyle="bold"
                     tools:text="HELD" />
 
-                <com.dommyg.acvideopoker.TextViewOutline
+                <com.dommyg.acvideopoker.utils.TextViewOutline
                     android:id="@+id/textViewHold5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -210,7 +211,7 @@
                     android:onClick="@{() -> viewModel.processHold(4)}"/>
             </LinearLayout>
 
-            <com.dommyg.acvideopoker.TextViewOutline
+            <com.dommyg.acvideopoker.utils.TextViewOutline
                 android:id="@+id/textViewGameOverCenter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -248,7 +249,7 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.6" />
 
-            <com.dommyg.acvideopoker.TextViewOutline
+            <com.dommyg.acvideopoker.utils.TextViewOutline
                 android:id="@+id/textViewWin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -263,7 +264,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="WIN $100.00" />
 
-            <com.dommyg.acvideopoker.TextViewOutline
+            <com.dommyg.acvideopoker.utils.TextViewOutline
                 android:id="@+id/textViewCredit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -277,7 +278,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="CREDIT $.00" />
 
-            <com.dommyg.acvideopoker.TextViewOutline
+            <com.dommyg.acvideopoker.utils.TextViewOutline
                 android:id="@+id/textViewBet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -419,7 +420,7 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:text="25¢" />
 
-            <com.dommyg.acvideopoker.TextViewOutline
+            <com.dommyg.acvideopoker.utils.TextViewOutline
                 android:id="@+id/textViewGameType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -430,7 +431,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="JACKS OR BETTER" />
 
-            <com.dommyg.acvideopoker.TextViewOutline
+            <com.dommyg.acvideopoker.utils.TextViewOutline
                 android:id="@+id/textViewGameOverCorner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

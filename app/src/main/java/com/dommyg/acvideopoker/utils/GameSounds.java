@@ -1,4 +1,4 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.utils;
 
 import android.app.Application;
 import android.content.res.AssetManager;
@@ -7,6 +7,8 @@ import android.media.SoundPool;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
+import com.dommyg.acvideopoker.BR;
 
 import java.io.IOException;
 
@@ -68,11 +70,11 @@ public class GameSounds extends BaseObservable {
     public void play(int sound) {
         switch (sound) {
             case SOUND_BING:
-                soundPool.play(bing, currentVolume, currentVolume, 1, 0, 1);
+                    soundPool.play(bing, currentVolume, currentVolume, 1, 0, 1);
                 break;
 
             case SOUND_DOOT:
-                soundPool.play(doot, currentVolume, currentVolume, 1, 0, 1);
+                    soundPool.play(doot, currentVolume, currentVolume, 1, 0, 1);
                 break;
         }
     }

@@ -4,11 +4,8 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
-import com.dommyg.acvideopoker.models.Bank;
-import com.dommyg.acvideopoker.models.Deck;
 import com.dommyg.acvideopoker.models.Machine;
-
-import java.math.BigDecimal;
+import com.dommyg.acvideopoker.utils.GameSounds;
 
 public class GameViewModel extends AndroidViewModel {
     private Machine jacksOrBetter;
@@ -44,7 +41,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     /**
-     * Updates {@link com.dommyg.acvideopoker.GameSounds}'s currentVolume to the next increment
+     * Updates {@link GameSounds}'s currentVolume to the next increment
      * depending on its current value.
      */
     public void processChangeVolume() {
