@@ -52,6 +52,7 @@ public class Machine extends BaseObservable {
     private boolean isInDeal;
     private boolean isDisplayingGameOver;
     private int currentSpeed;
+    private int currentSpeedIterator;
 
     private Handler handlerCards;
     private Handler handlerGameOver;
@@ -74,6 +75,7 @@ public class Machine extends BaseObservable {
         this.isInDeal = false;
         this.isDisplayingGameOver = true;
         this.currentSpeed = Constants.SPEED_1;
+        this.currentSpeedIterator = Constants.SPEED_1_ITERATOR;
     }
 
     /**
@@ -186,29 +188,32 @@ public class Machine extends BaseObservable {
         setWinAmount(BigDecimal.valueOf(0.00).setScale(2, RoundingMode.HALF_EVEN));
     }
 
-    @Bindable
-    public int getCurrentSpeed() {
-        return currentSpeed;
-    }
-
     /**
      * Updates the currentSpeed to the next increment depending on its current value.
      */
     public void changeSpeed() {
         switch (currentSpeed) {
             case Constants.SPEED_1:
+                currentSpeedIterator = Constants.SPEED_2_ITERATOR;
                 currentSpeed = Constants.SPEED_2;
                 break;
 
             case Constants.SPEED_2:
+                currentSpeedIterator = Constants.SPEED_3_ITERATOR;
                 currentSpeed = Constants.SPEED_3;
                 break;
 
             case Constants.SPEED_3:
+                currentSpeedIterator = Constants.SPEED_1_ITERATOR;
                 currentSpeed = Constants.SPEED_1;
                 break;
         }
-        notifyPropertyChanged(BR.currentSpeed);
+        notifyPropertyChanged(BR.currentSpeedIterator);
+    }
+
+    @Bindable
+    public int getCurrentSpeedIterator() {
+        return currentSpeedIterator;
     }
 
     @Bindable

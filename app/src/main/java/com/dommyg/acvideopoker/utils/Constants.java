@@ -11,7 +11,7 @@ public class Constants {
     public final static int SPEED_2 = 60;
     public final static int SPEED_3 = 25;
 
-    public final static int SPEED_1_TEXT = 1;
-    public final static int SPEED_2_TEXT = 2;
-    public final static int SPEED_3_TEXT = 3;
+    public final static int SPEED_1_ITERATOR = 1;
+    public final static int SPEED_2_ITERATOR = 2;
+    public final static int SPEED_3_ITERATOR = 3;
 }

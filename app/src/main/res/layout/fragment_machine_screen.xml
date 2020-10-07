@@ -327,7 +327,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/operation_buttons"
                     android:fontFamily="sans-serif-condensed-medium"
-                    android:text="@{StringUtil.createSpeedButtonText(viewModel.jacksOrBetter.currentSpeed, viewModel.application)}"
+                    android:text="@{StringUtil.createSpeedButtonText(viewModel.jacksOrBetter.currentSpeedIterator, viewModel.application)}"
                     android:textColor="@drawable/operation_buttons"
                     android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
                     android:onClick="@{() -> viewModel.processChangeSpeed()}"
