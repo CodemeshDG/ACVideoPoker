@@ -71,6 +71,7 @@ public class Machine extends BaseObservable {
         this.winAmount = BigDecimal.valueOf(0);
         this.holds = new boolean[5];
         this.cardImages = new Bitmap[5];
+        resetCardImages();
         this.isNewHand = true;
         this.isInDeal = false;
         this.isDisplayingGameOver = true;
