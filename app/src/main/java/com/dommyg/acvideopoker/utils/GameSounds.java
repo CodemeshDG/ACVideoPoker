@@ -55,8 +55,8 @@ public class GameSounds extends BaseObservable {
 
     private void setSounds() {
         try {
-            bing = soundPool.load(assetManager.openFd("sounds/bing.wav"), 1);
-            doot = soundPool.load(assetManager.openFd("sounds/doot.wav"), 1);
+            bing = soundPool.load(assetManager.openFd("sounds/bing.ogg"), 1);
+            doot = soundPool.load(assetManager.openFd("sounds/doot.ogg"), 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
