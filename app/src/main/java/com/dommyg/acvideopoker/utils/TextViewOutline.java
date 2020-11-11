@@ -1,4 +1,4 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+
+import com.dommyg.acvideopoker.R;
 
 /**
  * Custom TextView class which can allow for special outlines and shadows. Obtained from a post on

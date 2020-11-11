@@ -1,15 +1,21 @@
-package com.dommyg.acvideopoker;
+package com.dommyg.acvideopoker.models;
+
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import com.dommyg.acvideopoker.BR;
+import com.dommyg.acvideopoker.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
-class Deck {
+public class Deck extends BaseObservable {
     /**
      * Contains hierarchical values and Strings reflective of handCalculation outcomes.
      */
-    enum Result {
+    public enum Result {
         ROYAL_FLUSH(9, R.string.result_royal_flush),
         STRAIGHT_FLUSH(8, R.string.result_straight_flush),
         FOUR_OF_A_KIND(7, R.string.result_four_of_a_kind),
@@ -104,7 +110,7 @@ class Deck {
      */
     private Result handStatus;
 
-    final int HAND_SIZE = 5;
+    public final int HAND_SIZE = 5;
     private final int FIRST_CARD = 0;
     private final int HAND_LAST_CARD = 4;
 
@@ -116,11 +122,12 @@ class Deck {
         this.handStatus = Result.NOTHING;
     }
 
-    Result getHandStatus() {
+    @Bindable
+    public Result getHandStatus() {
         return handStatus;
     }
 
-    Card[] getHandDisplay() {
+    public Card[] getHandDisplay() {
         return handDisplay;
     }
 
@@ -128,7 +135,7 @@ class Deck {
      * Resets the currentDeck by clearing all cards in it and copying over the masterDeck. Used when
      * the game is over and a fresh deck must be prepared for the next game.
      */
-    void resetDeck() {
+    public void resetDeck() {
         currentDeck.subList(FIRST_CARD, currentDeck.size()).clear();
         currentDeck.addAll(masterDeck);
     }
@@ -137,7 +144,7 @@ class Deck {
      * Resets the handDisplay by setting all indexes to null. Used when the game is over and the
      * player's hand must be discarded.
      */
-    void resetHandDisplay() {
+    public void resetHandDisplay() {
         for (int i = 0; i < HAND_SIZE; i++) {
             handDisplay[i] = null;
         }
@@ -147,7 +154,7 @@ class Deck {
      * Deals cards from the currentDeck into the player's handCalculation until it has five cards
      * total.
      */
-    void deal() {
+    public void deal() {
         for (int i = 0; i < HAND_SIZE; i++) {
             // Checking if there are empty positions in the handDisplay. All positions would be
             // empty at the start of the game. Some positions might be empty during mid game if a
@@ -180,7 +187,7 @@ class Deck {
      * Processes holds in the handDisplay. If a card is not selected to be held by the player, it
      * will be discarded.
      */
-    void hold(boolean[] holds) {
+    public void hold(boolean[] holds) {
         if (!holds[0]) {
             discard(1);
         }
@@ -233,7 +240,7 @@ class Deck {
      * Sets the hand status by using various checking functions: checkStraight(), checkFlush(),
      * checkRoyalFlush(), and checkPair().
      */
-    void determineHandStatus() {
+    public void determineHandStatus() {
         sortHandCalculationByValue();
         boolean straight = checkStraight();
 
@@ -243,24 +250,27 @@ class Deck {
         if (flush && straight) {
             if (checkRoyalFlush()) {
                 handStatus = Result.ROYAL_FLUSH;
-                return;
             } else {
                 handStatus = Result.STRAIGHT_FLUSH;
-                return;
             }
+            notifyPropertyChanged(BR.handStatus);
+            return;
         }
 
         if (flush) {
             handStatus = Result.FLUSH;
+            notifyPropertyChanged(BR.handStatus);
             return;
         }
 
         if (straight) {
             handStatus = Result.STRAIGHT;
+            notifyPropertyChanged(BR.handStatus);
             return;
         }
 
         handStatus = checkPair();
+        notifyPropertyChanged(BR.handStatus);
     }
 
     /**
@@ -333,7 +343,7 @@ class Deck {
         ArrayList<Card> firstSet = new ArrayList<>();
         ArrayList<Card> secondSet = new ArrayList<>();
 
-        while(!handCalculation.isEmpty()) {
+        while (!handCalculation.isEmpty()) {
             Card source = new Card(handCalculation.get(FIRST_CARD));
 
             if (firstSet.size() != 0) {
@@ -347,9 +357,9 @@ class Deck {
                 }
             }
 
-            if (secondSet.size() != 0 ) {
+            if (secondSet.size() != 0) {
                 // Second set exists; checking for a match.
-                if(source.getValue()
+                if (source.getValue()
                         .equals(secondSet.get(FIRST_CARD).getValue())) {
                     // Match; add to set and restart loop.
                     secondSet.add(handCalculation.get(FIRST_CARD));

@@ -1,393 +1,449 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingStart="16dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="16dp"
-    android:paddingBottom="8dp">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.dommyg.acvideopoker.viewmodels.GameViewModel" />
+        <import type="com.dommyg.acvideopoker.utils.StringUtil"/>
+        <import type="com.dommyg.acvideopoker.models.Deck.Result"/>
+        <import type="java.math.BigDecimal"/>
+        <import type="android.view.View"/>
+        <import type="com.dommyg.acvideopoker.R"/>
+        <import type="androidx.core.content.ContextCompat"/>
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineCardTop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.2364341" />
-
-        <com.dommyg.acvideopoker.TextViewOutline
-            android:id="@+id/textViewResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textColor="@color/colorRedFont"
-            android:textSize="24sp"
-            app:outlineSize="2dp"
-            app:outlineColor="@color/colorYellowOutline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="FULL HOUSE" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-            <com.dommyg.acvideopoker.TextViewOutline
-                android:id="@+id/textViewHold1"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCardTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2364341" />
+
+            <com.dommyg.acvideopoker.utils.TextViewOutline
+                android:id="@+id/textViewResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@{StringUtil.createResultText(viewModel.jacksOrBetter.deck.handStatus.stringValue, viewModel.application)}"
+                android:textColor="@{viewModel.jacksOrBetter.isNewHand ? ContextCompat.getColor(context, R.color.colorRedFont) : ContextCompat.getColor(context, R.color.colorWhiteFont)}"
+                android:textSize="@{viewModel.jacksOrBetter.isNewHand ? 24 : 14}"
+                android:visibility="@{viewModel.jacksOrBetter.deck.handStatus.equals(Result.NOTHING) || viewModel.jacksOrBetter.isInDeal ? View.INVISIBLE : View.VISIBLE}"
+                app:outlineSize="@{viewModel.jacksOrBetter.isNewHand ? 8 : 0}"
+                app:outlineColor="@color/colorYellowOutline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="FULL HOUSE"
+                tools:textColor="@color/colorRedFont"
+                tools:textSize="24sp"
+                tools:outlineSize="8"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:text="@string/button_hold"
-                android:textAlignment="center"
-                android:textScaleX="1.5"
-                android:textStyle="bold"
-                android:shadowColor="@color/colorBlackShadow"
-                android:shadowRadius="1"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                tools:text="HELD" />
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout2">
 
-            <com.dommyg.acvideopoker.TextViewOutline
-                android:id="@+id/textViewHold2"
+                <com.dommyg.acvideopoker.utils.TextViewOutline
+                    android:id="@+id/textViewHold1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="@string/button_hold"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[0] ? View.VISIBLE : View.INVISIBLE}"
+                    android:textAlignment="center"
+                    android:textScaleX="1.5"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/colorBlackShadow"
+                    android:shadowRadius="1"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    tools:text="HELD" />
+
+                <com.dommyg.acvideopoker.utils.TextViewOutline
+                    android:id="@+id/textViewHold2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="@string/button_hold"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[1] ? View.VISIBLE : View.INVISIBLE}"
+                    android:shadowColor="@color/colorBlackShadow"
+                    android:shadowRadius="1"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:textAlignment="center"
+                    android:textScaleX="1.5"
+                    android:textStyle="bold"
+                    tools:text="HELD" />
+
+                <com.dommyg.acvideopoker.utils.TextViewOutline
+                    android:id="@+id/textViewHold3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="@string/button_hold"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[2] ? View.VISIBLE : View.INVISIBLE}"
+                    android:shadowColor="@color/colorBlackShadow"
+                    android:shadowRadius="1"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:textAlignment="center"
+                    android:textScaleX="1.5"
+                    android:textStyle="bold"
+                    tools:text="HELD" />
+
+                <com.dommyg.acvideopoker.utils.TextViewOutline
+                    android:id="@+id/textViewHold4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="@string/button_hold"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[3] ? View.VISIBLE : View.INVISIBLE}"
+                    android:shadowColor="@color/colorBlackShadow"
+                    android:shadowRadius="1"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:textAlignment="center"
+                    android:textScaleX="1.5"
+                    android:textStyle="bold"
+                    tools:text="HELD" />
+
+                <com.dommyg.acvideopoker.utils.TextViewOutline
+                    android:id="@+id/textViewHold5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="@string/button_hold"
+                    android:visibility="@{viewModel.jacksOrBetter.holds[4] ? View.VISIBLE : View.INVISIBLE}"
+                    android:shadowColor="@color/colorBlackShadow"
+                    android:shadowRadius="1"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:textAlignment="center"
+                    android:textScaleX="1.5"
+                    android:textStyle="bold"
+                    tools:text="HELD" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:text="@string/button_hold"
-                android:shadowColor="@color/colorBlackShadow"
-                android:shadowRadius="1"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:textAlignment="center"
-                android:textScaleX="1.5"
-                android:textStyle="bold"
-                tools:text="HELD" />
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guidelineCardTop">
 
-            <com.dommyg.acvideopoker.TextViewOutline
-                android:id="@+id/textViewHold3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:text="@string/button_hold"
-                android:shadowColor="@color/colorBlackShadow"
-                android:shadowRadius="1"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:textAlignment="center"
-                android:textScaleX="1.5"
-                android:textStyle="bold"
-                tools:text="HELD" />
+                <ImageView
+                    android:id="@+id/imageViewCard1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:src="@{viewModel.jacksOrBetter.cardImages[0]}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
+                    android:onClick="@{() -> viewModel.processHold(0)}"/>
 
-            <com.dommyg.acvideopoker.TextViewOutline
-                android:id="@+id/textViewHold4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:text="@string/button_hold"
-                android:shadowColor="@color/colorBlackShadow"
-                android:shadowRadius="1"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:textAlignment="center"
-                android:textScaleX="1.5"
-                android:textStyle="bold"
-                tools:text="HELD" />
+                <ImageView
+                    android:id="@+id/imageViewCard2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:src="@{viewModel.jacksOrBetter.cardImages[1]}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
+                    android:onClick="@{() -> viewModel.processHold(1)}"/>
 
-            <com.dommyg.acvideopoker.TextViewOutline
-                android:id="@+id/textViewHold5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="monospace"
-                android:text="@string/button_hold"
-                android:shadowColor="@color/colorBlackShadow"
-                android:shadowRadius="1"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:textAlignment="center"
-                android:textScaleX="1.5"
-                android:textStyle="bold"
-                tools:text="HELD" />
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageViewCard3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:src="@{viewModel.jacksOrBetter.cardImages[2]}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
+                    android:onClick="@{() -> viewModel.processHold(2)}"/>
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
+                <ImageView
+                    android:id="@+id/imageViewCard4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:src="@{viewModel.jacksOrBetter.cardImages[3]}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
+                    android:onClick="@{() -> viewModel.processHold(3)}"/>
+
+                <ImageView
+                    android:id="@+id/imageViewCard5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitCenter"
+                    android:src="@{viewModel.jacksOrBetter.cardImages[4]}"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
+                    android:onClick="@{() -> viewModel.processHold(4)}"/>
+            </LinearLayout>
+
+            <com.dommyg.acvideopoker.utils.TextViewOutline
+                android:id="@+id/textViewGameOverCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlueBackground"
+                android:fontFamily="monospace"
+                android:text="@string/game_over"
+                android:textColor="@color/colorRedFont"
+                android:textSize="46sp"
+                app:outlineSize="5dp"
+                app:outlineColor="@color/colorYellowOutline"
+                android:visibility="@{viewModel.jacksOrBetter.isDisplayingGameOver ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+                app:layout_constraintTop_toTopOf="@+id/guidelineCardTop" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guidelineCardTop">
+            android:layout_height="match_parent"
+            android:layout_weight="2">
 
-            <ImageView
-                android:id="@+id/imageViewCard1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter" />
-
-            <ImageView
-                android:id="@+id/imageViewCard2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter" />
-
-            <ImageView
-                android:id="@+id/imageViewCard3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter" />
-
-            <ImageView
-                android:id="@+id/imageViewCard4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter" />
-
-            <ImageView
-                android:id="@+id/imageViewCard5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitCenter" />
-        </LinearLayout>
-
-        <com.dommyg.acvideopoker.TextViewOutline
-            android:id="@+id/textViewGameOverCenter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBlueBackground"
-            android:fontFamily="monospace"
-            android:text="@string/game_over"
-            android:textColor="@color/colorRedFont"
-            android:textSize="46sp"
-            app:outlineSize="5dp"
-            app:outlineColor="@color/colorYellowOutline"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-            app:layout_constraintTop_toTopOf="@+id/guidelineCardTop" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineDenomLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineDemonRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.6" />
-
-        <com.dommyg.acvideopoker.TextViewOutline
-            android:id="@+id/textViewWin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textColor="@color/colorRedFont"
-            android:textSize="24sp"
-            app:outlineSize="2dp"
-            app:outlineColor="@color/colorYellowOutline"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="WIN $100.00" />
-
-        <com.dommyg.acvideopoker.TextViewOutline
-            android:id="@+id/textViewCredit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textColor="@color/colorRedFont"
-            android:textSize="24sp"
-            app:outlineSize="2dp"
-            app:outlineColor="@color/colorYellowOutline"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="CREDIT $.00" />
-
-        <com.dommyg.acvideopoker.TextViewOutline
-            android:id="@+id/textViewBet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="@string/bet"
-            android:textScaleX="1.5"
-            android:textStyle="bold"
-            android:shadowColor="@color/colorBlackShadow"
-            android:shadowRadius="1"
-            android:shadowDx="5"
-            android:shadowDy="5"
-            app:layout_constraintEnd_toEndOf="@+id/buttonDenom"
-            app:layout_constraintStart_toStartOf="@+id/buttonDenom"
-            app:layout_constraintTop_toTopOf="@+id/textViewWin"
-            tools:text="BET 5" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            app:layout_constraintBottom_toTopOf="@+id/textViewGameType"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineDenomLeft"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/buttonMenu"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineDenomLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/operation_buttons"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/button_game_menu"
-                android:textColor="@drawable/operation_buttons"
-                tools:text="Game Menu" />
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.4" />
 
-            <Button
-                android:id="@+id/buttonSpeed"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineDemonRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/operation_buttons"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/button_speed"
-                android:textColor="@drawable/operation_buttons"
-                tools:text="Speed (1)" />
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.6" />
 
-            <Button
-                android:id="@+id/buttonSound"
+            <com.dommyg.acvideopoker.utils.TextViewOutline
+                android:id="@+id/textViewWin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/operation_buttons"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/button_sound"
-                android:textColor="@drawable/operation_buttons"
-                tools:text="Sound (2)" />
-        </LinearLayout>
+                android:fontFamily="monospace"
+                android:textColor="@color/colorRedFont"
+                android:textSize="24sp"
+                app:outlineSize="2dp"
+                app:outlineColor="@color/colorYellowOutline"
+                android:text="@{StringUtil.createWinText(viewModel.jacksOrBetter.winAmount, viewModel.application)}"
+                android:visibility="@{viewModel.jacksOrBetter.winAmount.compareTo(BigDecimal.valueOf(0.00)) == 0 ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="WIN $100.00" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false"
-            android:weightSum="3"
-            app:layout_constraintBottom_toTopOf="@+id/textViewGameOverCorner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineDemonRight">
-
-            <Button
-                android:id="@+id/buttonDoubleUp"
+            <com.dommyg.acvideopoker.utils.TextViewOutline
+                android:id="@+id/textViewCredit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/operation_buttons"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/button_double_up"
-                android:textColor="@drawable/operation_buttons"
-                tools:text="Double Up" />
+                android:fontFamily="monospace"
+                android:textColor="@color/colorRedFont"
+                android:textSize="24sp"
+                app:outlineSize="2dp"
+                app:outlineColor="@color/colorYellowOutline"
+                android:text="@{StringUtil.createCreditText(viewModel.jacksOrBetter.bank.bankroll, viewModel.application)}"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="CREDIT $.00" />
 
-            <Button
-                android:id="@+id/buttonBet"
+            <com.dommyg.acvideopoker.utils.TextViewOutline
+                android:id="@+id/textViewBet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/operation_buttons"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/bet"
-                android:textColor="@drawable/operation_buttons"
-                tools:text="@string/bet" />
+                android:fontFamily="monospace"
+                android:text="@{StringUtil.createBetButtonText(viewModel.jacksOrBetter.bet, viewModel.application)}"
+                android:textScaleX="1.5"
+                android:textStyle="bold"
+                android:shadowColor="@color/colorBlackShadow"
+                android:shadowRadius="1"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                app:layout_constraintEnd_toEndOf="@+id/buttonDenom"
+                app:layout_constraintStart_toStartOf="@+id/buttonDenom"
+                app:layout_constraintTop_toTopOf="@+id/textViewWin"
+                tools:text="BET 5" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintBottom_toTopOf="@+id/textViewGameType"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineDenomLeft"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Button
+                    android:id="@+id/buttonMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/operation_buttons"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="@string/button_game_menu"
+                    android:textColor="@drawable/operation_buttons"
+                    tools:text="Game Menu" />
+
+                <Button
+                    android:id="@+id/buttonSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/operation_buttons"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="@{StringUtil.createSpeedButtonText(viewModel.jacksOrBetter.currentSpeedIterator, viewModel.application)}"
+                    android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
+                    android:onClick="@{() -> viewModel.processChangeSpeed()}"
+                    tools:text="Speed (1)" />
+
+                <Button
+                    android:id="@+id/buttonSound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/operation_buttons"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="@{StringUtil.createSoundButtonText(viewModel.jacksOrBetter.gameSounds.currentVolumeIterator, viewModel.application)}"
+                    android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{!viewModel.jacksOrBetter.isInDeal}"
+                    android:onClick="@{() -> viewModel.processChangeVolume()}"
+                    tools:text="Sound (2)" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:weightSum="3"
+                app:layout_constraintBottom_toTopOf="@+id/textViewGameOverCorner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guidelineDemonRight">
+
+                <Button
+                    android:id="@+id/buttonDoubleUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/operation_buttons"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="@string/button_double_up"
+                    android:textColor="@drawable/operation_buttons"
+                    tools:text="Double Up" />
+
+                <Button
+                    android:id="@+id/buttonBet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/operation_buttons"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="@string/bet"
+                    android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
+                    android:onClick="@{() -> viewModel.processChangeBet()}"
+                    tools:text="@string/bet" />
+
+                <Button
+                    android:id="@+id/buttonDeal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/operation_buttons"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="@{viewModel.jacksOrBetter.isNewHand ? @string/button_deal : @string/button_draw}"
+                    android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{!viewModel.jacksOrBetter.isInDeal}"
+                    android:onClick="@{() -> viewModel.dealOrDraw()}"
+                    tools:text="Deal" />
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/buttonDeal"
+                android:id="@+id/buttonDenom"
+                android:layout_width="88dp"
+                android:layout_height="0dp"
+                android:background="@drawable/denom_button"
+                android:fontFamily="@font/ultra"
+                android:textColor="@color/colorRedFont"
+                android:textSize="30sp"
+                android:text="@{StringUtil.createDenominationButtonText(viewModel.jacksOrBetter.betDenomination)}"
+                android:onClick="@{() -> viewModel.processChangeDenomination()}"
+                android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+                app:layout_constraintEnd_toStartOf="@+id/guidelineDemonRight"
+                app:layout_constraintStart_toStartOf="@+id/guidelineDenomLeft"
+                app:layout_constraintTop_toBottomOf="@+id/textViewBet"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="25¢" />
+
+            <com.dommyg.acvideopoker.utils.TextViewOutline
+                android:id="@+id/textViewGameType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/operation_buttons"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/button_deal"
-                android:textColor="@drawable/operation_buttons"
-                tools:text="Deal" />
+                android:fontFamily="sans-serif-light"
+                android:text="@string/result_jacks_or_better"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="JACKS OR BETTER" />
 
-        </LinearLayout>
+            <com.dommyg.acvideopoker.utils.TextViewOutline
+                android:id="@+id/textViewGameOverCorner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/game_over"
+                android:textSize="12sp"
+                android:visibility="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="GAME OVER" />
 
-        <Button
-            android:id="@+id/buttonDenom"
-            android:layout_width="88dp"
-            android:layout_height="0dp"
-            android:background="@drawable/denom_button"
-            android:fontFamily="@font/ultra"
-            android:textColor="@color/colorRedFont"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineDemonRight"
-            app:layout_constraintStart_toStartOf="@+id/guidelineDenomLeft"
-            app:layout_constraintTop_toBottomOf="@+id/textViewBet"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="25¢" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.dommyg.acvideopoker.TextViewOutline
-            android:id="@+id/textViewGameType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/result_jacks_or_better"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="JACKS OR BETTER" />
-
-        <com.dommyg.acvideopoker.TextViewOutline
-            android:id="@+id/textViewGameOverCorner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/game_over"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="GAME OVER" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</layout>
