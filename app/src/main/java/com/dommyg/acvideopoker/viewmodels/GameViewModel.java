@@ -49,16 +49,28 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     /**
-     * Sets the {@link Machine}'s hold at a specific index.
+     * If the game is not in double up mode, sets the {@link Machine}'s hold at a specific index.
+     * Otherwise, finishes the double up game logic with the selected card.
      */
-    public void processHold(int index) {
-        jacksOrBetter.setHolds(index);
+    public void processCardSelection(int index) {
+        if (jacksOrBetter.getIsInDoubleUp()) {
+            jacksOrBetter.continueDoubleUp(index);
+        } else {
+            jacksOrBetter.setHolds(index);
+        }
     }
 
     /**
-     * Runs the {@link Machine}'s game logic.
+     * Runs the {@link Machine}'s main game logic.
      */
     public void dealOrDraw() {
         jacksOrBetter.run();
+    }
+
+    /**
+     * Starts the {@link Machine}'s double up game logic.
+     */
+    public void doubleUp() {
+        jacksOrBetter.beginDoubleUp();
     }
 }
