@@ -138,6 +138,7 @@ public class Machine extends BaseObservable {
 
         setWinAmountDoubleUp(getWinAmount());
         resetWinAmount();
+        processWagerDoubleUp();
 
         deck.determineDoubleUpStatus();
 
@@ -157,6 +158,9 @@ public class Machine extends BaseObservable {
         deck.determineDoubleUpStatus(getDoubleUpSelection());
         checkIfPlayDing();
         processPayoutDoubleUp();
+
+        deck.resetDeck();
+        deck.resetHandDisplay();
 
         setIsNewHand(true);
         setIsInDeal(false);
@@ -506,6 +510,13 @@ public class Machine extends BaseObservable {
      */
     public void processWager() {
         bank.setBankroll(bank.getBankroll().subtract(calculateWager()));
+    }
+
+    /**
+     * Removes the wager amount for double up from the {@link Bank}'s bankroll.
+     */
+    public void processWagerDoubleUp() {
+        bank.setBankroll(bank.getBankroll().subtract(getWinAmountDoubleUp()));
     }
 
     /**

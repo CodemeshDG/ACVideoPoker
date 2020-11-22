@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="monospace"
-                    android:text="@string/button_hold"
+                    android:text="@{viewModel.jacksOrBetter.isInDoubleUp ? @string/dealer : @string/button_hold}"
                     android:visibility="@{viewModel.jacksOrBetter.holds[0] ? View.VISIBLE : View.INVISIBLE}"
                     android:textAlignment="center"
                     android:textScaleX="1.5"
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="monospace"
-                    android:text="@string/button_hold"
+                    android:text="@{viewModel.jacksOrBetter.isInDoubleUp ? @string/player : @string/button_hold}"
                     android:visibility="@{viewModel.jacksOrBetter.holds[1] ? View.VISIBLE : View.INVISIBLE}"
                     android:shadowColor="@color/colorBlackShadow"
                     android:shadowRadius="1"
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="monospace"
-                    android:text="@string/button_hold"
+                    android:text="@{viewModel.jacksOrBetter.isInDoubleUp ? @string/player : @string/button_hold}"
                     android:visibility="@{viewModel.jacksOrBetter.holds[2] ? View.VISIBLE : View.INVISIBLE}"
                     android:shadowColor="@color/colorBlackShadow"
                     android:shadowRadius="1"
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="monospace"
-                    android:text="@string/button_hold"
+                    android:text="@{viewModel.jacksOrBetter.isInDoubleUp ? @string/player : @string/button_hold}"
                     android:visibility="@{viewModel.jacksOrBetter.holds[3] ? View.VISIBLE : View.INVISIBLE}"
                     android:shadowColor="@color/colorBlackShadow"
                     android:shadowRadius="1"
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="monospace"
-                    android:text="@string/button_hold"
+                    android:text="@{viewModel.jacksOrBetter.isInDoubleUp ? @string/player : @string/button_hold}"
                     android:visibility="@{viewModel.jacksOrBetter.holds[4] ? View.VISIBLE : View.INVISIBLE}"
                     android:shadowColor="@color/colorBlackShadow"
                     android:shadowRadius="1"
@@ -167,8 +167,8 @@
                     android:layout_weight="1"
                     android:scaleType="fitCenter"
                     android:src="@{viewModel.jacksOrBetter.cardImages[0]}"
-                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
-                    android:onClick="@{() -> viewModel.processHold(0)}"/>
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal || viewModel.jacksOrBetter.isInDoubleUp ? false : true}"
+                    android:onClick="@{() -> viewModel.processCardSelection(0)}"/>
 
                 <ImageView
                     android:id="@+id/imageViewCard2"
@@ -178,7 +178,7 @@
                     android:scaleType="fitCenter"
                     android:src="@{viewModel.jacksOrBetter.cardImages[1]}"
                     android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
-                    android:onClick="@{() -> viewModel.processHold(1)}"/>
+                    android:onClick="@{() -> viewModel.processCardSelection(1)}"/>
 
                 <ImageView
                     android:id="@+id/imageViewCard3"
@@ -188,7 +188,7 @@
                     android:scaleType="fitCenter"
                     android:src="@{viewModel.jacksOrBetter.cardImages[2]}"
                     android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
-                    android:onClick="@{() -> viewModel.processHold(2)}"/>
+                    android:onClick="@{() -> viewModel.processCardSelection(2)}"/>
 
                 <ImageView
                     android:id="@+id/imageViewCard4"
@@ -198,7 +198,7 @@
                     android:scaleType="fitCenter"
                     android:src="@{viewModel.jacksOrBetter.cardImages[3]}"
                     android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
-                    android:onClick="@{() -> viewModel.processHold(3)}"/>
+                    android:onClick="@{() -> viewModel.processCardSelection(3)}"/>
 
                 <ImageView
                     android:id="@+id/imageViewCard5"
@@ -208,7 +208,7 @@
                     android:scaleType="fitCenter"
                     android:src="@{viewModel.jacksOrBetter.cardImages[4]}"
                     android:enabled="@{viewModel.jacksOrBetter.isNewHand || viewModel.jacksOrBetter.isInDeal ? false : true}"
-                    android:onClick="@{() -> viewModel.processHold(4)}"/>
+                    android:onClick="@{() -> viewModel.processCardSelection(4)}"/>
             </LinearLayout>
 
             <com.dommyg.acvideopoker.utils.TextViewOutline
@@ -290,6 +290,7 @@
                 android:shadowRadius="1"
                 android:shadowDx="5"
                 android:shadowDy="5"
+                android:visibility="@{(viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; viewModel.jacksOrBetter.isInDoubleUp) || !viewModel.jacksOrBetter.isInDoubleUp ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintEnd_toEndOf="@+id/buttonDenom"
                 app:layout_constraintStart_toStartOf="@+id/buttonDenom"
                 app:layout_constraintTop_toTopOf="@+id/textViewWin"
@@ -369,6 +370,8 @@
                     android:fontFamily="sans-serif-condensed-medium"
                     android:text="@string/button_double_up"
                     android:textColor="@drawable/operation_buttons"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; !viewModel.jacksOrBetter.deck.handStatus.equals(Result.NOTHING) &amp;&amp; !viewModel.jacksOrBetter.isInDoubleUp}"
+                    android:onClick="@{() -> viewModel.doubleUp()}"
                     tools:text="Double Up" />
 
                 <Button
@@ -396,7 +399,7 @@
                     android:fontFamily="sans-serif-condensed-medium"
                     android:text="@{viewModel.jacksOrBetter.isNewHand ? @string/button_deal : @string/button_draw}"
                     android:textColor="@drawable/operation_buttons"
-                    android:enabled="@{!viewModel.jacksOrBetter.isInDeal}"
+                    android:enabled="@{(viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; !viewModel.jacksOrBetter.isInDoubleUp) || (!viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; !viewModel.jacksOrBetter.isInDoubleUp) || (viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; viewModel.jacksOrBetter.isInDoubleUp)}"
                     android:onClick="@{() -> viewModel.dealOrDraw()}"
                     tools:text="Deal" />
 
@@ -413,6 +416,7 @@
                 android:text="@{StringUtil.createDenominationButtonText(viewModel.jacksOrBetter.betDenomination)}"
                 android:onClick="@{() -> viewModel.processChangeDenomination()}"
                 android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
+                android:visibility="@{(viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; viewModel.jacksOrBetter.isInDoubleUp) || !viewModel.jacksOrBetter.isInDoubleUp ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineDemonRight"
                 app:layout_constraintStart_toStartOf="@+id/guidelineDenomLeft"
