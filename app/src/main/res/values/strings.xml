@@ -30,6 +30,9 @@
     <string name="result_two_pair">TWO PAIR</string>
     <string name="result_jacks_or_better">JACKS OR BETTER</string>
     <string name="result_nothing">NOTHING</string>
+    <string name="result_double_up_win">WIN</string>
+    <string name="result_double_up_lose">LOSE</string>
+    <string name="result_select_a_card">SELECT A CARD</string>
 
     <string name="button_deal">DEAL</string>
     <string name="button_draw">DRAW</string>

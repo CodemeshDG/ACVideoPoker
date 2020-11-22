@@ -25,7 +25,10 @@ public class Deck extends BaseObservable {
         THREE_OF_A_KIND(3, R.string.result_three_of_a_kind),
         TWO_PAIR(2, R.string.result_two_pair),
         JACKS_OR_BETTER(1, R.string.result_jacks_or_better),
-        NOTHING(0, R.string.result_nothing);
+        NOTHING(0, R.string.result_nothing),
+        DOUBLE_UP_WIN(-1, R.string.result_double_up_win),
+        DOUBLE_UP_LOSE(-2, R.string.result_double_up_lose),
+        DOUBLE_UP_SELECT(-3, R.string.result_select_a_card);
 
         private final int numValue;
         private final int stringValue;
@@ -234,6 +237,29 @@ public class Deck extends BaseObservable {
                 return card1.getSuit().compareTo(card2.getSuit());
             }
         });
+    }
+
+    /**
+     * Sets the hand status to either "WIN" or "LOSE" based on which card was selected by the user.
+     * @param index Which card the user selected in the handDisplay.
+     */
+    public void determineDoubleUpStatus(int index) {
+        int dealerCard = handDisplay[0].getValue().getNumValue();
+        int playerCard = handDisplay[index].getValue().getNumValue();
+        if (playerCard > dealerCard) {
+            handStatus = Result.DOUBLE_UP_WIN;
+        } else {
+            handStatus = Result.DOUBLE_UP_LOSE;
+        }
+        notifyPropertyChanged(BR.handStatus);
+    }
+
+    /**
+     * Sets the hand status to "SELECT A CARD". Used when double up is selected by user.
+     */
+    public void determineDoubleUpStatus() {
+        handStatus = Result.DOUBLE_UP_SELECT;
+        notifyPropertyChanged(BR.handStatus);
     }
 
     /**

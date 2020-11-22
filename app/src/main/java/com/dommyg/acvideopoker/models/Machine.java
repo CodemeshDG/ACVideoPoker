@@ -42,6 +42,8 @@ public class Machine extends BaseObservable {
     private BigDecimal betDenomination;
     private int bet;
     private BigDecimal winAmount;
+    private BigDecimal winAmountDoubleUp;
+    private int doubleUpSelection;
 
     private GameSounds gameSounds;
 
@@ -50,6 +52,7 @@ public class Machine extends BaseObservable {
 
     private boolean isNewHand;
     private boolean isInDeal;
+    private boolean isInDoubleUp;
     private boolean isDisplayingGameOver;
     private int currentSpeed;
     private int currentSpeedIterator;
@@ -74,6 +77,7 @@ public class Machine extends BaseObservable {
         resetCardImages();
         this.isNewHand = true;
         this.isInDeal = false;
+        this.isInDoubleUp = false;
         this.isDisplayingGameOver = true;
         this.currentSpeed = Constants.SPEED_1;
         this.currentSpeedIterator = Constants.SPEED_1_ITERATOR;
@@ -87,6 +91,7 @@ public class Machine extends BaseObservable {
         if (isNewHand) {
             terminateGameOverAnimation();
             setIsInDeal(true);
+            setIsInDoubleUp(false);
             removeHolds();
             resetWinAmount();
             processWager();
@@ -113,6 +118,45 @@ public class Machine extends BaseObservable {
 
         deck.resetDeck();
         deck.resetHandDisplay();
+
+        setIsNewHand(true);
+        setIsInDeal(false);
+        handlerGameOver.post(new AnimateGameOverRunnable());
+    }
+
+    public void beginDoubleUp() {
+        terminateGameOverAnimation();
+        setIsInDeal(true);
+        setIsInDoubleUp(true);
+
+        removeHolds();
+        resetCardImages();
+
+        deck.deal();
+        setHolds(0);
+        getCardImage(0, 0);
+
+        setWinAmountDoubleUp(getWinAmount());
+        resetWinAmount();
+
+        deck.determineDoubleUpStatus();
+
+        setIsNewHand(false);
+        setIsInDeal(false);
+    }
+
+    public void continueDoubleUp(int index) {
+        setIsInDeal(true);
+        setDoubleUpSelection(index);
+        setHolds(index);
+        getCardImage(index, index);
+        processCardImages();
+    }
+
+    private void completeDoubleUp() {
+        deck.determineDoubleUpStatus(getDoubleUpSelection());
+        checkIfPlayDing();
+        processPayoutDoubleUp();
 
         setIsNewHand(true);
         setIsInDeal(false);
@@ -189,6 +233,22 @@ public class Machine extends BaseObservable {
         setWinAmount(BigDecimal.valueOf(0.00).setScale(2, RoundingMode.HALF_EVEN));
     }
 
+    private BigDecimal getWinAmountDoubleUp() {
+        return winAmountDoubleUp;
+    }
+
+    private void setWinAmountDoubleUp(BigDecimal winAmountDoubleUp) {
+        this.winAmountDoubleUp = winAmountDoubleUp;
+    }
+
+    private int getDoubleUpSelection() {
+        return doubleUpSelection;
+    }
+
+    private void setDoubleUpSelection(int doubleUpSelection) {
+        this.doubleUpSelection = doubleUpSelection;
+    }
+
     /**
      * Updates the currentSpeed to the next increment depending on its current value.
      */
@@ -223,7 +283,9 @@ public class Machine extends BaseObservable {
     }
 
     public void setHolds(int index) {
-        gameSounds.play(GameSounds.SOUND_DOOT);
+        if (!isInDoubleUp) {
+            gameSounds.play(GameSounds.SOUND_DOOT);
+        }
         holds[index] = !holds[index];
         notifyPropertyChanged(BR.holds);
     }
@@ -269,6 +331,16 @@ public class Machine extends BaseObservable {
     }
 
     @Bindable
+    public boolean getIsInDoubleUp() {
+        return isInDoubleUp;
+    }
+
+    public void setIsInDoubleUp(boolean isInDoubleUp) {
+        this.isInDoubleUp = isInDoubleUp;
+        notifyPropertyChanged(BR.isInDoubleUp);
+    }
+
+    @Bindable
     public boolean getIsDisplayingGameOver() {
         return isDisplayingGameOver;
     }
@@ -286,7 +358,8 @@ public class Machine extends BaseObservable {
      * Plays ding sound if {@link Deck}'s handStatus is not set to NOTHING.
      */
     private void checkIfPlayDing() {
-        if (!deck.getHandStatus().equals(Deck.Result.NOTHING)) {
+        if (!deck.getHandStatus().equals(Deck.Result.NOTHING) &&
+                !deck.getHandStatus().equals(Deck.Result.DOUBLE_UP_LOSE)) {
             gameSounds.play(GameSounds.SOUND_BING);
         }
     }
@@ -294,6 +367,7 @@ public class Machine extends BaseObservable {
     /**
      * Returns the path of a card's image in String format based upon a card's index position in the
      * {@link Deck}'s handDisplay.
+     *
      * @param readIndex Index position of {@link Deck}'s handDisplay to retrieve. Pass
      *                  BLANK_CARD_INDEX (-1) to retrieve the back of a card.
      */
@@ -316,9 +390,10 @@ public class Machine extends BaseObservable {
     /**
      * Retrieves the card image in {@link Bitmap} format based upon the index of the {@link Deck}'s
      * handDisplay array.
-     * @param readIndex The index to read from the handDisplay when retrieving the card image path.
-     *                  Should be same as writeIndex except when you want to set the card image path
-     *                  as a card back. In that case, use BLANK_CARD_INDEX (-1).
+     *
+     * @param readIndex  The index to read from the handDisplay when retrieving the card image path.
+     *                   Should be same as writeIndex except when you want to set the card image path
+     *                   as a card back. In that case, use BLANK_CARD_INDEX (-1).
      * @param writeIndex The index of the cardImages array into which to set the retrieved
      *                   {@link Bitmap}.
      */
@@ -350,7 +425,9 @@ public class Machine extends BaseObservable {
      * the {@link Deck}'s handDisplay array.
      */
     private void processCardImages() {
-        resetCardImages();
+        if (!isInDoubleUp) {
+            resetCardImages();
+        }
         AssetManager assetManager = application.getAssets();
         handlerCards.postDelayed(
                 new CardImagePathsRunnable(assetManager, 0), currentSpeed
@@ -405,11 +482,23 @@ public class Machine extends BaseObservable {
     }
 
     /**
-     * Updates and adds the winAmount to the {@link Bank}'s bankroll.
+     * Updates and adds the winAmount to the {@link Bank}'s bankroll. Used for normal game.
      */
     private void processPayout(int prize) {
         setWinAmount(calculatePayout(prize));
         bank.setBankroll(bank.getBankroll().add(winAmount));
+    }
+
+    /**
+     * Updates and adds the winAmount to the {@link Bank}'s bankroll. Used for double up.
+     */
+    private void processPayoutDoubleUp() {
+        if (deck.getHandStatus().equals(Deck.Result.DOUBLE_UP_WIN)) {
+            setWinAmount(winAmountDoubleUp.multiply(BigDecimal.valueOf(2)));
+            bank.setBankroll(bank.getBankroll().add(winAmount));
+        } else {
+            setWinAmount(BigDecimal.valueOf(0));
+        }
     }
 
     /**
@@ -457,6 +546,8 @@ public class Machine extends BaseObservable {
                 } else {
                     handlerCards.post(this);
                 }
+            } else if (isInDoubleUp) {
+                completeDoubleUp();
             } else if (isNewHand) {
                 firstCycle();
             } else {
