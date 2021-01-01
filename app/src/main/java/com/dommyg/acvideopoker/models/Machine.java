@@ -54,6 +54,7 @@ public class Machine extends BaseObservable {
     private boolean isInDeal;
     private boolean isInDoubleUp;
     private boolean isDisplayingGameOver;
+    private boolean isBankrupt;
     private int currentSpeed;
     private int currentSpeedIterator;
 
@@ -121,6 +122,7 @@ public class Machine extends BaseObservable {
 
         setIsNewHand(true);
         setIsInDeal(false);
+        updateIsBankrupt();
         handlerGameOver.post(new AnimateGameOverRunnable());
     }
 
@@ -164,6 +166,7 @@ public class Machine extends BaseObservable {
 
         setIsNewHand(true);
         setIsInDeal(false);
+        updateIsBankrupt();
         handlerGameOver.post(new AnimateGameOverRunnable());
     }
 
@@ -201,6 +204,7 @@ public class Machine extends BaseObservable {
             betDenomination = Constants.DENOM_25;
         }
         notifyPropertyChanged(BR.betDenomination);
+        updateIsBankrupt();
     }
 
     @Bindable
@@ -218,6 +222,7 @@ public class Machine extends BaseObservable {
             bet = 1;
         }
         notifyPropertyChanged(BR.bet);
+        updateIsBankrupt();
     }
 
     @Bindable
@@ -352,6 +357,24 @@ public class Machine extends BaseObservable {
     public void setIsDisplayingGameOver(boolean isDisplayingGameOver) {
         this.isDisplayingGameOver = isDisplayingGameOver;
         notifyPropertyChanged(BR.isDisplayingGameOver);
+    }
+
+    @Bindable
+    public boolean getIsBankrupt() {
+        return isBankrupt;
+    }
+
+    /**
+     * Determines if the player has enough money in their {@link Bank} to make a wager given the
+     * current bet and betDenomination values.
+     */
+    public void updateIsBankrupt() {
+        isBankrupt = bank.getBankroll().compareTo(calculateWager()) < 0;
+        notifyPropertyChanged(BR.isBankrupt);
+    }
+
+    public void setBankrupt(boolean bankrupt) {
+        isBankrupt = bankrupt;
     }
 
     public GameSounds getGameSounds() {
