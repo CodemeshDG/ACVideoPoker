@@ -217,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorBlueBackground"
                 android:fontFamily="monospace"
-                android:text="@string/game_over"
+                android:text="@string/play_5_credits"
                 android:textColor="@color/colorRedFont"
                 android:textSize="46sp"
                 app:outlineSize="5dp"
@@ -401,7 +401,7 @@
                     android:fontFamily="sans-serif-condensed-medium"
                     android:text="@{viewModel.jacksOrBetter.isNewHand ? @string/button_deal : @string/button_draw}"
                     android:textColor="@drawable/operation_buttons"
-                    android:enabled="@{(viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; !viewModel.jacksOrBetter.isInDoubleUp) || (!viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; !viewModel.jacksOrBetter.isInDoubleUp) || (viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; viewModel.jacksOrBetter.isInDoubleUp)}"
+                    android:enabled="@{(viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isBankrupt &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; !viewModel.jacksOrBetter.isInDoubleUp) || (!viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; !viewModel.jacksOrBetter.isInDoubleUp) || (viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isBankrupt &amp;&amp; !viewModel.jacksOrBetter.isInDeal &amp;&amp; viewModel.jacksOrBetter.isInDoubleUp)}"
                     android:onClick="@{() -> viewModel.dealOrDraw()}"
                     tools:text="Deal" />
 
