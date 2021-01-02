@@ -79,6 +79,7 @@ public class Machine extends BaseObservable {
         this.isNewHand = true;
         this.isInDeal = false;
         this.isInDoubleUp = false;
+        updateIsBankrupt();
         this.isDisplayingGameOver = true;
         this.currentSpeed = Constants.SPEED_1;
         this.currentSpeedIterator = Constants.SPEED_1_ITERATOR;
