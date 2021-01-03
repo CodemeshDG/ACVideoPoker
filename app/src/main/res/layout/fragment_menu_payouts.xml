@@ -16,10 +16,20 @@
         android:padding="16dp">
 
         <FrameLayout
+            android:id="@+id/column_0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/payout_background_deselected"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better" />
+
+        <FrameLayout
             android:id="@+id/column_1"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@{viewModel.jacksOrBetter.bet == 1 ? @color/colorRedFont : @color/colorBlueBackground}"
+            android:background="@{viewModel.jacksOrBetter.bet == 1 ? @drawable/payout_background_selected : @drawable/payout_background_deselected}"
             app:layout_constraintTop_toTopOf="@id/text_royal_flush_1"
             app:layout_constraintStart_toEndOf="@id/text_royal_flush"
             app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"
@@ -29,7 +39,7 @@
             android:id="@+id/column_2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@{viewModel.jacksOrBetter.bet == 2 ? @color/colorRedFont : @color/colorBlueBackground}"
+            android:background="@{viewModel.jacksOrBetter.bet == 2 ? @drawable/payout_background_selected : @drawable/payout_background_deselected}"
             app:layout_constraintTop_toTopOf="@id/text_royal_flush_2"
             app:layout_constraintStart_toEndOf="@id/text_royal_flush_1"
             app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"
@@ -39,7 +49,7 @@
             android:id="@+id/column_3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@{viewModel.jacksOrBetter.bet == 3 ? @color/colorRedFont : @color/colorBlueBackground}"
+            android:background="@{viewModel.jacksOrBetter.bet == 3 ? @drawable/payout_background_selected : @drawable/payout_background_deselected}"
             app:layout_constraintTop_toTopOf="@id/text_royal_flush_3"
             app:layout_constraintStart_toEndOf="@id/text_royal_flush_2"
             app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"
@@ -49,7 +59,7 @@
             android:id="@+id/column_4"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@{viewModel.jacksOrBetter.bet == 4 ? @color/colorRedFont : @color/colorBlueBackground}"
+            android:background="@{viewModel.jacksOrBetter.bet == 4 ? @drawable/payout_background_selected : @drawable/payout_background_deselected}"
             app:layout_constraintTop_toTopOf="@id/text_royal_flush_4"
             app:layout_constraintStart_toEndOf="@id/text_royal_flush_3"
             app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"
@@ -59,7 +69,7 @@
             android:id="@+id/column_5"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@{viewModel.jacksOrBetter.bet == 5 ? @color/colorRedFont : @color/colorBlueBackground}"
+            android:background="@{viewModel.jacksOrBetter.bet == 5 ? @drawable/payout_background_selected : @drawable/payout_background_deselected}"
             app:layout_constraintTop_toTopOf="@id/text_royal_flush_5"
             app:layout_constraintStart_toEndOf="@id/text_royal_flush_4"
             app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"
@@ -71,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             android:text="@{@string/result_royal_flush.concat(` ...................`)}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -153,6 +164,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/result_straight_flush.concat(` ................`)}"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             app:layout_constraintTop_toBottomOf="@id/text_royal_flush"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="STRAIGHT FLUSH ................"/>
@@ -234,6 +246,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/result_four_of_a_kind.concat(` ...................`)}"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             app:layout_constraintTop_toBottomOf="@id/text_straight_flush"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="4 OF A KIND ..................."/>
@@ -315,6 +328,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/result_full_house.concat(` ....................`)}"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             app:layout_constraintTop_toBottomOf="@id/text_four_of_a_kind"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="FULL HOUSE ...................."/>
@@ -396,6 +410,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/result_flush.concat(` .........................`)}"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             app:layout_constraintTop_toBottomOf="@id/text_full_house"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="FLUSH ........................."/>
@@ -477,6 +492,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/result_straight.concat(` ......................`)}"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             app:layout_constraintTop_toBottomOf="@id/text_flush"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="STRAIGHT ......................"/>
@@ -558,6 +574,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/result_three_of_a_kind.concat(` ...................`)}"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             app:layout_constraintTop_toBottomOf="@id/text_straight"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="3 OF A KIND ..................."/>
@@ -639,6 +656,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/result_two_pair.concat(` ......................`)}"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             app:layout_constraintTop_toBottomOf="@id/text_three_of_a_kind"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="TWO PAIR ......................"/>
@@ -720,6 +738,7 @@
             android:layout_height="wrap_content"
             android:text="@{@string/result_jacks_or_better.concat(` ...............`)}"
             android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             app:layout_constraintTop_toBottomOf="@id/text_two_pair"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="JACKS OR BETTER ..............."/>
