@@ -9,5 +9,31 @@
         android:id="@+id/gameScreenFragment"
         android:name="com.dommyg.acvideopoker.fragments.GameScreenFragment"
         android:label="GameScreenFragment"
-        tools:layout="@layout/fragment_machine_screen" />
+        tools:layout="@layout/fragment_machine_screen" >
+        <action
+            android:id="@+id/action_gameScreenFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.dommyg.acvideopoker.fragments.MenuFragment"
+        android:label="MenuFragment"
+        tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/action_menuFragment_to_menuBankFragment"
+            app:destination="@id/menuBankFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_menuPayoutsFragment"
+            app:destination="@id/menuPayoutsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuBankFragment"
+        android:name="com.dommyg.acvideopoker.fragments.MenuBankFragment"
+        android:label="MenuBankFragment"
+        tools:layout="@layout/fragment_menu_bank"/>
+    <fragment
+        android:id="@+id/menuPayoutsFragment"
+        android:name="com.dommyg.acvideopoker.fragments.MenuPayoutsFragment"
+        android:label="MenuPayoutsFragment"
+        tools:layout="@layout/fragment_menu_payouts"/>
 </navigation>
