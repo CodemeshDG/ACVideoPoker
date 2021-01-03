@@ -1,9 +1,14 @@
 package com.dommyg.acvideopoker.models;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.dommyg.acvideopoker.BR;
+import com.dommyg.acvideopoker.utils.Constants;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,8 +20,8 @@ public class Bank extends BaseObservable {
 
     private BigDecimal bankroll;
 
-    Bank() {
-        this.bankroll = BigDecimal.valueOf(200.00).setScale(2, RoundingMode.HALF_EVEN);
+    Bank(Application application) {
+        this.bankroll = loadBankroll(application);
     }
 
     @Bindable
@@ -27,5 +32,30 @@ public class Bank extends BaseObservable {
     void setBankroll(BigDecimal bankroll) {
         this.bankroll = bankroll.setScale(2, RoundingMode.HALF_EVEN);
         notifyPropertyChanged(BR.bankroll);
+    }
+
+    private BigDecimal loadBankroll(Application application) {
+        SharedPreferences sharedPreferences =
+                application.getSharedPreferences("bank", Context.MODE_PRIVATE);
+        return BigDecimal.valueOf(
+                Double.parseDouble(
+                        sharedPreferences.getString(
+                                Constants.KEY_BANKROLL,
+                                "200.00"
+                        )
+                )
+        ).setScale(
+                2,
+                RoundingMode.HALF_EVEN
+        );
+    }
+
+    public void addCash(double amount) {
+        setBankroll(
+                this.bankroll.add(
+                        BigDecimal.valueOf(amount)
+                                .setScale(2, RoundingMode.HALF_EVEN)
+                )
+        );
     }
 }

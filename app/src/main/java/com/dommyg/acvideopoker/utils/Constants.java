@@ -14,4 +14,6 @@ public class Constants {
     public final static int SPEED_1_ITERATOR = 1;
     public final static int SPEED_2_ITERATOR = 2;
     public final static int SPEED_3_ITERATOR = 3;
+
+    public static final String KEY_BANKROLL = "bankroll";
 }

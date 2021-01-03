@@ -8,4 +8,15 @@
         <item name="android:colorBackground">@color/colorBlueBackground</item>
     </style>
 
+    <style name="GameButton">
+        <item name="android:background">@drawable/operation_buttons</item>
+        <item name="android:fontFamily">sans-serif-condensed-medium</item>
+        <item name="android:textColor">@drawable/operation_buttons</item>
+    </style>
+
+    <style name="RegularText">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textColor">@color/colorWhiteFont</item>
+    </style>
+
 </resources>

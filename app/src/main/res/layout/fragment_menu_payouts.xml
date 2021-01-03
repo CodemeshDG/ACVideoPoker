@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="fragment"
+            type="com.dommyg.acvideopoker.fragments.MenuPayoutsFragment" />
+        <variable
+            name="viewModel"
+            type="com.dommyg.acvideopoker.viewmodels.GameViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <FrameLayout
+            android:id="@+id/column_1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@{viewModel.jacksOrBetter.bet == 1 ? @color/colorRedFont : @color/colorBlueBackground}"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush_1"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better_1" />
+
+        <FrameLayout
+            android:id="@+id/column_2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@{viewModel.jacksOrBetter.bet == 2 ? @color/colorRedFont : @color/colorBlueBackground}"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush_2"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better_2"/>
+
+        <FrameLayout
+            android:id="@+id/column_3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@{viewModel.jacksOrBetter.bet == 3 ? @color/colorRedFont : @color/colorBlueBackground}"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush_3"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better_3"/>
+
+        <FrameLayout
+            android:id="@+id/column_4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@{viewModel.jacksOrBetter.bet == 4 ? @color/colorRedFont : @color/colorBlueBackground}"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush_4"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better_4"/>
+
+        <FrameLayout
+            android:id="@+id/column_5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@{viewModel.jacksOrBetter.bet == 5 ? @color/colorRedFont : @color/colorBlueBackground}"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush_5"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better_5"/>
+
+        <TextView
+            android:id="@+id/text_royal_flush"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:text="@{@string/result_royal_flush.concat(` ...................`)}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="ROYAL FLUSH ..................."/>
+        
+        <TextView
+            android:id="@+id/text_royal_flush_1"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="800"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_royal_flush"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush"
+            app:layout_constraintEnd_toStartOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_royal_flush_2"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1600"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_royal_flush"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toStartOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_royal_flush_3"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2400"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_royal_flush"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toStartOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_royal_flush_4"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3200"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_royal_flush"
+            app:layout_constraintStart_toEndOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toStartOf="@id/text_royal_flush_5"/>
+
+        <TextView
+            android:id="@+id/text_royal_flush_5"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4000"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_royal_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_royal_flush"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"/>
+
+        <TextView
+            android:id="@+id/text_straight_flush"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/result_straight_flush.concat(` ................`)}"
+            android:paddingEnd="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_royal_flush"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="STRAIGHT FLUSH ................"/>
+
+        <TextView
+            android:id="@+id/text_straight_flush_1"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="50"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"/>
+
+        <TextView
+            android:id="@+id/text_straight_flush_2"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_straight_flush_3"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="150"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_straight_flush_4"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="200"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_straight_flush_5"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="250"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_5"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"/>
+
+        <TextView
+            android:id="@+id/text_four_of_a_kind"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/result_four_of_a_kind.concat(` ...................`)}"
+            android:paddingEnd="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_straight_flush"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="4 OF A KIND ..................."/>
+
+        <TextView
+            android:id="@+id/text_four_of_a_kind_1"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="25"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_four_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_four_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"/>
+
+        <TextView
+            android:id="@+id/text_four_of_a_kind_2"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="50"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_four_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_four_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_four_of_a_kind_3"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="75"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_four_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_four_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_four_of_a_kind_4"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_four_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_four_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_four_of_a_kind_5"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="125"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_four_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_four_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_5"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"/>
+
+        <TextView
+            android:id="@+id/text_full_house"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/result_full_house.concat(` ....................`)}"
+            android:paddingEnd="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_four_of_a_kind"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="FULL HOUSE ...................."/>
+
+        <TextView
+            android:id="@+id/text_full_house_1"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="9"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_full_house"
+            app:layout_constraintBottom_toBottomOf="@id/text_full_house"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"/>
+
+        <TextView
+            android:id="@+id/text_full_house_2"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="18"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_full_house"
+            app:layout_constraintBottom_toBottomOf="@id/text_full_house"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_full_house_3"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="27"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_full_house"
+            app:layout_constraintBottom_toBottomOf="@id/text_full_house"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_full_house_4"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="36"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_full_house"
+            app:layout_constraintBottom_toBottomOf="@id/text_full_house"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_full_house_5"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="45"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_full_house"
+            app:layout_constraintBottom_toBottomOf="@id/text_full_house"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_5"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"/>
+
+        <TextView
+            android:id="@+id/text_flush"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/result_flush.concat(` .........................`)}"
+            android:paddingEnd="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_full_house"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="FLUSH ........................."/>
+
+        <TextView
+            android:id="@+id/text_flush_1"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"/>
+
+        <TextView
+            android:id="@+id/text_flush_2"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_flush_3"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="18"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_flush_4"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="24"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_flush_5"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_flush"
+            app:layout_constraintBottom_toBottomOf="@id/text_flush"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_5"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"/>
+
+        <TextView
+            android:id="@+id/text_straight"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/result_straight.concat(` ......................`)}"
+            android:paddingEnd="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_flush"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="STRAIGHT ......................"/>
+
+        <TextView
+            android:id="@+id/text_straight_1"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"/>
+
+        <TextView
+            android:id="@+id/text_straight_2"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_straight_3"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_straight_4"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="16"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_straight_5"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="20"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_straight"
+            app:layout_constraintBottom_toBottomOf="@id/text_straight"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_5"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"/>
+
+        <TextView
+            android:id="@+id/text_three_of_a_kind"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/result_three_of_a_kind.concat(` ...................`)}"
+            android:paddingEnd="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_straight"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="3 OF A KIND ..................."/>
+
+        <TextView
+            android:id="@+id/text_three_of_a_kind_1"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_three_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_three_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"/>
+
+        <TextView
+            android:id="@+id/text_three_of_a_kind_2"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_three_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_three_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_three_of_a_kind_3"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="9"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_three_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_three_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_three_of_a_kind_4"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_three_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_three_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_three_of_a_kind_5"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="15"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_three_of_a_kind"
+            app:layout_constraintBottom_toBottomOf="@id/text_three_of_a_kind"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_5"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"/>
+
+        <TextView
+            android:id="@+id/text_two_pair"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/result_two_pair.concat(` ......................`)}"
+            android:paddingEnd="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_three_of_a_kind"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="TWO PAIR ......................"/>
+
+        <TextView
+            android:id="@+id/text_two_pair_1"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_two_pair"
+            app:layout_constraintBottom_toBottomOf="@id/text_two_pair"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"/>
+
+        <TextView
+            android:id="@+id/text_two_pair_2"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_two_pair"
+            app:layout_constraintBottom_toBottomOf="@id/text_two_pair"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_two_pair_3"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_two_pair"
+            app:layout_constraintBottom_toBottomOf="@id/text_two_pair"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_two_pair_4"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_two_pair"
+            app:layout_constraintBottom_toBottomOf="@id/text_two_pair"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_two_pair_5"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_two_pair"
+            app:layout_constraintBottom_toBottomOf="@id/text_two_pair"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_5"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"/>
+
+        <TextView
+            android:id="@+id/text_jacks_or_better"
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/result_jacks_or_better.concat(` ...............`)}"
+            android:paddingEnd="4dp"
+            app:layout_constraintTop_toBottomOf="@id/text_two_pair"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="JACKS OR BETTER ..............."/>
+
+        <TextView
+            android:id="@+id/text_jacks_or_better_1"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_jacks_or_better"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_1"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_1"/>
+
+        <TextView
+            android:id="@+id/text_jacks_or_better_2"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_jacks_or_better"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_2"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_2"/>
+
+        <TextView
+            android:id="@+id/text_jacks_or_better_3"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_jacks_or_better"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_3"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_3"/>
+
+        <TextView
+            android:id="@+id/text_jacks_or_better_4"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_jacks_or_better"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_4"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_4"/>
+
+        <TextView
+            android:id="@+id/text_jacks_or_better_5"
+            style="@style/RegularText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:gravity="end"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/text_jacks_or_better"
+            app:layout_constraintBottom_toBottomOf="@id/text_jacks_or_better"
+            app:layout_constraintStart_toStartOf="@id/text_royal_flush_5"
+            app:layout_constraintEnd_toEndOf="@id/text_royal_flush_5"/>
+
+        <Button
+            android:id="@+id/button_menu_return_to_menu"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_return_to_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> fragment.navigateBack()}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

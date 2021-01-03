@@ -66,7 +66,7 @@ public class Machine extends BaseObservable {
     public Machine(Application application) {
         this.application = application;
         this.deck = new Deck();
-        this.bank = new Bank();
+        this.bank = new Bank(application);
         this.gameSounds = new GameSounds(application);
         this.handlerCards = new Handler();
         this.handlerGameOver = new Handler();

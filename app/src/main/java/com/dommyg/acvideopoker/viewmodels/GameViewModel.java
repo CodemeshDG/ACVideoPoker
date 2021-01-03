@@ -1,10 +1,13 @@
 package com.dommyg.acvideopoker.viewmodels;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
 
 import com.dommyg.acvideopoker.models.Machine;
+import com.dommyg.acvideopoker.utils.Constants;
 import com.dommyg.acvideopoker.utils.GameSounds;
 
 public class GameViewModel extends AndroidViewModel {
@@ -61,6 +64,13 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     /**
+     * Adds the amount to the {@link Machine}'s {@link com.dommyg.acvideopoker.models.Bank}.
+     */
+    public void addCashToMachine(double amount) {
+        jacksOrBetter.getBank().addCash(amount);
+    }
+
+    /**
      * Runs the {@link Machine}'s main game logic.
      */
     public void dealOrDraw() {
@@ -72,5 +82,24 @@ public class GameViewModel extends AndroidViewModel {
      */
     public void doubleUp() {
         jacksOrBetter.beginDoubleUp();
+    }
+
+    @Override
+    protected void onCleared() {
+        saveBank();
+        super.onCleared();
+    }
+
+    /**
+     * Saves current bankroll amount in {@link com.dommyg.acvideopoker.models.Bank} to
+     * {@link SharedPreferences}.
+     */
+    private void saveBank() {
+        SharedPreferences sharedPreferences =
+                getApplication().getSharedPreferences("bank", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String currentBankroll = jacksOrBetter.getBank().getBankroll().toString();
+        editor.putString(Constants.KEY_BANKROLL, currentBankroll);
+        editor.commit();
     }
 }

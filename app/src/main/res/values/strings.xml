@@ -22,11 +22,11 @@
 
     <string name="result_royal_flush">ROYAL FLUSH</string>
     <string name="result_straight_flush">STRAIGHT FLUSH</string>
-    <string name="result_four_of_a_kind">FOUR OF A KIND</string>
+    <string name="result_four_of_a_kind">4 OF A KIND</string>
     <string name="result_full_house">FULL HOUSE</string>
     <string name="result_flush">FLUSH</string>
     <string name="result_straight">STRAIGHT</string>
-    <string name="result_three_of_a_kind">THREE OF A KIND</string>
+    <string name="result_three_of_a_kind">3 OF A KIND</string>
     <string name="result_two_pair">TWO PAIR</string>
     <string name="result_jacks_or_better">JACKS OR BETTER</string>
     <string name="result_nothing">NOTHING</string>
@@ -48,4 +48,14 @@
     <string name="play_5_credits">PLAY 5 CREDITS</string>
     <string name="win">WIN $</string>
     <string name="credit">CREDIT $</string>
+
+    <string name="button_menu_payouts">PAYOUTS</string>
+    <string name="button_menu_statistics">STATISTICS</string>
+    <string name="button_menu_bank">BANK</string>
+    <string name="button_menu_card_designs">CARDS</string>
+    <string name="button_menu_return_to_game">RETURN TO GAME</string>
+
+    <string name="button_menu_insert">INSERT \$%d\.00</string>
+    <string name="current_bank_amount">CURRENT CREDIT AMOUNT IN MACHINE:</string>
+    <string name="button_return_to_menu">RETURN TO GAME MENU</string>
 </resources>
