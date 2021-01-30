@@ -83,6 +83,7 @@ public class GameViewModel extends AndroidViewModel {
      */
     public void addCashToMachine(double amount) {
         jacksOrBetter.getBank().addCash(amount);
+        jacksOrBetter.updateIsBankrupt();
     }
 
     /**
