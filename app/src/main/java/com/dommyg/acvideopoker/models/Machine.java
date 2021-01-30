@@ -46,6 +46,7 @@ public class Machine extends BaseObservable {
     private int doubleUpSelection;
 
     private GameSounds gameSounds;
+    private Statistics statistics;
 
     private boolean[] holds;
     private Bitmap[] cardImages;
@@ -68,6 +69,7 @@ public class Machine extends BaseObservable {
         this.deck = new Deck();
         this.bank = new Bank(application);
         this.gameSounds = new GameSounds(application);
+        this.statistics = new Statistics(application);
         this.handlerCards = new Handler();
         this.handlerGameOver = new Handler();
         this.betDenomination = BigDecimal.valueOf(.25);
@@ -97,6 +99,7 @@ public class Machine extends BaseObservable {
             removeHolds();
             resetWinAmount();
             processWager();
+            statistics.incrementHandsPlayed();
         } else {
             setIsInDeal(true);
             deck.hold(holds);
@@ -107,6 +110,7 @@ public class Machine extends BaseObservable {
 
     private void firstCycle() {
         deck.determineHandStatus();
+        statistics.incrementHandCount(Statistics.KEY_DEALT, deck.getHandStatus());
         checkIfPlayDing();
 
         setIsNewHand(false);
@@ -115,6 +119,7 @@ public class Machine extends BaseObservable {
 
     private void finalCycle() {
         deck.determineHandStatus();
+        statistics.incrementHandCount(Statistics.KEY_DRAWN, deck.getHandStatus());
         checkIfPlayDing();
         determinePayout();
 
@@ -147,6 +152,7 @@ public class Machine extends BaseObservable {
 
         setIsNewHand(false);
         setIsInDeal(false);
+        statistics.incrementDoubleUpPlays();
     }
 
     public void continueDoubleUp(int index) {
@@ -159,6 +165,9 @@ public class Machine extends BaseObservable {
 
     private void completeDoubleUp() {
         deck.determineDoubleUpStatus(getDoubleUpSelection());
+        if (deck.getHandStatus() == Deck.Result.DOUBLE_UP_WIN) {
+            statistics.incrementDoubleUpWins();
+        }
         checkIfPlayDing();
         processPayoutDoubleUp();
 
@@ -186,6 +195,10 @@ public class Machine extends BaseObservable {
 
     public Bank getBank() {
         return bank;
+    }
+
+    public Statistics getStatistics() {
+        return statistics;
     }
 
     @Bindable
@@ -374,10 +387,6 @@ public class Machine extends BaseObservable {
         notifyPropertyChanged(BR.isBankrupt);
     }
 
-    public void setBankrupt(boolean bankrupt) {
-        isBankrupt = bankrupt;
-    }
-
     public GameSounds getGameSounds() {
         return gameSounds;
     }
@@ -515,6 +524,7 @@ public class Machine extends BaseObservable {
     private void processPayout(int prize) {
         setWinAmount(calculatePayout(prize));
         bank.setBankroll(bank.getBankroll().add(winAmount));
+        statistics.addToMoneyWon(winAmount);
     }
 
     /**
@@ -524,6 +534,7 @@ public class Machine extends BaseObservable {
         if (deck.getHandStatus().equals(Deck.Result.DOUBLE_UP_WIN)) {
             setWinAmount(winAmountDoubleUp.multiply(BigDecimal.valueOf(2)));
             bank.setBankroll(bank.getBankroll().add(winAmount));
+            statistics.addToMoneyWon(winAmount);
         } else {
             setWinAmount(BigDecimal.valueOf(0));
         }
@@ -533,7 +544,9 @@ public class Machine extends BaseObservable {
      * Removes the wager amount from the {@link Bank}'s bankroll.
      */
     public void processWager() {
-        bank.setBankroll(bank.getBankroll().subtract(calculateWager()));
+        BigDecimal wager = calculateWager();
+        bank.setBankroll(bank.getBankroll().subtract(wager));
+        statistics.addToMoneyWagered(wager);
     }
 
     /**
@@ -541,6 +554,7 @@ public class Machine extends BaseObservable {
      */
     public void processWagerDoubleUp() {
         bank.setBankroll(bank.getBankroll().subtract(getWinAmountDoubleUp()));
+        statistics.addToMoneyWagered(getWinAmountDoubleUp());
     }
 
     /**

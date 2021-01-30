@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="fragment"
+            type="com.dommyg.acvideopoker.fragments.MenuStatisticsFragment" />
+        <variable
+            name="statistics"
+            type="com.dommyg.acvideopoker.models.Statistics" />
+        <import type="com.dommyg.acvideopoker.models.Deck.Result"/>
+        <import type="java.math.BigDecimal"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/mid_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_hands_played"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/payout_background_deselected"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/mid_guideline">
+
+            <TextView
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/statistics_hands_played.concat(` ..... `).concat(String.valueOf(statistics.handsPlayed))}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="HANDS PLAYED ..... 283"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_results"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/payout_background_deselected"
+            app:layout_constraintTop_toBottomOf="@id/layout_hands_played"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/mid_guideline">
+
+            <TextView
+                android:id="@+id/result_header"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@string/statistics_dealt_drawn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/result_royal_flush"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_royal_flush.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.ROYAL_FLUSH.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.ROYAL_FLUSH.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="ROYAL FLUSH ..... 0 / 1"/>
+
+            <TextView
+                android:id="@+id/result_straight_flush"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_straight_flush.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.STRAIGHT_FLUSH.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.STRAIGHT_FLUSH.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_royal_flush"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="STRAIGHT FLUSH ..... 0 / 0"/>
+
+            <TextView
+                android:id="@+id/result_four_of_a_kind"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_four_of_a_kind.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.FOUR_OF_A_KIND.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.FOUR_OF_A_KIND.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_straight_flush"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="4 OF A KIND ..... 3 / 12"/>
+
+            <TextView
+                android:id="@+id/result_full_house"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_full_house.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.FULL_HOUSE.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.FULL_HOUSE.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_four_of_a_kind"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="FULL HOUSE ..... 13 / 27"/>
+
+            <TextView
+                android:id="@+id/result_flush"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_flush.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.FLUSH.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.FLUSH.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_full_house"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="FLUSH ..... 21 / 29"/>
+
+            <TextView
+                android:id="@+id/result_straight"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_straight.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.STRAIGHT.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.STRAIGHT.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_flush"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="STRAIGHT ..... 17 / 23"/>
+
+            <TextView
+                android:id="@+id/result_three_of_a_kind"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_three_of_a_kind.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.THREE_OF_A_KIND.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.THREE_OF_A_KIND.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_straight"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="3 OF A KIND ..... 26 / 34"/>
+
+            <TextView
+                android:id="@+id/result_two_pair"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_two_pair.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.TWO_PAIR.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.TWO_PAIR.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_three_of_a_kind"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="TWO PAIR ..... 41 / 37"/>
+
+            <TextView
+                android:id="@+id/result_jacks_or_better"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/result_jacks_or_better.concat(` ..... `).concat(String.valueOf(statistics.dealt[Result.JACKS_OR_BETTER.numValue])).concat(` / `).concat(String.valueOf(statistics.drawn[Result.JACKS_OR_BETTER.numValue]))}"
+                app:layout_constraintTop_toBottomOf="@id/result_two_pair"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="JACKS OR BETTER ..... 58 / 49"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_double_up"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/payout_background_deselected"
+            app:layout_constraintTop_toBottomOf="@id/layout_results"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/mid_guideline">
+
+            <TextView
+                android:id="@+id/double_up_plays"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/statistics_double_up_plays.concat(` ..... `).concat(String.valueOf(statistics.doubleUpPlays))}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="DOUBLE UP PLAYS ..... 72"/>
+
+            <TextView
+                android:id="@+id/double_up_wins"
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{@string/statistics_double_up_wins.concat(` ..... `).concat(String.valueOf(statistics.doubleUpWins))}"
+                app:layout_constraintTop_toBottomOf="@id/double_up_plays"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="DOUBLE UP WINS ..... 42"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_money"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/payout_background_deselected"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/layout_double_up"
+            app:layout_constraintStart_toStartOf="@id/mid_guideline"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group_money_wagered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/group_money_won"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/money_wagered"
+                    style="@style/RegularText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:textSize="20sp"
+                    android:text="@string/statistics_money_wagered"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    style="@style/RegularText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:textSize="36sp"
+                    android:text="@{`$`.concat(statistics.moneyWagered.toString())}"
+                    app:layout_constraintTop_toBottomOf="@id/money_wagered"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="$2687.25"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group_money_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/group_money_wagered"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/money_won"
+                    style="@style/RegularText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:textSize="20sp"
+                    android:text="@string/statistics_money_won"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    style="@style/RegularText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:textSize="36sp"
+                    android:text="@{`$`.concat(statistics.moneyWon.toString())}"
+                    app:layout_constraintTop_toBottomOf="@id/money_won"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="$4208.75"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/button_menu_return_to_menu"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_return_to_menu"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_menu_reset_statistics"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> fragment.navigateBack()}"/>
+
+        <Button
+            android:id="@+id/button_menu_reset_statistics"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_reset_statistics"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/button_menu_return_to_menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> fragment.resetMachine()}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

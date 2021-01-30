@@ -58,4 +58,12 @@
     <string name="button_menu_insert">INSERT \$%d\.00</string>
     <string name="current_bank_amount">CURRENT CREDIT AMOUNT IN MACHINE:</string>
     <string name="button_return_to_menu">RETURN TO GAME MENU</string>
+    <string name="button_reset_statistics">RESET YOUR STATISTICS</string>
+
+    <string name="statistics_hands_played">HANDS PLAYED</string>
+    <string name="statistics_dealt_drawn">RESULTS (DEALT/DRAWN)</string>
+    <string name="statistics_double_up_plays">DOUBLE UP PLAYS</string>
+    <string name="statistics_double_up_wins">DOUBLE UP WINS</string>
+    <string name="statistics_money_wagered">MONEY WAGERED</string>
+    <string name="statistics_money_won">MONEY WON</string>
 </resources>
