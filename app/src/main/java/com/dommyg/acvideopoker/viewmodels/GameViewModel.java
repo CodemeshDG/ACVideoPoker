@@ -1,21 +1,21 @@
 package com.dommyg.acvideopoker.viewmodels;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.dommyg.acvideopoker.models.Machine;
-import com.dommyg.acvideopoker.utils.Constants;
 import com.dommyg.acvideopoker.utils.GameSounds;
 
 public class GameViewModel extends AndroidViewModel {
     private Machine jacksOrBetter;
+    private ObservableBoolean isResettingMachine = new ObservableBoolean();
 
     public GameViewModel(Application application) {
         super(application);
         this.jacksOrBetter = new Machine(application);
+        setIsResettingMachine(false);
     }
 
     public Machine getJacksOrBetter() {
@@ -26,6 +26,15 @@ public class GameViewModel extends AndroidViewModel {
         jacksOrBetter.getStatistics().resetStatistics();
         jacksOrBetter.getBank().resetBankroll();
         this.jacksOrBetter = new Machine(getApplication());
+        setIsResettingMachine(false);
+    }
+
+    public ObservableBoolean getIsResettingMachine() {
+        return isResettingMachine;
+    }
+
+    public void setIsResettingMachine(boolean isResettingMachine) {
+        this.isResettingMachine.set(isResettingMachine);
     }
 
     /**

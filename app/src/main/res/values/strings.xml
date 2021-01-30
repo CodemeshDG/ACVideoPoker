@@ -66,4 +66,5 @@
     <string name="statistics_double_up_wins">DOUBLE UP WINS</string>
     <string name="statistics_money_wagered">MONEY WAGERED</string>
     <string name="statistics_money_won">MONEY WON</string>
+    <string name="statistics_reset_confirm">THIS ACTION WILL RESET THE MACHINE &amp; YOUR STATISTICS AND START YOU AT $200.00 IN YOUR BANK. ARE YOU SURE YOU WANT TO RESET?</string>
 </resources>

@@ -9,8 +9,12 @@
         <variable
             name="statistics"
             type="com.dommyg.acvideopoker.models.Statistics" />
+        <variable
+            name="isResettingMachine"
+            type="androidx.databinding.ObservableBoolean" />
         <import type="com.dommyg.acvideopoker.models.Deck.Result"/>
         <import type="java.math.BigDecimal"/>
+        <import type="android.view.View"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,6 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/payout_background_deselected"
+            android:visibility="@{isResettingMachine ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/mid_guideline">
@@ -53,6 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/payout_background_deselected"
+            android:visibility="@{isResettingMachine ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/layout_hands_played"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/mid_guideline">
@@ -193,6 +199,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/payout_background_deselected"
+            android:visibility="@{isResettingMachine ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/layout_results"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/mid_guideline">
@@ -230,6 +237,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/payout_background_deselected"
+            android:visibility="@{isResettingMachine ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/layout_double_up"
             app:layout_constraintStart_toStartOf="@id/mid_guideline"
@@ -313,29 +321,44 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            style="@style/RegularText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/statistics_reset_confirm"
+            android:textAlignment="center"
+            android:visibility="@{isResettingMachine ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_menu_return_to_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <Button
             android:id="@+id/button_menu_return_to_menu"
             style="@style/GameButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/button_return_to_menu"
+            android:text="@{isResettingMachine ? @string/button_reset_statistics : @string/button_return_to_menu}"
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/button_menu_reset_statistics"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="@{() -> fragment.navigateBack()}"/>
+            android:onClick="@{() -> fragment.leftButtonPress()}"
+            tools:text="RETURN TO GAME MENU"/>
 
         <Button
             android:id="@+id/button_menu_reset_statistics"
             style="@style/GameButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/button_reset_statistics"
+            android:text="@{isResettingMachine ? @android:string/cancel : @string/button_reset_statistics}"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@id/button_menu_return_to_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="@{() -> fragment.resetMachine()}"/>
+            android:onClick="@{() -> fragment.rightButtonPress()}"
+            tools:text="RESET YOUR STATISTICS"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

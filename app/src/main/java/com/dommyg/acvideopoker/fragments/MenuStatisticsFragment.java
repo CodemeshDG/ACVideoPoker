@@ -22,9 +22,22 @@ public class MenuStatisticsFragment extends BaseFragment {
 
         binding.setFragment(this);
         binding.setStatistics(viewModel.getJacksOrBetter().getStatistics());
+        binding.setIsResettingMachine(viewModel.getIsResettingMachine());
     }
 
-    public void resetMachine() {
+    public void leftButtonPress() {
+        if (viewModel.getIsResettingMachine().get()) {
+            resetMachine();
+        } else {
+            navigateBack();
+        }
+    }
+
+    public void rightButtonPress() {
+        viewModel.setIsResettingMachine(!viewModel.getIsResettingMachine().get());
+    }
+
+    private void resetMachine() {
         viewModel.resetMachine();
         binding.setStatistics(viewModel.getJacksOrBetter().getStatistics());
     }
