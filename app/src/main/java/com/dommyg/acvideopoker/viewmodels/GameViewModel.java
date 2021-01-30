@@ -99,10 +99,8 @@ public class GameViewModel extends AndroidViewModel {
         jacksOrBetter.beginDoubleUp();
     }
 
-    @Override
-    protected void onCleared() {
+    public void saveState() {
         jacksOrBetter.getBank().saveBankroll();
         jacksOrBetter.getStatistics().saveStatistics();
-        super.onCleared();
     }
 }
