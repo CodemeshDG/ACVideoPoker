@@ -392,12 +392,17 @@ public class Machine extends BaseObservable {
     }
 
     /**
-     * Plays ding sound if {@link Deck}'s handStatus is not set to NOTHING.
+     * Plays ding or jangle sound if {@link Deck}'s handStatus is not set to NOTHING or
+     * DOUBLE_UP_LOSE.
      */
     private void checkIfPlayDing() {
         if (!deck.getHandStatus().equals(Deck.Result.NOTHING) &&
                 !deck.getHandStatus().equals(Deck.Result.DOUBLE_UP_LOSE)) {
-            gameSounds.play(GameSounds.SOUND_BING);
+            if (isNewHand) {
+                gameSounds.play(GameSounds.SOUND_BING);
+            } else {
+                gameSounds.play(GameSounds.SOUND_JANGLE);
+            }
         }
     }
 

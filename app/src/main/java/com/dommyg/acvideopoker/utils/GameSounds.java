@@ -15,9 +15,11 @@ import java.io.IOException;
 public class GameSounds extends BaseObservable {
     private int bing;
     private int doot;
+    private int jangle;
 
     public static final int SOUND_BING = 0;
     public static final int SOUND_DOOT = 1;
+    public static final int SOUND_JANGLE = 2;
 
     private static final float VOLUME_3 = 1.0f;
     private static final float VOLUME_2 = 0.66f;
@@ -57,6 +59,7 @@ public class GameSounds extends BaseObservable {
         try {
             bing = soundPool.load(assetManager.openFd("sounds/bing.ogg"), 1);
             doot = soundPool.load(assetManager.openFd("sounds/doot.ogg"), 1);
+            jangle = soundPool.load(assetManager.openFd("sounds/jangle.ogg"), 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,6 +78,10 @@ public class GameSounds extends BaseObservable {
 
             case SOUND_DOOT:
                     soundPool.play(doot, currentVolume, currentVolume, 1, 0, 1);
+                break;
+
+            case SOUND_JANGLE:
+                soundPool.play(jangle, currentVolume, currentVolume, 1, 0, 1);
                 break;
         }
     }

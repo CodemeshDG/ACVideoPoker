@@ -320,6 +320,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
                     android:text="@string/button_game_menu"
+                    android:enabled="@{viewModel.jacksOrBetter.isNewHand &amp;&amp; !viewModel.jacksOrBetter.isInDeal}"
                     android:onClick="@{() -> fragment.navigateToGameMenu()}"
                     tools:text="Game Menu" />
 
