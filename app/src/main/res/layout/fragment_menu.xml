@@ -35,12 +35,12 @@
             android:text="@string/button_menu_statistics"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="16dp"
-            android:enabled="false"
             app:layout_constraintBottom_toTopOf="@id/button_menu_card_designs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_menu_payouts"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintVertical_bias="1.0"
+            android:onClick="@{() -> fragment.navigateToStatistics()}"/>
 
         <Button
             android:id="@+id/button_menu_bank"

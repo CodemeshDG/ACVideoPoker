@@ -19,14 +19,18 @@ public class Statistics extends BaseObservable {
     private static final String KEY_HANDS_PLAYED = "hands_played";
     private static final String KEY_MONEY_WAGERED = "money_wagered";
     private static final String KEY_MONEY_WON = "money_won";
+    private static final String KEY_DOUBLE_UP_PLAYS = "double_up_plays";
+    private static final String KEY_DOUBLE_UP_WINS = "double_up_wins";
     public static final String KEY_DEALT = "dealt";
     public static final String KEY_DRAWN = "drawn";
 
-    private final int[] dealt = new int[10];
-    private final int[] drawn = new int[10];
+    private int[] dealt = new int[10];
+    private int[] drawn = new int[10];
     private BigDecimal moneyWagered;
     private BigDecimal moneyWon;
     private long handsPlayed;
+    private long doubleUpPlays;
+    private long doubleUpWins;
 
     private final SharedPreferences sharedPreferences;
 
@@ -36,6 +40,8 @@ public class Statistics extends BaseObservable {
         initializeArray(dealt, KEY_DEALT);
         initializeArray(drawn, KEY_DRAWN);
         loadHandsPlayed();
+        loadDoubleUpPlays();
+        loadDoubleUpWins();
         loadMoneyWagered();
         loadMoneyWon();
     }
@@ -87,6 +93,26 @@ public class Statistics extends BaseObservable {
     public void addToMoneyWon(BigDecimal moneyWon) {
         this.moneyWon = this.moneyWon.add(moneyWon).setScale(2, RoundingMode.HALF_EVEN);
         notifyPropertyChanged(BR.moneyWon);
+    }
+
+    @Bindable
+    public long getDoubleUpPlays() {
+        return doubleUpPlays;
+    }
+
+    public void incrementDoubleUpPlays() {
+        this.doubleUpPlays++;
+        notifyPropertyChanged(BR.doubleUpPlays);
+    }
+
+    @Bindable
+    public long getDoubleUpWins() {
+        return doubleUpWins;
+    }
+
+    public void incrementDoubleUpWins() {
+        this.doubleUpWins++;
+        notifyPropertyChanged(BR.doubleUpWins);
     }
 
     private void initializeArray(int[] array, String type) {
@@ -180,10 +206,32 @@ public class Statistics extends BaseObservable {
         editor.putString(KEY_MONEY_WON, moneyWon.toString());
     }
 
+    private void loadDoubleUpPlays() {
+        doubleUpPlays = sharedPreferences.getLong(KEY_DOUBLE_UP_PLAYS, 0);
+    }
+
+    private void saveDoubleUpPlays(SharedPreferences.Editor editor) {
+        editor.putLong(KEY_DOUBLE_UP_PLAYS, doubleUpPlays);
+    }
+
+    private void loadDoubleUpWins() {
+        doubleUpWins = sharedPreferences.getLong(KEY_DOUBLE_UP_WINS, 0);
+    }
+
+    private void saveDoubleUpWins(SharedPreferences.Editor editor) {
+        editor.putLong(KEY_DOUBLE_UP_WINS, doubleUpWins);
+    }
+
+    public void resetStatistics() {
+        sharedPreferences.edit().clear().commit();
+    }
+
     public void saveStatistics() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         saveHands(editor);
         saveHandsPlayed(editor);
+        saveDoubleUpPlays(editor);
+        saveDoubleUpWins(editor);
         saveMoneyWagered(editor);
         saveMoneyWon(editor);
         editor.commit();

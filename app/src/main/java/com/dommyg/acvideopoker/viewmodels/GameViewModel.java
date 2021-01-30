@@ -22,6 +22,12 @@ public class GameViewModel extends AndroidViewModel {
         return jacksOrBetter;
     }
 
+    public void resetMachine() {
+        jacksOrBetter.getStatistics().resetStatistics();
+        jacksOrBetter.getBank().resetBankroll();
+        this.jacksOrBetter = new Machine(getApplication());
+    }
+
     /**
      * Updates the {@link Machine}'s betDenomination value.
      */
@@ -86,20 +92,8 @@ public class GameViewModel extends AndroidViewModel {
 
     @Override
     protected void onCleared() {
-        saveBank();
+        jacksOrBetter.getBank().saveBankroll();
+        jacksOrBetter.getStatistics().saveStatistics();
         super.onCleared();
-    }
-
-    /**
-     * Saves current bankroll amount in {@link com.dommyg.acvideopoker.models.Bank} to
-     * {@link SharedPreferences}.
-     */
-    private void saveBank() {
-        SharedPreferences sharedPreferences =
-                getApplication().getSharedPreferences("bank", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String currentBankroll = jacksOrBetter.getBank().getBankroll().toString();
-        editor.putString(Constants.KEY_BANKROLL, currentBankroll);
-        editor.commit();
     }
 }

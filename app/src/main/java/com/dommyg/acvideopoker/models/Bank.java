@@ -19,9 +19,11 @@ import java.math.RoundingMode;
 public class Bank extends BaseObservable {
 
     private BigDecimal bankroll;
+    private Application application;
 
     Bank(Application application) {
-        this.bankroll = loadBankroll(application);
+        this.application = application;
+        this.bankroll = loadBankroll();
     }
 
     @Bindable
@@ -34,7 +36,7 @@ public class Bank extends BaseObservable {
         notifyPropertyChanged(BR.bankroll);
     }
 
-    private BigDecimal loadBankroll(Application application) {
+    private BigDecimal loadBankroll() {
         SharedPreferences sharedPreferences =
                 application.getSharedPreferences("bank", Context.MODE_PRIVATE);
         return BigDecimal.valueOf(
@@ -50,6 +52,14 @@ public class Bank extends BaseObservable {
         );
     }
 
+    public void saveBankroll() {
+        SharedPreferences sharedPreferences =
+                application.getSharedPreferences("bank", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.KEY_BANKROLL, String.valueOf(bankroll));
+        editor.commit();
+    }
+
     public void addCash(double amount) {
         setBankroll(
                 this.bankroll.add(
@@ -57,5 +67,11 @@ public class Bank extends BaseObservable {
                                 .setScale(2, RoundingMode.HALF_EVEN)
                 )
         );
+    }
+
+    public void resetBankroll() {
+        SharedPreferences sharedPreferences =
+                application.getSharedPreferences("bank", Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().commit();
     }
 }
