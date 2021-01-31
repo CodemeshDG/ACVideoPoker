@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_menuFragment_to_menuStatisticsFragment"
             app:destination="@id/menuStatisticsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_menuCardsFragment"
+            app:destination="@id/menuCardsFragment" />
     </fragment>
     <fragment
         android:id="@+id/menuBankFragment"
@@ -44,4 +47,9 @@
         android:name="com.dommyg.acvideopoker.fragments.MenuStatisticsFragment"
         android:label="MenuStatisticsFragment"
         tools:layout="@layout/fragment_menu_statistics"/>
+    <fragment
+        android:id="@+id/menuCardsFragment"
+        android:name="com.dommyg.acvideopoker.fragments.MenuCardsFragment"
+        android:label="MenuCardsFragment"
+        tools:layout="@layout/fragment_menu_cards"/>
 </navigation>

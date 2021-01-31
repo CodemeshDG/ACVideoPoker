@@ -101,6 +101,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void saveState() {
+        jacksOrBetter.saveState();
         jacksOrBetter.getBank().saveBankroll();
         jacksOrBetter.getStatistics().saveStatistics();
     }

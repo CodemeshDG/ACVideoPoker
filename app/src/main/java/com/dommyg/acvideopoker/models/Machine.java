@@ -1,6 +1,8 @@
 package com.dommyg.acvideopoker.models;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,6 +39,8 @@ public class Machine extends BaseObservable {
 
     private static final int BLANK_CARD_INDEX = -1;
 
+    private final String[] cardDesigns = {"classic", "large"};
+
     private Deck deck;
     private Bank bank;
     private BigDecimal betDenomination;
@@ -44,6 +48,7 @@ public class Machine extends BaseObservable {
     private BigDecimal winAmount;
     private BigDecimal winAmountDoubleUp;
     private int doubleUpSelection;
+    private int currentCardDesign;
 
     private GameSounds gameSounds;
     private Statistics statistics;
@@ -85,6 +90,7 @@ public class Machine extends BaseObservable {
         this.isDisplayingGameOver = true;
         this.currentSpeed = Constants.SPEED_1;
         this.currentSpeedIterator = Constants.SPEED_1_ITERATOR;
+        loadCurrentCardDesign();
     }
 
     /**
@@ -272,6 +278,29 @@ public class Machine extends BaseObservable {
         this.doubleUpSelection = doubleUpSelection;
     }
 
+    @Bindable
+    public int getCurrentCardDesign() {
+        return currentCardDesign;
+    }
+
+    public void setCurrentCardDesign(int currentCardDesign) {
+        this.currentCardDesign = currentCardDesign;
+        notifyPropertyChanged(BR.currentCardDesign);
+    }
+
+    private void loadCurrentCardDesign() {
+        SharedPreferences sharedPreferences =
+                application.getSharedPreferences("machine", Context.MODE_PRIVATE);
+        currentCardDesign = sharedPreferences.getInt(
+                Constants.KEY_CARD_DESIGN,
+                Constants.CARD_DESIGN_CLASSIC_INDEX
+        );
+    }
+
+    private void saveCurrentCardDesign(SharedPreferences.Editor editor) {
+        editor.putInt(Constants.KEY_CARD_DESIGN, currentCardDesign);
+    }
+
     /**
      * Updates the currentSpeed to the next increment depending on its current value.
      */
@@ -421,8 +450,15 @@ public class Machine extends BaseObservable {
             String suit = application.getResources().getString(
                     deck.getHandDisplay()[readIndex].getSuit().getStringValue()
             );
+            String design = cardDesigns[currentCardDesign];
             gameSounds.play(GameSounds.SOUND_DOOT);
-            return "card_faces/" + value.toLowerCase() + "_" + suit.toLowerCase() + ".png";
+            return "card_faces/"
+                    .concat(design)
+                    .concat("_")
+                    .concat(value.toLowerCase())
+                    .concat("_")
+                    .concat(suit.toLowerCase())
+                    .concat(".png");
         } else {
             return "card_faces/back.png";
         }
@@ -574,6 +610,16 @@ public class Machine extends BaseObservable {
      */
     private BigDecimal calculateWager() {
         return betDenomination.multiply(BigDecimal.valueOf(bet));
+    }
+
+    /**
+     * Saves relevant variables to maintain machine state between play sessions.
+     */
+    public void saveState() {
+        SharedPreferences sharedPreferences =
+                application.getSharedPreferences("machine", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        saveCurrentCardDesign(editor);
     }
 
     private class CardImagePathsRunnable implements Runnable {

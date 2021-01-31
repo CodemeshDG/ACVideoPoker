@@ -63,11 +63,11 @@
             android:layout_height="wrap_content"
             android:text="@string/button_menu_card_designs"
             android:layout_marginStart="8dp"
-            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_menu_bank"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> fragment.navigateToCards()}"/>
 
         <Button
             android:id="@+id/button_menu_return_to_game"

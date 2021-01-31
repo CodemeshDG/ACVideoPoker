@@ -67,4 +67,7 @@
     <string name="statistics_money_wagered">MONEY WAGERED</string>
     <string name="statistics_money_won">MONEY WON</string>
     <string name="statistics_reset_confirm">THIS ACTION WILL RESET THE MACHINE &amp; YOUR STATISTICS AND START YOU AT $200.00 IN YOUR BANK. ARE YOU SURE YOU WANT TO RESET?</string>
+
+    <string name="card_design_classic">CLASSIC</string>
+    <string name="card_design_large">LARGE</string>
 </resources>
