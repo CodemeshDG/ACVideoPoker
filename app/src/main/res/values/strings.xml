@@ -53,6 +53,7 @@
     <string name="button_menu_statistics">STATISTICS</string>
     <string name="button_menu_bank">BANK</string>
     <string name="button_menu_card_designs">CARDS</string>
+    <string name="button_menu_contact">CONTACT</string>
     <string name="button_menu_return_to_game">RETURN TO GAME</string>
 
     <string name="button_menu_insert">INSERT \$%d\.00</string>
@@ -67,6 +68,9 @@
     <string name="statistics_money_wagered">MONEY WAGERED</string>
     <string name="statistics_money_won">MONEY WON</string>
     <string name="statistics_reset_confirm">THIS ACTION WILL RESET THE MACHINE &amp; YOUR STATISTICS AND START YOU AT $200.00 IN YOUR BANK. ARE YOU SURE YOU WANT TO RESET?</string>
+
+    <string name="about_contact">HAVE A SUGGESTION, ISSUE, OR KIND WORDS TO SHARE ABOUT THE APP?\nCONTACT ME BY USING THE BUTTON BELOW.\nIT WILL OPEN A NEW EMAIL ADDRESSED TO ME USING YOUR DEFAULT EMAIL APP.</string>
+    <string name="button_contact">SEND FEEDBACK EMAIL</string>
 
     <string name="card_design_classic">CLASSIC</string>
     <string name="card_design_large">LARGE</string>

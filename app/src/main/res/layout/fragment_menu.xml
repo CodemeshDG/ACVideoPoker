@@ -83,5 +83,16 @@
             app:layout_constraintVertical_bias="0.0"
             android:onClick="@{() -> fragment.navigateBack()}"/>
 
+        <Button
+            android:id="@+id/button_menu_contact"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button_menu_contact"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/button_menu_bank"
+            android:onClick="@{() -> fragment.navigateToContact()}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

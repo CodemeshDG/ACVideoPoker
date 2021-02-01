@@ -37,6 +37,10 @@ public class MenuFragment extends BaseFragment {
         navController.navigate(R.id.action_menuFragment_to_menuCardsFragment);
     }
 
+    public void navigateToContact() {
+        navController.navigate(R.id.action_menuFragment_to_menuContactFragment);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_menu;
