@@ -1,6 +1,8 @@
 package com.dommyg.acvideopoker.utils;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
@@ -26,7 +28,7 @@ public class GameSounds extends BaseObservable {
     private static final float VOLUME_1 = 0.33f;
     private static final float VOLUME_0 = 0;
 
-    static final int VOLUME_3_ITERATOR = 3;
+    private static final int VOLUME_3_ITERATOR = 3;
     private static final int VOLUME_2_ITERATOR = 2;
     private static final int VOLUME_1_ITERATOR = 1;
     private static final int VOLUME_0_ITERATOR = 0;
@@ -50,9 +52,21 @@ public class GameSounds extends BaseObservable {
                 .build();
 
         setSounds();
+        loadVolume(application);
+    }
 
-        currentVolume = VOLUME_3;
-        currentVolumeIterator = VOLUME_3_ITERATOR;
+    private void loadVolume(Application application) {
+        SharedPreferences sharedPreferences =
+                application.getSharedPreferences("machine", Context.MODE_PRIVATE);
+        currentVolume =
+                sharedPreferences.getFloat(Constants.KEY_VOLUME, VOLUME_3);
+        currentVolumeIterator =
+                sharedPreferences.getInt(Constants.KEY_VOLUME_ITERATOR, VOLUME_3_ITERATOR);
+    }
+
+    public void saveVolume(SharedPreferences.Editor editor) {
+        editor.putFloat(Constants.KEY_VOLUME, currentVolume);
+        editor.putInt(Constants.KEY_VOLUME_ITERATOR, currentVolumeIterator);
     }
 
     private void setSounds() {

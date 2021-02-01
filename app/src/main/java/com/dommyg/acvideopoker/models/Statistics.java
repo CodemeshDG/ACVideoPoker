@@ -36,7 +36,7 @@ public class Statistics extends BaseObservable {
 
     public Statistics(Application application) {
         this.sharedPreferences =
-                application.getSharedPreferences("statistics", Context.MODE_PRIVATE);
+                application.getSharedPreferences("machine", Context.MODE_PRIVATE);
         initializeArray(dealt, KEY_DEALT);
         initializeArray(drawn, KEY_DRAWN);
         loadHandsPlayed();
@@ -226,14 +226,12 @@ public class Statistics extends BaseObservable {
         sharedPreferences.edit().clear().commit();
     }
 
-    public void saveStatistics() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    public void saveStatistics(SharedPreferences.Editor editor) {
         saveHands(editor);
         saveHandsPlayed(editor);
         saveDoubleUpPlays(editor);
         saveDoubleUpWins(editor);
         saveMoneyWagered(editor);
         saveMoneyWon(editor);
-        editor.commit();
     }
 }

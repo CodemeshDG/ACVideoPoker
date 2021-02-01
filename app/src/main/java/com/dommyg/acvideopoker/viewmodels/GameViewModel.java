@@ -25,6 +25,7 @@ public class GameViewModel extends AndroidViewModel {
     public void resetMachine() {
         jacksOrBetter.getStatistics().resetStatistics();
         jacksOrBetter.getBank().resetBankroll();
+        jacksOrBetter.saveState(true);
         this.jacksOrBetter = new Machine(getApplication());
         setIsResettingMachine(false);
     }
@@ -101,8 +102,6 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void saveState() {
-        jacksOrBetter.saveState();
-        jacksOrBetter.getBank().saveBankroll();
-        jacksOrBetter.getStatistics().saveStatistics();
+        jacksOrBetter.saveState(false);
     }
 }

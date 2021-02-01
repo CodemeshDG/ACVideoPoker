@@ -38,7 +38,7 @@ public class Bank extends BaseObservable {
 
     private BigDecimal loadBankroll() {
         SharedPreferences sharedPreferences =
-                application.getSharedPreferences("bank", Context.MODE_PRIVATE);
+                application.getSharedPreferences("machine", Context.MODE_PRIVATE);
         return BigDecimal.valueOf(
                 Double.parseDouble(
                         sharedPreferences.getString(
@@ -52,12 +52,8 @@ public class Bank extends BaseObservable {
         );
     }
 
-    public void saveBankroll() {
-        SharedPreferences sharedPreferences =
-                application.getSharedPreferences("bank", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    public void saveBankroll(SharedPreferences.Editor editor) {
         editor.putString(Constants.KEY_BANKROLL, String.valueOf(bankroll));
-        editor.commit();
     }
 
     public void addCash(double amount) {

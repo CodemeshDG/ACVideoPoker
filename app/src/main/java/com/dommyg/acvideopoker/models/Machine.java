@@ -12,8 +12,8 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.dommyg.acvideopoker.BR;
-import com.dommyg.acvideopoker.utils.GameSounds;
 import com.dommyg.acvideopoker.utils.Constants;
+import com.dommyg.acvideopoker.utils.GameSounds;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,10 +75,9 @@ public class Machine extends BaseObservable {
         this.bank = new Bank(application);
         this.gameSounds = new GameSounds(application);
         this.statistics = new Statistics(application);
+        loadState();
         this.handlerCards = new Handler();
         this.handlerGameOver = new Handler();
-        this.betDenomination = BigDecimal.valueOf(.25);
-        this.bet = 1;
         this.winAmount = BigDecimal.valueOf(0);
         this.holds = new boolean[5];
         this.cardImages = new Bitmap[5];
@@ -88,9 +87,6 @@ public class Machine extends BaseObservable {
         this.isInDoubleUp = false;
         updateIsBankrupt();
         this.isDisplayingGameOver = true;
-        this.currentSpeed = Constants.SPEED_1;
-        this.currentSpeedIterator = Constants.SPEED_1_ITERATOR;
-        loadCurrentCardDesign();
     }
 
     /**
@@ -227,6 +223,24 @@ public class Machine extends BaseObservable {
         updateIsBankrupt();
     }
 
+    private void loadDenomination(SharedPreferences sharedPreferences) {
+        betDenomination = BigDecimal.valueOf(
+                Double.parseDouble(
+                        sharedPreferences.getString(
+                                Constants.KEY_BET_DENOMINATION,
+                                ".25"
+                        )
+                )
+        ).setScale(
+                2,
+                RoundingMode.HALF_EVEN
+        );
+    }
+
+    private void saveDenomination(SharedPreferences.Editor editor) {
+        editor.putString(Constants.KEY_BET_DENOMINATION, String.valueOf(betDenomination));
+    }
+
     @Bindable
     public int getBet() {
         return bet;
@@ -243,6 +257,14 @@ public class Machine extends BaseObservable {
         }
         notifyPropertyChanged(BR.bet);
         updateIsBankrupt();
+    }
+
+    private void loadBet(SharedPreferences sharedPreferences) {
+        bet = sharedPreferences.getInt(Constants.KEY_BET, 1);
+    }
+
+    private void saveBet(SharedPreferences.Editor editor) {
+        editor.putInt(Constants.KEY_BET, bet);
     }
 
     @Bindable
@@ -288,9 +310,7 @@ public class Machine extends BaseObservable {
         notifyPropertyChanged(BR.currentCardDesign);
     }
 
-    private void loadCurrentCardDesign() {
-        SharedPreferences sharedPreferences =
-                application.getSharedPreferences("machine", Context.MODE_PRIVATE);
+    private void loadCurrentCardDesign(SharedPreferences sharedPreferences) {
         currentCardDesign = sharedPreferences.getInt(
                 Constants.KEY_CARD_DESIGN,
                 Constants.CARD_DESIGN_CLASSIC_INDEX
@@ -322,6 +342,18 @@ public class Machine extends BaseObservable {
                 break;
         }
         notifyPropertyChanged(BR.currentSpeedIterator);
+    }
+
+    private void loadSpeed(SharedPreferences sharedPreferences) {
+        currentSpeed =
+                sharedPreferences.getInt(Constants.KEY_SPEED, Constants.SPEED_1);
+        currentSpeedIterator =
+                sharedPreferences.getInt(Constants.KEY_SPEED_ITERATOR, Constants.SPEED_1_ITERATOR);
+    }
+
+    private void saveSpeed(SharedPreferences.Editor editor) {
+        editor.putInt(Constants.KEY_SPEED, currentSpeed);
+        editor.putInt(Constants.KEY_SPEED_ITERATOR, currentSpeedIterator);
     }
 
     @Bindable
@@ -613,13 +645,35 @@ public class Machine extends BaseObservable {
     }
 
     /**
-     * Saves relevant variables to maintain machine state between play sessions.
+     * Loads relevant variables to restore previous play session.
      */
-    public void saveState() {
+    private void loadState() {
+        SharedPreferences sharedPreferences =
+                application.getSharedPreferences("machine", Context.MODE_PRIVATE);
+        loadBet(sharedPreferences);
+        loadDenomination(sharedPreferences);
+        loadCurrentCardDesign(sharedPreferences);
+        loadSpeed(sharedPreferences);
+    }
+
+    /**
+     * Saves relevant variables to maintain machine state between play sessions.
+     * @param isResetting The save is being triggered because the Machine object is being replaced.
+     */
+    public void saveState(boolean isResetting) {
         SharedPreferences sharedPreferences =
                 application.getSharedPreferences("machine", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (!isResetting) {
+            bank.saveBankroll(editor);
+            statistics.saveStatistics(editor);
+        }
+        gameSounds.saveVolume(editor);
+        saveBet(editor);
+        saveDenomination(editor);
+        saveSpeed(editor);
         saveCurrentCardDesign(editor);
+        editor.commit();
     }
 
     private class CardImagePathsRunnable implements Runnable {
