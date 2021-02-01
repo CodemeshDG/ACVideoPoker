@@ -71,6 +71,7 @@
 
     <string name="about_contact">HAVE A SUGGESTION, ISSUE, OR KIND WORDS TO SHARE ABOUT THE APP?\nCONTACT ME BY USING THE BUTTON BELOW.\nIT WILL OPEN A NEW EMAIL ADDRESSED TO ME USING YOUR DEFAULT EMAIL APP.</string>
     <string name="button_contact">SEND FEEDBACK EMAIL</string>
+    <string name="error_activity_not_found">ERROR: COULD NOT FIND EMAIL APP</string>
 
     <string name="card_design_classic">CLASSIC</string>
     <string name="card_design_large">LARGE</string>
